@@ -30,6 +30,13 @@ const userSchema = new Schema(
      */
     image: {
       type: String
+    },
+    /**
+     * isScrumMaster for the user
+     */
+    isScrumMaster: {
+      type: Boolean,
+      default: false
     }
   },
   {

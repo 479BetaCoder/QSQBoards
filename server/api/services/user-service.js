@@ -17,7 +17,8 @@ exports.createUser = function(newUser) {
   const hash = bcrypt.hashSync(newUser.password, utilConstants.SALT_ROUNDS);
   const user = new User({
     emailId: newUser.emailId,
-    password: hash
+    password: hash,
+    isScrumMaster: newUser.isScrumMaster || false
   });
   const promise = user.save();
   return promise;
