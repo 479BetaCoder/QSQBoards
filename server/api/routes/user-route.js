@@ -1,8 +1,17 @@
 "use strict";
+//const checkAuth = require("../services/auth-service");
 module.exports = function(app) {
   const userController = require("../controllers/user-controller");
   // Route for registering a user
   app
     .route("/users/signup")
-    .post(userController.validate("createUser"), userController.createUser);
+    .post(userController.validateUser(), userController.createUser);
+
+  // Route for logging in the registered user
+  app
+    .route("/users/login")
+    .post(userController.validateUser(), userController.loginUser);
+
+  // Mock for authenticated routes
+  //app.route("/users").get(checkAuth, userController.getUsers);
 };

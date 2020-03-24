@@ -23,3 +23,8 @@ exports.createUser = function(newUser) {
   const promise = user.save();
   return promise;
 };
+
+exports.loginUser = function(userObj) {
+  const promise = User.findOne({ emailId: userObj.emailId }).exec();
+  return promise;
+};
