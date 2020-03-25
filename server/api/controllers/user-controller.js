@@ -4,14 +4,15 @@ const userService = require("../services/user-service");
 const { check, validationResult } = require("express-validator"),
   utilConstants = require("../utils/Constants"),
   bcrypt = require("bcrypt"),
-  jwt = require("jsonwebtoken");
-
+  jwt = require("jsonwebtoken"),
+  log4js = require("log4js"),
+  logger = log4js.getLogger();
 exports.validateUser = () => {
   return [
-    check("emailId", utilConstants.INVALID_EMAIL)
+    check("emailId")
       .exists()
       .isEmail(),
-    check("password", utilConstants.INVALID_PASSWORD)
+    check("password")
       .exists()
       .isLength({ min: 8 })
   ];
@@ -85,7 +86,8 @@ exports.loginUser = (request, response) => {
           );
           return response.status(200).json({
             message: "Login Successful",
-            token: jwtToken
+            token: jwtToken,
+            isScrumMaster: user.isScrumMaster
           });
         }
 
@@ -118,13 +120,15 @@ let renderErrorResponse = response => {
       });
     } else if (error && error.name !== utilConstants.VALIDATION_ERR) {
       response.status(500);
+      logger.fatal(`Server error: ${error.message}`);
       response.json({
-        message: error.message
+        message: utilConstants.SERVER_ERR
       });
     } else if (error && error.name === utilConstants.VALIDATION_ERR) {
       response.status(400);
+      logger.warn(`Client error: ${error.message}`);
       response.json({
-        message: error.message
+        message: utilConstants.CLIENT_ERR
       });
     }
   };
