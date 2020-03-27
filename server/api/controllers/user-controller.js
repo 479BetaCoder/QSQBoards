@@ -5,8 +5,17 @@ const { check, validationResult } = require("express-validator"),
   utilConstants = require("../utils/Constants"),
   bcrypt = require("bcrypt"),
   jwt = require("jsonwebtoken"),
-  log4js = require("log4js"),
-  logger = log4js.getLogger();
+  log4js = require("log4js");
+log4js.configure({
+  appenders: {
+    everything: { type: "file", filename: "logs/qsqBoard.log" }
+  },
+  categories: {
+    default: { appenders: ["everything"], level: "debug" }
+  }
+});
+const logger = log4js.getLogger("qsqBoard");
+
 exports.validateUser = () => {
   return [
     check("emailId")
@@ -111,7 +120,7 @@ let renderErrorResponse = response => {
     if (error && error.code === utilConstants.MONGO_CONFLICT_CODE) {
       response.status(422);
       response.json({
-        message: utilConstants.UNIQUE_EMAIL_ERR
+        message: utilConstants.UNIQUE_EMAIL_USER_ERR
       });
     } else if (error && error.name !== utilConstants.VALIDATION_ERR) {
       response.status(500);
