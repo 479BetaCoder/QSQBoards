@@ -12,6 +12,9 @@ exports.validateUser = () => {
     check("emailId")
       .exists()
       .isEmail(),
+    check("userName")
+      .exists()
+      .isAlphanumeric(),
     check("password")
       .exists()
       .isLength({ min: 8 })
@@ -28,7 +31,7 @@ exports.createUser = (request, response) => {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
       response.status(400).json({
-        message: utilConstants.USER_REQ_ERR
+        message: utilConstants.CLIENT_ERR
       });
       return;
     }
@@ -53,14 +56,6 @@ exports.createUser = (request, response) => {
  */
 exports.loginUser = (request, response) => {
   try {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      response.status(400).json({
-        message: utilConstants.USER_REQ_ERR
-      });
-      return;
-    }
-    // after validating
     const resolve = user => {
       if (!user) {
         return response.status(401).json({

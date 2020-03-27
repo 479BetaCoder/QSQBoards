@@ -17,6 +17,7 @@ exports.createUser = function(newUser) {
   const hash = bcrypt.hashSync(newUser.password, utilConstants.SALT_ROUNDS);
   const user = new User({
     emailId: newUser.emailId,
+    userName: newUser.userName,
     password: hash,
     isScrumMaster: newUser.isScrumMaster || false
   });
@@ -25,6 +26,6 @@ exports.createUser = function(newUser) {
 };
 
 exports.loginUser = function(userObj) {
-  const promise = User.findOne({ emailId: userObj.emailId }).exec();
+  const promise = User.findOne({ userName: userObj.userName }).exec();
   return promise;
 };

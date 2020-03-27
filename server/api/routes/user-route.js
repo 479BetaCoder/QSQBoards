@@ -8,10 +8,8 @@ module.exports = function(app) {
     .post(userController.validateUser(), userController.createUser);
 
   // Route for logging in the registered user
-  app
-    .route("/users/login")
-    .post(userController.validateUser(), userController.loginUser);
+  app.route("/users/login").post(userController.loginUser);
 
   // Mock for authenticated routes
-  //app.route("/users").get(checkAuth, userController.getUsers);
+  //app.route("/users").get(checkAuth);
 };
