@@ -89,6 +89,7 @@ exports.loginUser = (request, response) => {
             }
           );
           return response.status(200).json({
+            userName: user.userName,
             message: "Login Successful",
             token: jwtToken,
             isScrumMaster: user.isScrumMaster
