@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
-import { QsqserviceService } from '../qsqservice.service';
+import { QsqserviceService } from '../../services/qsqservice.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

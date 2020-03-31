@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QsqserviceService } from '../qsqservice.service';
+import { QsqserviceService } from '../../services/qsqservice.service';
 
 @Component({
   selector: 'app-register',
@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
         error => this.successMessage = 'Error occurred'
       );
     }
-    
+
   }
 
   movetologin(){
