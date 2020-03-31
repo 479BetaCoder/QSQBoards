@@ -4,15 +4,15 @@
             <div class="header">Register</div>
             <div>
                 <mat-form-field style="width:100%;">
-                    <input type="text" formControlName="email" matInput placeholder="Email" id="email">
+                    <input type="text" formControlName="emailId" matInput placeholder="Email" id="emailId">
                 </mat-form-field>                
-                <span *ngIf="isValid('email')">Entered email is invalid</span>
+                <span *ngIf="isValid('emailId')">Entered email is invalid</span>
             </div>
             <div>
                 <mat-form-field style="width:100%;">
-                    <input type="text" formControlName="username" matInput placeholder="Username" id="user">
+                    <input type="text" formControlName="userName" matInput placeholder="Username" id="userName">
                 </mat-form-field>
-                <span *ngIf="isValid('username')">Username is required</span>
+                <span *ngIf="isValid('userName')">Username is required</span>
             </div>
             <div>
                 <mat-form-field style="width:100%;">

@@ -14,8 +14,8 @@ export class RegisterComponent implements OnInit {
   constructor(private _qsqservice:QsqserviceService,
     private _router: Router, private _activateRoute:ActivatedRoute) {
     this.myForm = new FormGroup({
-      email: new FormControl(null, Validators.email),
-      username: new FormControl(null, Validators.required),
+      emailId: new FormControl(null, Validators.email),
+      userName: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       cnfpass: new FormControl(null, this.passValidator)
     });
