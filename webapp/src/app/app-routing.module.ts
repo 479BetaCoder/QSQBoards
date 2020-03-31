@@ -2,23 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-// import { MainDeskComponent } from './main-desk/main-desk.component';
 import { RegisterComponent } from './register/register.component';
-// import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
-  //{ path: '', redirectTo: 'main', pathMatch: 'full' },
-  // {
-  //   path: 'main', component: MainDeskComponent, children:
-  //     [
-  //       // {path: '', redirectTo: 'login', pathMatch: 'full'},
-  //       { path: 'login', component: LoginComponent },
-  //       { path: 'register', component: RegisterComponent }
-  //     ]
-  // },
-  // {path: 'dash' , component: UserDashboardComponent}
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent }
 ];
 
 @NgModule({

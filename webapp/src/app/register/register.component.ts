@@ -52,11 +52,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this._qsqservice.submitRegister(this.myForm.value)
-    .subscribe(
-      data => this.successMessage = 'Registration Succesfull',
-      error => this.successMessage = 'Error occurred'
-    );
+    if(this.myForm.valid){
+      this._qsqservice.submitRegister(this.myForm.value)
+      .subscribe(
+        data => this.successMessage = 'Registration Succesfull',
+        error => this.successMessage = 'Error occurred'
+      );
+    }
+    
   }
 
   movetologin(){

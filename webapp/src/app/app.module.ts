@@ -16,6 +16,7 @@ import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import {QsqserviceService} from './qsqservice.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LoginComponent } from './login/login.component';
     // LoginComponent,
     RegisterComponent,
     LoginComponent,
+    HomeComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
