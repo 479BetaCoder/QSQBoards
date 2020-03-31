@@ -1,11 +1,9 @@
-'use strict';
-module.exports = function (app) {
-    //Initialize models
-    let userModel = require('./models/user');
-    let taskModel = require('./models/task');
+"use strict";
+module.exports = function(app) {
+  //Initialize models
+  const userModel = require("./models/user");
 
-    //Initialize routes
-    let userRoutes = require('./routes/user-route');
-    let taskRoutes = require('./routes/task-route');
-    userRoutes(app);
+  //Initialize routes
+  const userRoutes = require("./routes/user-route");
+  userRoutes(app);
 };
