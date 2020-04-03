@@ -20,7 +20,24 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 
+export function socialConfigs() {
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider('app -id')
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('475613902037-o57l8kifnrms179mg7r65aur9jfsc58j.apps.googleusercontent.com')
+      }
+    ]
+  );
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -42,11 +59,19 @@ import { FooterComponent } from './components/footer/footer.component';
     MatSnackBarModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule,
   ],
-  providers: [ QsqserviceService],
+  providers: [ QsqserviceService,
+    AuthService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: socialConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
