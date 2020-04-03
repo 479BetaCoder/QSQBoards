@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
       emailId: new FormControl(null, Validators.email),
       userName: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
-      cnfpass: new FormControl(null, this.passValidator)
+      cnfpass: new FormControl(null, this.passValidator),
+      isScrumMaster: new FormControl(null,null)
     });
 
     this.myForm.controls.password.valueChanges
@@ -55,7 +56,9 @@ export class RegisterComponent implements OnInit {
     if(this.myForm.valid){
       this._qsqservice.submitRegister(this.myForm.value)
       .subscribe(
-        data => this.successMessage = 'Registration Succesfull',
+        data => {
+          this._router.navigate(['/login']);
+        },
         error => this.successMessage = 'Error occurred'
       );
     }

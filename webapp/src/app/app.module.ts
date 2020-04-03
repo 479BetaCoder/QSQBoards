@@ -11,6 +11,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import {QsqserviceService} from './services/qsqservice.service';
@@ -40,6 +41,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatInputModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
