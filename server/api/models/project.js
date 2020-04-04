@@ -1,5 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
+const { ObjectId }=mongoose.Schema
 const Schema = mongoose.Schema;
 
 /**
@@ -31,7 +32,18 @@ let projectSchema = new Schema({
     status: {
         type: String,
         default: "New"
-    }
+    },
+    /**
+     * Project owner
+     */
+    owner: {
+        type: ObjectId,
+        ref: "User"
+    },
+    /**
+     * Project Members
+     */
+    members:[{type:ObjectId,ref:"User"}]
 },
 {
     timestamps: true,
