@@ -22,13 +22,18 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
 
 export function socialConfigs() {
   const config = new AuthServiceConfig(
     [
       {
         id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider('app -id')
+        provider: new FacebookLoginProvider('229213258168440')
       },
       {
         id: GoogleLoginProvider.PROVIDER_ID,
@@ -48,6 +53,7 @@ export function socialConfigs() {
     HomeComponent,
     HeaderComponent,
     FooterComponent,
+    NavBarComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -60,12 +66,17 @@ export function socialConfigs() {
     MatButtonModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     SocialLoginModule,
   ],
-  providers: [ QsqserviceService,
+  providers: [
+    QsqserviceService,
     AuthService,
     {
       provide: AuthServiceConfig,
