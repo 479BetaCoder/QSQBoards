@@ -6,7 +6,7 @@
 module.exports = function (app) {
     const projectController = require('../controllers/project-controller');
     // Project Routes for search and create.
-    app.route('/project')
+    app.route('/projects')
         .get(projectController.list)
         .post(projectController.post);
 
