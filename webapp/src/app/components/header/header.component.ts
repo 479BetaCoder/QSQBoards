@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../../auth/authentication.service";
+import {AuthenticationService} from '../../auth/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +7,11 @@ import {AuthenticationService} from "../../auth/authentication.service";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  private profile: any;
+  profile: any;
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.profile = this.authService.userProfile$;
+    this.authService.userProfile$.subscribe(prof =>  this.profile = prof);
   }
 
 }

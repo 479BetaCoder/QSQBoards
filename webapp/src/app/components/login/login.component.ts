@@ -13,7 +13,10 @@ import {AuthenticationService} from '../../auth/authentication.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  reqObj: {
+    emailId: '',
+    userName: ''
+  };
   loginForm: FormGroup;
   constructor(
     private qsqservice: QsqserviceService,
@@ -43,12 +46,28 @@ export class LoginComponent implements OnInit {
     } else if (socialProvider === 'google') {
       socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     }
-    this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
-      console.log(socialProvider, socialusers);
-      console.log(socialusers);
-      this.authService.userProfile$ = socialusers;
-      // this.Savesresponse(socialusers);
-      this._router.navigate(['/home']);
+    this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
+      console.log(socialProvider, socialuser);
+      console.log(socialuser);
+      this.authService.userProfileSubject$.next(socialuser);
+      const reObject = {
+        emailId: socialuser.email,
+        userName: socialuser.firstName + socialuser.lastName,
+        password: '123645789',
+        isScrumMaster: null,
+        image: socialuser.photoUrl
+      };
+      this.qsqservice.submitRegister(reObject)
+        .subscribe(
+          data => {
+            this._router.navigate(['/home']);
+          },
+          error => {
+            if (error.status === 422) {
+              this._router.navigate(['/home']);
+            }
+          }
+        );
     });
   }
 

@@ -24,9 +24,9 @@ import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angular
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 export function socialConfigs() {
   const config = new AuthServiceConfig(
@@ -53,7 +53,7 @@ export function socialConfigs() {
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    NavBarComponent,
+    UserProfileComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],

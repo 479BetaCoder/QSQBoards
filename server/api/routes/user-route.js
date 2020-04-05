@@ -10,6 +10,9 @@ module.exports = function(app) {
   // Route for logging in the registered user
   app.route("/users/login").post(userController.loginUser);
 
+  app.route("/users/:id")
+      .put(userController.updateUser);
+
   // Mock for authenticated routes
   //app.route("/users").get(checkAuth);
 };
