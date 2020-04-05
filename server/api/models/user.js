@@ -13,7 +13,6 @@ const userSchema = new Schema(
     emailId: {
       type: String,
       unique: true,
-      index: true,
       lowercase: true,
       trim: true,
       required: "Email is required"
@@ -25,6 +24,7 @@ const userSchema = new Schema(
     userName: {
       type: String,
       unique: true,
+      index: true,
       trim: true,
       required: "Username is required"
     },
@@ -41,13 +41,6 @@ const userSchema = new Schema(
      */
     image: {
       type: String
-    },
-    /**
-     * isScrumMaster for the user
-     */
-    isScrumMaster: {
-      type: Boolean,
-      default: false
     }
   },
   {

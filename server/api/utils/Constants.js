@@ -8,5 +8,6 @@ module.exports = {
   MONGO_CONFLICT_CODE: 11000,
   JWT_KEY: "secret",
   SERVER_ERR: "OOPS!! Please check your internet connection or Try Again",
-  CLIENT_ERR: "Invalid Request"
+  CLIENT_ERR: "Invalid Request",
+  FORBIDDEN_ERR: "Access Forbidden"
 };

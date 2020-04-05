@@ -80,19 +80,18 @@ exports.loginUser = (request, response) => {
         if (result) {
           const jwtToken = jwt.sign(
             {
-              email: user.emailId,
+              userName: user.userName,
               userId: user._id
             },
             utilConstants.JWT_KEY,
             {
-              expiresIn: "1h"
+              expiresIn: "2h"
             }
           );
           return response.status(200).json({
             userName: user.userName,
             message: "Login Successful",
-            token: jwtToken,
-            isScrumMaster: user.isScrumMaster
+            token: jwtToken
           });
         }
 

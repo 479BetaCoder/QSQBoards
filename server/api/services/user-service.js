@@ -18,8 +18,7 @@ exports.createUser = function(newUser) {
   const user = new User({
     emailId: newUser.emailId,
     userName: newUser.userName,
-    password: hash,
-    isScrumMaster: newUser.isScrumMaster || false
+    password: hash
   });
   const promise = user.save();
   return promise;

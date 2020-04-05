@@ -2,18 +2,20 @@
  * Service for project operations.
  */
 
-'use strict';
-const mongoose = require('mongoose'),
-    Project = mongoose.model('project');
-
+"use strict";
+const mongoose = require("mongoose"),
+  Project = mongoose.model("project"),
+  utilConstants = require("../utils/Constants");
 /**
  * Returns an array of project object matching the search parameters.
  *
  * @param {Object} params {Search parameters}
  */
-exports.search = function (params) {
-    const promise = Project.find(params).exec();
-    return promise;
+exports.search = function(userName) {
+  const promise = Project.find({
+    $or: [{ owner: userName }, { members: userName }]
+  }).exec();
+  return promise;
 };
 
 /**
@@ -21,10 +23,10 @@ exports.search = function (params) {
  *
  * @param {Object} project {project object}
  */
-exports.save = function (project) {
-    const newProject = new Project(project);
-    const promise = newProject.save();
-    return promise;
+exports.save = function(project) {
+  const newProject = new Project(project);
+  const promise = newProject.save();
+  return promise;
 };
 
 /**
@@ -32,9 +34,9 @@ exports.save = function (project) {
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.get = function (projectId) {
-    const promise = Project.findById(projectId).exec();
-    return promise
+exports.get = function(projectId) {
+  const promise = Project.findById(projectId).exec();
+  return promise;
 };
 
 /**
@@ -42,10 +44,19 @@ exports.get = function (projectId) {
  *
  * @param {Object} project {project object}
  */
-exports.update = function (project) {
-    project.modifiedDate = new Date();
-    const promise = Project.findOneAndUpdate({_id: project._id}, project).exec();
-    return promise;
+exports.update = async function(project, userName) {
+  try {
+    const validProject = await Project.findOne({ _id: project._id });
+
+    if (validProject && validProject.owner === userName) {
+      project.modifiedDate = new Date();
+      return validProject.update(project);
+    } else {
+      return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+    }
+  } catch (err) {
+    return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+  }
 };
 
 /**
@@ -53,7 +64,15 @@ exports.update = function (project) {
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.delete = function (projectId) {
-    const promise = Project.find({_id: projectId}).remove({_id: projectId}).exec();
-    return promise;
+exports.delete = async function(projectId, userName) {
+  try {
+    const validProject = await Project.findOne({ _id: projectId });
+    if (validProject && validProject.owner === userName) {
+      return validProject.remove();
+    } else {
+      return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+    }
+  } catch (err) {
+    return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+  }
 };

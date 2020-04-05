@@ -1,53 +1,54 @@
-'use strict';
-const mongoose = require('mongoose');
-const { ObjectId }=mongoose.Schema
+"use strict";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
  * Mongoose schema for project object.
  */
-let projectSchema = new Schema({
+let projectSchema = new Schema(
+  {
     /**
      * Title of the Project  item.
      */
     title: {
-        type: String,
-        required: "title is required"
+      type: String,
+      required: "title is required"
     },
     /**
      * Project item description.
      */
     description: {
-        type: String
+      type: String
     },
     /**
-    * Project item comments.
-    */
+     * Project item comments.
+     */
     comments: {
-        type: String
+      type: String
     },
     /**
-    * Project item status.
-    */
+     * Project item status.
+     */
     status: {
-        type: String,
-        default: "New"
+      type: String,
+      default: "New"
     },
     /**
      * Project owner
      */
     owner: {
-        type: ObjectId,
-        ref: "User"
+      type: String,
+      ref: "Users"
     },
     /**
      * Project Members
      */
-    members:[{type:ObjectId,ref:"User"}]
-},
-{
+    members: [{ type: String, ref: "Users" }]
+  },
+  {
     timestamps: true,
     versionKey: false
-});
+  }
+);
 
-module.exports = mongoose.model('project', projectSchema);
+module.exports = mongoose.model("project", projectSchema);
