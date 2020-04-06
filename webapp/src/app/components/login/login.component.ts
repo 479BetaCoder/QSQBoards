@@ -85,6 +85,6 @@ export class LoginComponent implements OnInit {
   }
 
   movetoregister() {
-    this._router.navigateByUrl('', { relativeTo: this._activatedRoute });
+    this._router.navigateByUrl('/register', { relativeTo: this._activatedRoute });
   }
 }

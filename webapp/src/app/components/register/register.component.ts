@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  movetologin(){
-    this._router.navigate(['../login'],{relativeTo: this._activateRoute});
+  movetologin() {
+    this._router.navigateByUrl('',{relativeTo: this._activateRoute});
   }
 }

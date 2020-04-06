@@ -30,6 +30,10 @@ import {baseURL} from './shared/baseurl';
 import socialConfigs from './shared/socialConfigs';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule, MatNavList} from "@angular/material/list";
+import {NbLayoutModule, NbSidebarModule, NbThemeModule, NbThemeService} from "@nebular/theme";
 
 
 @NgModule({
@@ -42,6 +46,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     HeaderComponent,
     FooterComponent,
     UserProfileComponent,
+    SideNavComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -62,7 +67,12 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     ReactiveFormsModule,
     HttpClientModule,
     SocialLoginModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatListModule,
+    NbThemeModule.forRoot({name: 'default'}),
+    NbLayoutModule,
+    NbSidebarModule.forRoot()
   ],
   providers: [
     QsqserviceService,
