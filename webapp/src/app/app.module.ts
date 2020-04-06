@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 // import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 // import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { AppRoutingModule } from './/app-routing.module';
 // import { MainDeskComponent } from './main-desk/main-desk.component';
 
 import {MatInputModule} from '@angular/material/input';
@@ -27,22 +26,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import {baseURL} from './shared/baseurl';
+import socialConfigs from './shared/socialConfigs';
+import {AppRoutingModule} from './app-routing/app-routing.module';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
-export function socialConfigs() {
-  const config = new AuthServiceConfig(
-    [
-      {
-        id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider('229213258168440')
-      },
-      {
-        id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider('475613902037-o57l8kifnrms179mg7r65aur9jfsc58j.apps.googleusercontent.com')
-      }
-    ]
-  );
-  return config;
-}
 
 @NgModule({
   declarations: [
@@ -74,6 +62,7 @@ export function socialConfigs() {
     ReactiveFormsModule,
     HttpClientModule,
     SocialLoginModule,
+    FlexLayoutModule
   ],
   providers: [
     QsqserviceService,
@@ -81,7 +70,8 @@ export function socialConfigs() {
     {
       provide: AuthServiceConfig,
       useFactory: socialConfigs
-    }
+    },
+    { provide: 'BaseURL', useValue: baseURL }
   ],
   bootstrap: [AppComponent]
 })

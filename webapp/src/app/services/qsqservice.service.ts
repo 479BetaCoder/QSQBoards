@@ -1,22 +1,47 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {baseURL} from '../shared/baseurl';
+import {Observable, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QsqserviceService {
 
-  constructor(private _http:HttpClient) { }
+  // tslint:disable-next-line:variable-name
+  constructor(private _http: HttpClient) { }
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  submitRegister(body:any){
-    return this._http.post('http://localhost:3000/users/signup',body,{
-      observe:'body'
-    })
+  submitRegister(body: any) {
+    return this._http.post( baseURL + '/users/signup', body, {
+      observe: 'body'
+    });
   }
-   
-  login(body:any){
-    return this._http.post('http://localhost:3000/users/login', body,{
-      observe:'body'
+
+  login(body: any) {
+    return this._http.post(baseURL + '/users/login', body, {
+      observe: 'body'
    });
+  }
+
+  updateUser(id, updateUser): Observable<any> {
+    const url = `${baseURL}/users/${id}`;
+    return this._http.put(url, { headers: this.headers }).pipe(
+      catchError(this.errorHandling)
+    );
+  }
+  // Error handling
+  errorHandling(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }

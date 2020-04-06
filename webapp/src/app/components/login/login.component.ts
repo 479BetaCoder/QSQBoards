@@ -13,10 +13,7 @@ import {AuthenticationService} from '../../auth/authentication.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  reqObj: {
-    emailId: '',
-    userName: ''
-  };
+
   loginForm: FormGroup;
   constructor(
     private qsqservice: QsqserviceService,
@@ -88,6 +85,6 @@ export class LoginComponent implements OnInit {
   }
 
   movetoregister() {
-    this._router.navigate(['../register'], { relativeTo: this._activatedRoute });
+    this._router.navigateByUrl('', { relativeTo: this._activatedRoute });
   }
 }
