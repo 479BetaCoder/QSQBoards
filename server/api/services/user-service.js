@@ -36,7 +36,7 @@ exports.updateUser = function(updatedUser) {
       query: {id : updatedUser.id},
       update: {userName: updatedUser.userName}
   });*/
-  const promise = User.findOneAndUpdate(updatedUser.id,
+  const promise = User.findOneAndUpdate(updatedUser.username,
       {
         $set: {
         password: updatedUser.password

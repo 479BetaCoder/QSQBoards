@@ -12,13 +12,15 @@ import {AuthenticationService} from '../../auth/authentication.service';
 export class UserProfileComponent implements OnInit {
   socialImage: any;
   updateForm: FormGroup;
-  constructor(public fb: FormBuilder,
-              private actRoute: ActivatedRoute,
-              private qsqService: QsqserviceService,
-              public authService: AuthenticationService,
-              private router: Router) {  }
+  constructor(
+    public fb: FormBuilder,
+    private actRoute: ActivatedRoute,
+    private qsqService: QsqserviceService,
+    public authService: AuthenticationService,
+    private router: Router) {  }
+
   ngOnInit() {
-    const id = this.actRoute.snapshot.paramMap.get('id');
+    // const id = this.actRoute.snapshot.paramMap.get('id');
     this.updateForm = this.fb.group({
       userName: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -29,7 +31,7 @@ export class UserProfileComponent implements OnInit {
     this.setForm();
     this.updateForm.controls.password.valueChanges
       .subscribe(
-        x => this.updateForm.controls.cnfpass.updateValueAndValidity()
+        x => this.updateForm.controls.conPassword.updateValueAndValidity()
       );
   }
 
@@ -54,8 +56,8 @@ export class UserProfileComponent implements OnInit {
       return false;
     } else {
       if (window.confirm('Are you sure?')) {
-        const id = this.actRoute.snapshot.paramMap.get('id');
-        this.qsqService.updateUser(id, this.updateForm.value)
+        // const userName = this.actRoute.snapshot.paramMap.get('userName');
+        this.qsqService.updateUser(this.updateForm.value.userName, this.updateForm.value)
           .subscribe(res => {
             this.router.navigateByUrl('/home');
             console.log('Content updated successfully!');
