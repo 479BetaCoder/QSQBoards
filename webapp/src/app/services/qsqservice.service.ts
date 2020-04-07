@@ -25,8 +25,8 @@ export class QsqserviceService {
    });
   }
 
-  updateUser(userName, updateUser): Observable<any> {
-    const url = `${baseURL}/users/${userName}`;
+  updateUser(updateUser): Observable<any> {
+    const url = `${baseURL}/users/`;
     return this._http.put(url, updateUser, { headers: this.headers }).pipe(
       catchError(this.errorHandling)
     );

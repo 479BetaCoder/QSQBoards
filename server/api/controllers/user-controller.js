@@ -118,9 +118,7 @@ exports.loginUser = (request, response) => {
  * @param response
  */
 exports.updateUser = (request, response) => {
-  const userName = request.params.userName;
   const updatedUser = Object.assign({}, request.body);
-  updatedUser.userName = userName;
   const resolve = () => {
     response.status(200).json();
   };

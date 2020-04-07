@@ -57,7 +57,7 @@ export class UserProfileComponent implements OnInit {
     } else {
       if (window.confirm('Are you sure?')) {
         // const userName = this.actRoute.snapshot.paramMap.get('userName');
-        this.qsqService.updateUser(this.updateForm.value.userName, this.updateForm.value)
+        this.qsqService.updateUser(this.updateForm.value)
           .subscribe(res => {
             this.router.navigateByUrl('/home');
             console.log('Content updated successfully!');
