@@ -110,6 +110,30 @@ exports.loginUser = (request, response) => {
   }
 };
 
+
+/**
+ * Returns todo response.
+ *
+ * @param request
+ * @param response
+ */
+exports.updateUser = (request, response) => {
+  const userName = request.params.userName;
+  const updatedUser = Object.assign({}, request.body);
+  updatedUser.userName = userName;
+  const resolve = () => {
+    response.status(200).json();
+  };
+  try {
+    userService
+      .updateUser(updatedUser)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
+  }
+};
+
 /**
  * Throws error if error object is present.
  *

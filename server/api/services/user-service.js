@@ -29,3 +29,14 @@ exports.loginUser = function(userObj) {
   const promise = User.findOne({ userName: userObj.userName }).exec();
   return promise;
 };
+
+exports.updateUser = function(updatedUser) {
+
+  const promise = User.findOneAndUpdate(updatedUser.username,
+      {
+        $set: {
+        password: updatedUser.password
+        }
+      });
+  return promise;
+};
