@@ -32,10 +32,6 @@ exports.loginUser = function(userObj) {
 
 exports.updateUser = function(updatedUser) {
 
-  /*const promise = User.findAndModify({
-      query: {id : updatedUser.id},
-      update: {userName: updatedUser.userName}
-  });*/
   const promise = User.findOneAndUpdate(updatedUser.username,
       {
         $set: {

@@ -5,7 +5,7 @@
             <div>
                 <mat-form-field >
                     <input type="text" formControlName="emailId" matInput placeholder="Email" id="emailId">
-                </mat-form-field>                
+                </mat-form-field>
                 <span *ngIf="isValid('emailId')">Entered email is invalid</span>
             </div>
             <div>
@@ -26,23 +26,20 @@
                 </mat-form-field>
                 <span *ngIf="isValid('cnfpass')">Password and confirm password should match</span>
             </div>
-            <div class="scrummaster">
-                    <mat-checkbox formControlName="isScrumMaster">I am a Scrum Master!!</mat-checkbox>
-                
-            </div>
-            
+
+
             <div>
                 <button class="form-btn" (click)="register()">Register</button>
-                
+
             </div>
 
 
-            <div>                
+            <div>
                 <a class="alreadyMember" (click)="movetologin()">Already a member? click here to login!</a>
             </div>
         </form>
     </div>
-<!-- 
+<!--
     <div>
         <div>
             <button class="form-btn-hollow" (click)="movetologin()">Login</button>

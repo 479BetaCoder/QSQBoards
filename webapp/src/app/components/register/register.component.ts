@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit {
       userName: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       cnfpass: new FormControl(null, this.passValidator),
-      isScrumMaster: new FormControl(null,null)
     });
 
     this.myForm.controls.password.valueChanges

@@ -122,7 +122,7 @@ exports.updateUser = (request, response) => {
   const updatedUser = Object.assign({}, request.body);
   updatedUser.userName = userName;
   const resolve = () => {
-    response.status(201).json();
+    response.status(200).json();
   };
   try {
     userService
