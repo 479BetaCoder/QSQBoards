@@ -33,8 +33,7 @@ const userSchema = new Schema(
      * password of the user.
      */
     password: {
-      type: String,
-      required: "Password is required"
+      type: String
     },
     /**
      * image of the user.
