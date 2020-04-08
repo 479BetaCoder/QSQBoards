@@ -21,18 +21,6 @@ let projectSchema = new Schema(
       type: String,
     },
     /**
-     * Project item comments.
-     */
-    comments: [
-      {
-        text: String,
-        postedBy: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
-    /**
      * Project item status.
      */
     status: {

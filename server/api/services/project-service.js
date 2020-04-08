@@ -5,6 +5,7 @@
 "use strict";
 const mongoose = require("mongoose"),
   Project = mongoose.model("Projects"),
+  UserStory = mongoose.model("UserStories"),
   utilConstants = require("../utils/Constants");
 /**
  * Returns an array of project object matching the search parameters.
@@ -68,6 +69,8 @@ exports.delete = async function (projectId, userName) {
   try {
     const validProject = await Project.findOne({ _id: projectId });
     if (validProject && validProject.owner === userName) {
+      // Remove the associated userStories
+      UserStory.deleteMany({ projectId: projectId }).exec();
       return validProject.remove();
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));

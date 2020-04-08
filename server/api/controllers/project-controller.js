@@ -5,11 +5,11 @@ const projectService = require("../services/project-service"),
   log4js = require("log4js");
 log4js.configure({
   appenders: {
-    everything: { type: "file", filename: "logs/qsqBoard.log" }
+    everything: { type: "file", filename: "logs/qsqBoard.log" },
   },
   categories: {
-    default: { appenders: ["everything"], level: "debug" }
-  }
+    default: { appenders: ["everything"], level: "debug" },
+  },
 });
 const logger = log4js.getLogger("qsqBoard");
 
@@ -20,8 +20,8 @@ const logger = log4js.getLogger("qsqBoard");
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.list = function(request, response) {
-  const resolve = projects => {
+exports.list = function (request, response) {
+  const resolve = (projects) => {
     response.status(200);
     response.json(projects);
   };
@@ -39,7 +39,7 @@ exports.list = function(request, response) {
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.post = function(request, response) {
+exports.post = function (request, response) {
   try {
     const newProject = Object.assign({}, request.body);
     newProject.owner = request.userData.userName;
@@ -61,10 +61,14 @@ exports.post = function(request, response) {
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.get = function(request, response) {
-  const resolve = project => {
-    response.status(200);
-    response.json(project);
+exports.get = function (request, response) {
+  const resolve = (project) => {
+    if (project) {
+      response.status(200);
+      response.json(project);
+    } else {
+      response.status(404).json();
+    }
   };
   projectService
     .get(request.params.projectId)
@@ -78,7 +82,7 @@ exports.get = function(request, response) {
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.put = function(request, response) {
+exports.put = function (request, response) {
   const project = Object.assign({}, request.body);
   const resolve = () => {
     response.status(200).json();
@@ -96,7 +100,7 @@ exports.put = function(request, response) {
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.delete = function(request, response) {
+exports.delete = function (request, response) {
   const resolve = () => {
     response.status(200).json();
   };
@@ -111,23 +115,23 @@ exports.delete = function(request, response) {
  * @param {Response} response The response object
  * @return {Function} The error handler function.
  */
-let renderErrorResponse = response => {
-  const errorCallback = error => {
+let renderErrorResponse = (response) => {
+  const errorCallback = (error) => {
     if (error && error.message === utilConstants.FORBIDDEN_ERR) {
       response.status(403).json({
-        message: utilConstants.FORBIDDEN_ERR
+        message: utilConstants.FORBIDDEN_ERR,
       });
     } else if (error && error.name === utilConstants.VALIDATION_ERR) {
       response.status(400);
       logger.warn(`Client error: ${error.message}`);
       response.json({
-        message: utilConstants.CLIENT_ERR
+        message: utilConstants.CLIENT_ERR,
       });
     } else {
       response.status(500);
       logger.fatal(`Server error: ${error.message}`);
       response.json({
-        message: utilConstants.SERVER_ERR
+        message: utilConstants.SERVER_ERR,
       });
     }
   };

@@ -36,17 +36,60 @@ exports.create = function (request, response) {
             .save(newUserStory)
             .then(resolve)
             .catch(renderErrorResponse(response));
+        } else {
+          response.status(404).json({
+            message: "Project not found",
+          });
         }
       })
       .catch((err) => {
         logger.warn(err.message);
-        response.status(400).json({
+        response.status(404).json({
           message: "Project not found",
         });
       });
   } catch (err) {
     renderErrorResponse(err);
   }
+};
+
+/**
+ * Returns a list of userStories in JSON based on the
+ * projectId parameter
+ *
+ * @param {request} {HTTP request object}
+ * @param {response} {HTTP response object}
+ */
+exports.list = function (request, response) {
+  const resolve = (userStories) => {
+    if (userStories) {
+      response.status(200);
+      response.json(userStories);
+    } else {
+      response.status(404).json();
+    }
+  };
+  const projectId = request.params.projectId;
+  userStoryService
+    .getStories(projectId)
+    .then(resolve)
+    .catch(renderErrorResponse(response));
+};
+
+/**
+ * Deletes a user Story object.
+ *
+ * @param {request} {HTTP request object}
+ * @param {response} {HTTP response object}
+ */
+exports.delete = function (request, response) {
+  const resolve = () => {
+    response.status(200).json();
+  };
+  userStoryService
+    .delete(request.params.storyId)
+    .then(resolve)
+    .catch(renderErrorResponse(response));
 };
 
 /**

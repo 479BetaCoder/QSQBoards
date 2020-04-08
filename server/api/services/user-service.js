@@ -25,7 +25,11 @@ exports.createUser = function (newUser) {
 };
 
 exports.loginUser = function (userObj) {
-  const promise = User.findOne({ userName: userObj.userName }).exec();
+  const criteria =
+    userObj.userName.indexOf("@") === -1
+      ? { userName: userObj.userName }
+      : { emailId: userObj.userName };
+  const promise = User.findOne(criteria).exec();
   return promise;
 };
 
@@ -42,7 +46,6 @@ exports.isUserUnique = function (userObj) {
 };
 
 exports.updateUser = function (updatedUser, currentUser) {
-  console.log(JSON.stringify(updatedUser));
   const hashPwd = bcrypt.hashSync(
     updatedUser.password,
     utilConstants.SALT_ROUNDS

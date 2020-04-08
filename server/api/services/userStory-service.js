@@ -9,9 +9,9 @@ const mongoose = require("mongoose"),
   utilConstants = require("../utils/Constants");
 
 /**
- * Saves and returns the new project object.
+ * Saves and returns the new userStory object.
  *
- * @param {Object} project {project object}
+ * @param {Object} userStory {userStory object}
  */
 exports.save = function (userStory) {
   const newUserStory = new UserStory(userStory);
@@ -19,6 +19,9 @@ exports.save = function (userStory) {
   return promise;
 };
 
+/**
+ * Checks for project Validity
+ */
 exports.isProjectValid = function (projectId) {
   try {
     const promise = Project.find({
@@ -31,12 +34,12 @@ exports.isProjectValid = function (projectId) {
 };
 
 /**
- * Returns the project object matching the id.
+ * Returns the list of userStories for the projectId.
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.get = function (projectId) {
-  const promise = Project.findById(projectId).exec();
+exports.getStories = function (projectId) {
+  const promise = UserStory.find({ projectId: projectId }).exec();
   return promise;
 };
 
@@ -61,15 +64,15 @@ exports.update = async function (project, userName) {
 };
 
 /**
- * Deletes the project object matching the id.
+ * Deletes the userStory object matching the id.
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.delete = async function (projectId, userName) {
+exports.delete = async function (storyId) {
   try {
-    const validProject = await Project.findOne({ _id: projectId });
-    if (validProject && validProject.owner === userName) {
-      return validProject.remove();
+    const validUserStory = await UserStory.findOne({ _id: storyId });
+    if (validUserStory) {
+      return validUserStory.remove();
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
     }
