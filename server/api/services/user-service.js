@@ -28,3 +28,15 @@ exports.loginUser = function(userObj) {
   const promise = User.findOne({ userName: userObj.userName }).exec();
   return promise;
 };
+
+exports.updateUser = function(updatedUser) {
+  const hashPwd = bcrypt.hashSync(updatedUser.password, utilConstants.SALT_ROUNDS);
+  const promise = User.findOneAndUpdate(updatedUser.userName,
+      {
+        $set: {
+        password: hashPwd,
+        image: updatedUser.image
+        }
+      });
+  return promise;
+};

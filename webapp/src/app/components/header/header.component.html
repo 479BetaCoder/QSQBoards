@@ -1,0 +1,13 @@
+
+<mat-toolbar color="primary">
+  <button mat-button [matMenuTriggerFor]="menu" class="alignmentMenu">
+    <img *ngIf="profile"
+      [src]="profile.photoUrl"
+      alt="Profile picture"
+      class="avatar"/>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/profile"><i class="fa fa-user-circle-o fa-lg"> Profile</i></button>
+    <button mat-menu-item  routerLink="" routerLinkActive="active"><i class="fa fa-sign-out fa-lg"> Logout</i></button>
+  </mat-menu>
+</mat-toolbar>

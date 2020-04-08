@@ -1,5 +1,5 @@
 "use strict";
-module.exports = function(app) {
+module.exports = function (app) {
   const userController = require("../controllers/user-controller");
   // Route for registering a user
   app
@@ -8,4 +8,6 @@ module.exports = function(app) {
 
   // Route for logging in the registered user
   app.route("/users/login").post(userController.loginUser);
+
+  app.route("/users").put(userController.updateUser);
 };
