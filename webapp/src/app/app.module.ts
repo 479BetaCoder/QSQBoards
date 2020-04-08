@@ -29,11 +29,11 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import {baseURL} from './shared/baseurl';
 import socialConfigs from './shared/socialConfigs';
 import {AppRoutingModule} from './app-routing/app-routing.module';
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {FlexLayoutModule} from '@angular/flex-layout';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule, MatNavList} from "@angular/material/list";
-import {NbLayoutModule, NbSidebarModule, NbThemeModule, NbThemeService} from "@nebular/theme";
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule, MatNavList} from '@angular/material/list';
+import { BoardComponent } from './components/board/board.component';
 
 
 @NgModule({
@@ -47,6 +47,7 @@ import {NbLayoutModule, NbSidebarModule, NbThemeModule, NbThemeService} from "@n
     FooterComponent,
     UserProfileComponent,
     SideNavComponent,
+    BoardComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -69,10 +70,7 @@ import {NbLayoutModule, NbSidebarModule, NbThemeModule, NbThemeService} from "@n
     SocialLoginModule,
     FlexLayoutModule,
     MatSidenavModule,
-    MatListModule,
-    NbThemeModule.forRoot({name: 'default'}),
-    NbLayoutModule,
-    NbSidebarModule.forRoot()
+    MatListModule
   ],
   providers: [
     QsqserviceService,

@@ -31,11 +31,12 @@ exports.loginUser = function(userObj) {
 };
 
 exports.updateUser = function(updatedUser) {
-
-  const promise = User.findOneAndUpdate(updatedUser.username,
+  const hashPwd = bcrypt.hashSync(updatedUser.password, utilConstants.SALT_ROUNDS);
+  const promise = User.findOneAndUpdate(updatedUser.userName,
       {
         $set: {
-        password: updatedUser.password
+        password: hashPwd,
+        image: updatedUser.image
         }
       });
   return promise;
