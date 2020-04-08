@@ -12,10 +12,8 @@ const userSchema = new Schema(
      */
     emailId: {
       type: String,
-      unique: true,
-      lowercase: true,
       trim: true,
-      required: "Email is required"
+      required: "Email is required",
     },
 
     /**
@@ -23,28 +21,27 @@ const userSchema = new Schema(
      */
     userName: {
       type: String,
-      unique: true,
       index: true,
       trim: true,
-      required: "Username is required"
+      required: "Username is required",
     },
 
     /**
      * password of the user.
      */
     password: {
-      type: String
+      type: String,
     },
     /**
      * image of the user.
      */
     image: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
   }
 );
 
