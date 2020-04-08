@@ -1,6 +1,6 @@
 "use strict";
 //import task service.
-const projectService = require("../services/project-service"),
+const userStoryService = require("../services/userStory-service"),
   utilConstants = require("../utils/Constants"),
   log4js = require("log4js");
 log4js.configure({
@@ -14,88 +14,70 @@ log4js.configure({
 const logger = log4js.getLogger("qsqBoard");
 
 /**
- * Returns a list of projects in JSON based on the
- * search parameters.
+ * Creates a new UserStory with the request JSON and
+ * returns success response.
  *
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.list = function (request, response) {
-  const resolve = (projects) => {
-    response.status(200);
-    response.json(projects);
-  };
-  const loggedInUser = request.userData.userName;
-  projectService
-    .search(loggedInUser)
-    .then(resolve)
-    .catch(renderErrorResponse(response));
-};
-
-/**
- * Creates a new project with the request JSON and
- * returns project JSON object.
- *
- * @param {request} {HTTP request object}
- * @param {response} {HTTP response object}
- */
-exports.post = function (request, response) {
+exports.create = function (request, response) {
   try {
-    const newProject = Object.assign({}, request.body);
-    newProject.owner = request.userData.userName;
+    const newUserStory = Object.assign({}, request.body);
     const resolve = () => {
       response.status(201).json();
     };
-    projectService
-      .save(newProject)
-      .then(resolve)
-      .catch(renderErrorResponse(response));
+    // check if project exists
+    userStoryService
+      .isProjectValid(request.params.projectId)
+      .then((project) => {
+        if (project.length) {
+          newUserStory.projectId = request.params.projectId;
+          userStoryService
+            .save(newUserStory)
+            .then(resolve)
+            .catch(renderErrorResponse(response));
+        } else {
+          response.status(404).json({
+            message: "Project not found",
+          });
+        }
+      })
+      .catch((err) => {
+        logger.warn(err.message);
+        response.status(404).json({
+          message: "Project not found",
+        });
+      });
   } catch (err) {
     renderErrorResponse(err);
   }
 };
 
 /**
- * Returns a project object in JSON.
+ * Returns a list of userStories in JSON based on the
+ * projectId parameter
  *
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
  */
-exports.get = function (request, response) {
-  const resolve = (project) => {
-    if (project) {
+exports.list = function (request, response) {
+  const resolve = (userStories) => {
+    if (userStories) {
       response.status(200);
-      response.json(project);
+      response.json(userStories);
     } else {
       response.status(404).json();
     }
   };
-  projectService
-    .get(request.params.projectId)
+  const projectId = request.params.projectId;
+  userStoryService
+    .getStories(projectId)
     .then(resolve)
     .catch(renderErrorResponse(response));
 };
 
 /**
- * Updates and returns a project object in JSON.
- *
- * @param {request} {HTTP request object}
- * @param {response} {HTTP response object}
- */
-exports.put = function (request, response) {
-  const project = Object.assign({}, request.body);
-  const resolve = () => {
-    response.status(200).json();
-  };
-  project._id = request.params.projectId;
-  projectService
-    .update(project, request.userData.userName)
-    .then(resolve)
-    .catch(renderErrorResponse(response));
-};
-
-/**
- * Deletes a project object.
+ * Deletes a user Story object.
  *
  * @param {request} {HTTP request object}
  * @param {response} {HTTP response object}
@@ -104,11 +86,12 @@ exports.delete = function (request, response) {
   const resolve = () => {
     response.status(200).json();
   };
-  projectService
-    .delete(request.params.projectId, request.userData.userName)
+  userStoryService
+    .delete(request.params.storyId)
     .then(resolve)
     .catch(renderErrorResponse(response));
 };
+
 /**
  * Throws error if error object is present.
  *

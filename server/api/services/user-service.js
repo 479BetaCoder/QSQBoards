@@ -13,31 +13,49 @@ const mongoose = require("mongoose"),
  *
  * @param {Object} newUser {user object}
  */
-exports.createUser = function(newUser) {
+exports.createUser = function (newUser) {
   const hash = bcrypt.hashSync(newUser.password, utilConstants.SALT_ROUNDS);
   const user = new User({
     emailId: newUser.emailId,
     userName: newUser.userName,
     password: hash,
-    isScrumMaster: newUser.isScrumMaster || false
   });
   const promise = user.save();
   return promise;
 };
 
-exports.loginUser = function(userObj) {
-  const promise = User.findOne({ userName: userObj.userName }).exec();
+exports.loginUser = function (userObj) {
+  const criteria =
+    userObj.userName.indexOf("@") === -1
+      ? { userName: userObj.userName }
+      : { emailId: userObj.userName };
+  const promise = User.findOne(criteria).exec();
   return promise;
 };
 
-exports.updateUser = function(updatedUser) {
-  const hashPwd = bcrypt.hashSync(updatedUser.password, utilConstants.SALT_ROUNDS);
-  const promise = User.findOneAndUpdate(updatedUser.userName,
-      {
-        $set: {
-        password: hashPwd,
-        image: updatedUser.image
-        }
-      });
+exports.getUserNames = function () {
+  const promise = User.find({}, { userName: 1, image: 1, _id: 0 });
+  return promise;
+};
+
+exports.isUserUnique = function (userObj) {
+  const promise = User.find({
+    $or: [{ userName: userObj.userName }, { emailId: userObj.emailId }],
+  }).exec();
+  return promise;
+};
+
+exports.updateUser = function (updatedUser, currentUser) {
+  const hashPwd = bcrypt.hashSync(
+    updatedUser.password,
+    utilConstants.SALT_ROUNDS
+  );
+
+  const promise = User.findOneAndUpdate(currentUser, {
+    $set: {
+      password: hashPwd,
+      image: updatedUser.image,
+    },
+  });
   return promise;
 };

@@ -1,42 +1,45 @@
 /**
- * Service for project operations.
+ * Service for userStory operations.
  */
 
 "use strict";
 const mongoose = require("mongoose"),
-  Project = mongoose.model("Projects"),
   UserStory = mongoose.model("UserStories"),
+  Project = mongoose.model("Projects"),
   utilConstants = require("../utils/Constants");
+
 /**
- * Returns an array of project object matching the search parameters.
+ * Saves and returns the new userStory object.
  *
- * @param {Object} params {Search parameters}
+ * @param {Object} userStory {userStory object}
  */
-exports.search = function (userName) {
-  const promise = Project.find({
-    $or: [{ owner: userName }, { members: userName }],
-  }).exec();
+exports.save = function (userStory) {
+  const newUserStory = new UserStory(userStory);
+  const promise = newUserStory.save();
   return promise;
 };
 
 /**
- * Saves and returns the new project object.
- *
- * @param {Object} project {project object}
+ * Checks for project Validity
  */
-exports.save = function (project) {
-  const newProject = new Project(project);
-  const promise = newProject.save();
-  return promise;
+exports.isProjectValid = function (projectId) {
+  try {
+    const promise = Project.find({
+      _id: projectId,
+    }).exec();
+    return promise;
+  } catch (err) {
+    return Promise.reject(new Error(err));
+  }
 };
 
 /**
- * Returns the project object matching the id.
+ * Returns the list of userStories for the projectId.
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.get = function (projectId) {
-  const promise = Project.findById(projectId).exec();
+exports.getStories = function (projectId) {
+  const promise = UserStory.find({ projectId: projectId }).exec();
   return promise;
 };
 
@@ -61,17 +64,15 @@ exports.update = async function (project, userName) {
 };
 
 /**
- * Deletes the project object matching the id.
+ * Deletes the userStory object matching the id.
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.delete = async function (projectId, userName) {
+exports.delete = async function (storyId) {
   try {
-    const validProject = await Project.findOne({ _id: projectId });
-    if (validProject && validProject.owner === userName) {
-      // Remove the associated userStories
-      UserStory.deleteMany({ projectId: projectId }).exec();
-      return validProject.remove();
+    const validUserStory = await UserStory.findOne({ _id: storyId });
+    if (validUserStory) {
+      return validUserStory.remove();
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
     }
