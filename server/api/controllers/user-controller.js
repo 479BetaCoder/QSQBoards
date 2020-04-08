@@ -41,8 +41,8 @@ exports.createUser = (request, response) => {
     // Validate if user already exists
     userService
       .isUserUnique(request.body)
-      .then((res) => {
-        if (res.length) {
+      .then((user) => {
+        if (user.length) {
           response.status(422);
           response.json({
             message: utilConstants.UNIQUE_EMAIL_USER_ERR,

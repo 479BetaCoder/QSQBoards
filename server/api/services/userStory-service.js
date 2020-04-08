@@ -1,32 +1,33 @@
 /**
- * Service for project operations.
+ * Service for userStory operations.
  */
 
 "use strict";
 const mongoose = require("mongoose"),
+  UserStory = mongoose.model("UserStories"),
   Project = mongoose.model("Projects"),
   utilConstants = require("../utils/Constants");
-/**
- * Returns an array of project object matching the search parameters.
- *
- * @param {Object} params {Search parameters}
- */
-exports.search = function (userName) {
-  const promise = Project.find({
-    $or: [{ owner: userName }, { members: userName }],
-  }).exec();
-  return promise;
-};
 
 /**
  * Saves and returns the new project object.
  *
  * @param {Object} project {project object}
  */
-exports.save = function (project) {
-  const newProject = new Project(project);
-  const promise = newProject.save();
+exports.save = function (userStory) {
+  const newUserStory = new UserStory(userStory);
+  const promise = newUserStory.save();
   return promise;
+};
+
+exports.isProjectValid = function (projectId) {
+  try {
+    const promise = Project.find({
+      _id: projectId,
+    }).exec();
+    return promise;
+  } catch (err) {
+    return Promise.reject(new Error(err));
+  }
 };
 
 /**

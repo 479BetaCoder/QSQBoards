@@ -5,23 +5,30 @@ const Schema = mongoose.Schema;
 /**
  * Mongoose schema for userStory object.
  */
-let taskSchema = new Schema(
+let userStorySchema = new Schema(
   {
     /**
-     * Title of the tasks.
+     * Title of the user story.
      */
     title: {
       type: String,
       required: "title is required",
     },
     /**
-     * Task description.
+     * User Story description.
      */
     description: {
       type: String,
     },
     /**
-     * Task comments.
+     * ProjectId of the user story
+     */
+    projectId: {
+      type: String,
+      required: "projectId is required",
+    },
+    /**
+     * User Story comments.
      */
     comments: [
       {
@@ -32,27 +39,38 @@ let taskSchema = new Schema(
         },
       },
     ],
+
     /**
-     * Task status.
+     * UserStory status.
      */
     status: {
       type: String,
       default: "New",
     },
+
     /**
-     * Priority for the tasks
+     * Story Points for the userStory
+     */
+    storyPoints: {
+      type: Number,
+      default: 0,
+    },
+    /**
+     * Priority for the userStory
      */
     priority: {
       type: Number,
       default: 0,
     },
     /**
-     * Assignee for the tasks
+     * Tasks for the userStory
      */
-    assignee: {
-      type: String,
-      ref: "Users",
-    },
+    tasks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tasks",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -60,4 +78,4 @@ let taskSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Tasks", taskSchema);
+module.exports = mongoose.model("UserStories", userStorySchema);

@@ -12,43 +12,49 @@ let projectSchema = new Schema(
      */
     title: {
       type: String,
-      required: "title is required"
+      required: "title is required",
     },
     /**
      * Project item description.
      */
     description: {
-      type: String
+      type: String,
     },
     /**
      * Project item comments.
      */
-    comments: {
-      type: String
-    },
+    comments: [
+      {
+        text: String,
+        postedBy: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
     /**
      * Project item status.
      */
     status: {
       type: String,
-      default: "New"
+      default: "New",
     },
     /**
      * Project owner
      */
     owner: {
       type: String,
-      ref: "Users"
+      ref: "Users",
     },
     /**
      * Project Members
      */
-    members: [{ type: String, ref: "Users" }]
+    members: [{ type: String, ref: "Users" }],
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
   }
 );
 
-module.exports = mongoose.model("project", projectSchema);
+module.exports = mongoose.model("Projects", projectSchema);
