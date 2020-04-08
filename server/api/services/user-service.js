@@ -15,11 +15,8 @@ const mongoose = require("mongoose"),
  */
 exports.createUser = function (newUser) {
   const hash = bcrypt.hashSync(newUser.password, utilConstants.SALT_ROUNDS);
-  const user = new User({
-    emailId: newUser.emailId,
-    userName: newUser.userName,
-    password: hash,
-  });
+  newUser.password = hash;
+  const user = new User(newUser);
   const promise = user.save();
   return promise;
 };
