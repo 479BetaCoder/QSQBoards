@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+//import { FooterComponent } from './components/footer/footer.component';
 import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {MatIconModule} from '@angular/material/icon';
@@ -33,7 +33,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule, MatNavList} from '@angular/material/list';
-import { BoardComponent } from './components/board/board.component';
+import { OverviewComponent } from './components/project/overview/overview.component';
+import { BoardComponent } from './components/project/board/board.component';
+//import { BoardComponent } from './components/board/board.component';
 
 
 @NgModule({
@@ -44,10 +46,12 @@ import { BoardComponent } from './components/board/board.component';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent,
+    //FooterComponent,
     UserProfileComponent,
     SideNavComponent,
+    OverviewComponent,
     BoardComponent,
+    //BoardComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],

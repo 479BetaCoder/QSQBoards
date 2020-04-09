@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "webapp"
+  "defaultProject": "webapp",
+  "cli": {
+    "analytics": "c0e6cbae-1be5-4934-a7ff-08ebccaea246"
+  }
 }
