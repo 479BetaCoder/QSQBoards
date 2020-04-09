@@ -7,7 +7,7 @@ import {catchError} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class QsqserviceService {
+export class LoginRegisterService {
 
   // tslint:disable-next-line:variable-name
   constructor(private _http: HttpClient) { }
