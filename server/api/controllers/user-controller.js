@@ -96,6 +96,7 @@ exports.loginUser = (request, response) => {
             }
           );
           return response.status(200).json({
+            _id: user._id,
             userName: user.userName,
             emailId: user.emailId,
             image: user.image,

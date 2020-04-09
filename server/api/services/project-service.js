@@ -36,9 +36,17 @@ exports.save = function (project) {
  *
  * @param {string} projectId {Id of the project object}
  */
-exports.get = function (projectId) {
-  const promise = Project.findById(projectId).exec();
-  return promise;
+exports.get = async function (projectId) {
+  try {
+    const promise = await Project.findOne({ _id: projectId });
+    if (promise) {
+      return promise;
+    } else {
+      return Promise.reject(new Error(utilConstants.NOT_FOUND));
+    }
+  } catch (err) {
+    return Promise.reject(new Error(utilConstants.NOT_FOUND));
+  }
 };
 
 const generateOwnerObj = (owner) => {
