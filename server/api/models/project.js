@@ -32,12 +32,11 @@ let projectSchema = new Schema(
      */
     owner: {
       type: String,
-      ref: "Users",
     },
     /**
      * Project Members
      */
-    members: [{ type: String, ref: "Users" }],
+    members: [{ type: String }],
   },
   {
     timestamps: true,

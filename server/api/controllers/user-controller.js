@@ -65,17 +65,16 @@ exports.createUser = (request, response) => {
   }
 };
 
-
 const generateLoginToken = (user) => {
   return jwt.sign(
-      {
-        userName: user.userName,
-        userId: user._id,
-      },
-      utilConstants.JWT_KEY,
-      {
-        expiresIn: "2h",
-      }
+    {
+      userName: user.userName,
+      userId: user._id,
+    },
+    utilConstants.JWT_KEY,
+    {
+      expiresIn: "2h",
+    }
   );
 };
 
@@ -125,9 +124,9 @@ exports.loginUser = (request, response) => {
       }
     };
     userService
-        .loginUser(request.body)
-        .then(resolve)
-        .catch(renderErrorResponse(response));
+      .loginUser(request.body)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
   } catch (err) {
     renderErrorResponse(err);
   }

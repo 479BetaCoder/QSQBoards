@@ -9,5 +9,6 @@ module.exports = {
   JWT_KEY: "secret",
   SERVER_ERR: "OOPS!! Please check your internet connection or Try Again",
   CLIENT_ERR: "Invalid Request",
-  FORBIDDEN_ERR: "Access Forbidden"
+  FORBIDDEN_ERR: "Access Forbidden",
+  NOT_FOUND: "Resource not found",
 };

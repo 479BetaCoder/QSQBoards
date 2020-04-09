@@ -6,6 +6,7 @@
 const mongoose = require("mongoose"),
   UserStory = mongoose.model("UserStories"),
   Project = mongoose.model("Projects"),
+  Task = mongoose.model("Tasks"),
   utilConstants = require("../utils/Constants");
 
 /**
@@ -39,7 +40,12 @@ exports.isProjectValid = function (projectId) {
  * @param {string} projectId {Id of the project object}
  */
 exports.getStories = function (projectId) {
-  const promise = UserStory.find({ projectId: projectId }).exec();
+  const promise = UserStory.find(
+    { projectId: projectId },
+    { createdAt: 0, updatedAt: 0, projectId: 0 }
+  )
+    .populate("tasks", { updatedAt: 0, createdAt: 0 }, [], {})
+    .exec();
   return promise;
 };
 

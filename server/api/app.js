@@ -14,4 +14,5 @@ module.exports = function (app) {
   userRoutes(app);
   projectRoutes(app);
   userStoryRoutes(app);
+  taskRoutes(app);
 };
