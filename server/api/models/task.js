@@ -47,10 +47,17 @@ let taskSchema = new Schema(
       default: 0,
     },
     /**
+     * userStory Id
+     */
+    storyId: {
+      type: String,
+      required: "User Story Id is required",
+    },
+    /**
      * Assignee for the tasks
      */
     assignee: {
-      type: String,
+      type: Schema.Types.ObjectId,
       ref: "Users",
     },
   },
