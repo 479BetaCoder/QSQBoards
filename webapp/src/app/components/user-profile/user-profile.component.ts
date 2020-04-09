@@ -23,7 +23,7 @@ export class UserProfileComponent implements OnInit {
     // const id = this.actRoute.snapshot.paramMap.get('id');
     this.updateForm = this.fb.group({
       userName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      emailId: ['', [Validators.required]],
       password: ['', []],
       conPassword: ['', this.passValidator],
       image: ['', []]
@@ -38,13 +38,13 @@ export class UserProfileComponent implements OnInit {
   setForm() {
     this.authService.userProfile$.subscribe(data => {
       this.updateForm.setValue({
-        userName: data.firstName + data.lastName,
-        email: data.email,
+        userName: data.userName,
+        emailId: data.emailId,
         password: '',
         conPassword: '',
-        image: data.photoUrl
+        image: data.image
       });
-      this.socialImage = data.photoUrl;
+      this.socialImage = data.image;
     });
   }
 

@@ -11,5 +11,5 @@ export class AuthenticationService {
   }
 
   userProfileSubject$ = new BehaviorSubject<any>(null);
-  userProfile$: Observable<SocialUser> = this.userProfileSubject$.asObservable();
+  userProfile$: Observable<any> = this.userProfileSubject$.asObservable();
 }

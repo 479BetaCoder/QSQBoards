@@ -13,5 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.userProfile$.subscribe(prof =>  this.profile = prof);
   }
-
+  logoutProfile(): void {
+    this.authService.userProfile$.subscribe().unsubscribe();
+  }
 }
