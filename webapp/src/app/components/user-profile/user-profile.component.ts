@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
       userName: ['', [Validators.required]],
       emailId: ['', [Validators.required]],
       password: ['', []],
-      conPassword: ['', this.passValidator],
+      conPassword: ['', this.passValid],
       image: ['', []]
     });
     this.setForm();
@@ -37,6 +37,7 @@ export class UserProfileComponent implements OnInit {
 
   setForm() {
     this.authService.userProfile$.subscribe(data => {
+      this.socialImage = data.image;
       this.updateForm.setValue({
         userName: data.userName,
         emailId: data.emailId,
@@ -44,7 +45,6 @@ export class UserProfileComponent implements OnInit {
         conPassword: '',
         image: data.image
       });
-      this.socialImage = data.image;
     });
   }
 
@@ -68,8 +68,8 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  passValidator(control: AbstractControl) {
-    if (control && (control.value !== null || control.value !== undefined)) {
+  passValid(control: AbstractControl) {
+    if (control && (control.value !== null || true)) {
       const confPassword = control.value;
 
       const passControl = control.root.get('password');
