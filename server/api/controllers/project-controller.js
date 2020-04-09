@@ -56,6 +56,30 @@ exports.post = function (request, response) {
 };
 
 /**
+ * Building Custom Project Object
+ */
+const buildCustomProj = (project, ownerInfo, memberInfo) => {
+  // build custom response object
+  const projectResp = {
+    _id: project._id,
+    title: project.title,
+    owner: ownerInfo,
+    members: memberInfo,
+    status: project.status,
+  };
+  return projectResp;
+};
+
+/**
+ * custom async foreach function
+ */
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
+/**
  * Returns a project object in JSON.
  *
  * @param {request} {HTTP request object}
@@ -64,8 +88,44 @@ exports.post = function (request, response) {
 exports.get = function (request, response) {
   const resolve = (project) => {
     if (project) {
-      response.status(200);
-      response.json(project);
+      // make owner field to contain username and image
+      projectService
+        .getOwnerInfo(project.owner)
+        .then(async (ownerInfo) => {
+          if (ownerInfo) {
+            // get members info
+            if (project.members.length > 0) {
+              let memberCustomArr = [];
+              await asyncForEach(project.members, async (member) => {
+                const memberInfo = await projectService.getOwnerInfo(member);
+                memberCustomArr.push(memberInfo);
+              });
+
+              const projectResp = buildCustomProj(
+                project,
+                ownerInfo,
+                memberCustomArr
+              );
+              response.status(200);
+              response.json(projectResp);
+            } else {
+              const projectResp = buildCustomProj(
+                project,
+                ownerInfo,
+                project.members
+              );
+              response.status(200);
+              response.json(projectResp);
+            }
+          } else {
+            response.status(400);
+            logger.warn(`Client error: ${error.message}`);
+            response.json({
+              message: utilConstants.CLIENT_ERR,
+            });
+          }
+        })
+        .catch(renderErrorResponse(response));
     } else {
       response.status(404).json();
     }

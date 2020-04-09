@@ -147,7 +147,7 @@ exports.updateUser = (request, response) => {
   }
 };
 
-exports.getUsers = (request, response) => {
+exports.getUsers = (_request, response) => {
   const resolve = (userNames) => {
     response.status(200);
     response.json(userNames);

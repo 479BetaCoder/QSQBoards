@@ -6,6 +6,7 @@
 const mongoose = require("mongoose"),
   Project = mongoose.model("Projects"),
   UserStory = mongoose.model("UserStories"),
+  User = mongoose.model("Users"),
   utilConstants = require("../utils/Constants");
 /**
  * Returns an array of project object matching the search parameters.
@@ -38,6 +39,21 @@ exports.save = function (project) {
 exports.get = function (projectId) {
   const promise = Project.findById(projectId).exec();
   return promise;
+};
+
+const generateOwnerObj = (owner) => {
+  const promise = User.findOne(
+    { userName: owner },
+    { userName: 1, image: 1, _id: 0 }
+  ).exec();
+  return promise;
+};
+
+/**
+ * Returns owner info with image
+ */
+exports.getOwnerInfo = function (owner) {
+  return generateOwnerObj(owner);
 };
 
 /**
