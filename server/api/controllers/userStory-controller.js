@@ -30,7 +30,7 @@ exports.create = function (request, response) {
     userStoryService
       .isProjectValid(request.params.projectId)
       .then((project) => {
-        if (project.length) {
+        if (project.length > 0) {
           newUserStory.projectId = request.params.projectId;
           userStoryService
             .save(newUserStory)

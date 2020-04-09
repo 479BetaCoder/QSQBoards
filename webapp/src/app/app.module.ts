@@ -19,7 +19,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-//import { FooterComponent } from './components/footer/footer.component';
 import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {MatIconModule} from '@angular/material/icon';
@@ -53,7 +52,6 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    //FooterComponent,
     UserProfileComponent,
     SideNavComponent,
     OverviewComponent,
