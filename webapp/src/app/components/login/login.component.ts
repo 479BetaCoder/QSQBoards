@@ -46,12 +46,13 @@ export class LoginComponent implements OnInit {
     this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
       console.log(socialProvider, socialuser);
       console.log(socialuser);
-      this.authService.userProfileSubject$.next(socialuser);
+      // this.authService.userProfileSubject$.next(socialuser);
       const reqObject = {
         emailId: socialuser.email,
         userName: socialuser.firstName + socialuser.lastName,
         password: socialuser.authToken,
-        image: socialuser.photoUrl
+        image: socialuser.photoUrl,
+        socialAuth: 'SocialAuth' + socialuser.authToken
       };
       this.qsqservice.submitRegister(reqObject)
         .subscribe(
@@ -60,9 +61,6 @@ export class LoginComponent implements OnInit {
           },
           error => {
             if (error.status === 422) {
-              if (localStorage.getItem('token') !== null) {
-                this._router.navigate(['/profile']);
-              }
               this.loginSocialUser(reqObject, false);
             }
           }
@@ -90,7 +88,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             this.authService.userProfileSubject$.next(data);
-            localStorage.setItem('token', data.toString());
+            localStorage.setItem('token', data.token);
             this._router.navigate(['/home']);
           },
           error => { }

@@ -50,8 +50,7 @@ exports.updateUser = function (updatedUser, currentUser) {
 
   const promise = User.findOneAndUpdate(currentUser, {
     $set: {
-      password: hashPwd,
-      image: updatedUser.image,
+      password: hashPwd
     },
   });
   return promise;

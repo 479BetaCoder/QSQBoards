@@ -8,7 +8,7 @@
           <mat-card-subtitle></mat-card-subtitle>
         </mat-card-header><br>
         <mat-card-content>
-          <img mat-card-image *ngIf="socialImage" src={{socialImage}} alt="Profile Picture" class="img-width"><br>
+          <img mat-card-image *ngIf="socialImage" src={{socialImage}} alt="Profile Picture"  class="img-width"><br>
           <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="half-width">
               <mat-label>UserName</mat-label>
