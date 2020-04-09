@@ -13,7 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import {QsqserviceService} from './services/qsqservice.service';
+import {LoginRegisterService} from './services/LoginRegister.service';
+import {ProjectService} from './services/project.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -40,6 +41,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {RouterModule} from '@angular/router';
 import {homeRoutes} from './app-routing/home-routes';
 import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
+
+//import { BoardComponent } from './components/board/board.component';
 
 
 @NgModule({
@@ -83,7 +86,8 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     RouterModule.forChild(homeRoutes)
   ],
   providers: [
-    QsqserviceService,
+    LoginRegisterService,
+    ProjectService,
     AuthService,
     {
       provide: AuthServiceConfig,

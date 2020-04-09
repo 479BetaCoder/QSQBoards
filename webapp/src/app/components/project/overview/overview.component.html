@@ -1,1 +1,16 @@
-<p>overview works!</p>
+<app-header></app-header>
+<!--<app-side-nav></app-side-nav>-->
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+    <mat-card class="overview-card">
+        <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+            <span fxFlex="100%">{{project.Title}}</span>
+          </mat-card-title>
+    
+          <mat-card-content>
+            {{project.Description}}
+          </mat-card-content>
+          <mat-card-actions>
+              <button>Open Project</button>
+          </mat-card-actions>
+        </mat-card>
+</div>

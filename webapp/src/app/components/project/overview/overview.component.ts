@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from '../../../models/project';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-overview',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  constructor() { }
+  project : Project;
+  constructor(projectService: ProjectService) { 
+    this.project = projectService.getProject();
+  }
 
   ngOnInit(): void {
   }
