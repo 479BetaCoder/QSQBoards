@@ -4,15 +4,15 @@ module.exports = function (app) {
     checkAuth = require("../services/auth-service");
   // Route for registering a user
   app
-    .route("/users/signup")
+    .route("/v1/users/signup")
     .post(userController.validateUser(), userController.createUser);
 
   // Route for logging in the registered user
-  app.route("/users/login").post(userController.loginUser);
+  app.route("/v1/users/login").post(userController.loginUser);
 
   // Route for updating user details and getting list of registered users
   app
-    .route("/users")
+    .route("/v1/users")
     .put(checkAuth, userController.validateUser(), userController.updateUser)
     .get(checkAuth, userController.getUsers);
 };

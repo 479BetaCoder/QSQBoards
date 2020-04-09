@@ -63,6 +63,7 @@ const buildCustomProj = (project, ownerInfo, memberInfo) => {
   const projectResp = {
     _id: project._id,
     title: project.title,
+    description: project.description,
     owner: ownerInfo,
     members: memberInfo,
     status: project.status,
@@ -186,6 +187,12 @@ let renderErrorResponse = (response) => {
       logger.warn(`Client error: ${error.message}`);
       response.json({
         message: utilConstants.CLIENT_ERR,
+      });
+    } else if (error && error.message === utilConstants.NOT_FOUND) {
+      response.status(404);
+      logger.warn(`Client Input error: ${error.message}`);
+      response.json({
+        message: utilConstants.NOT_FOUND,
       });
     } else {
       response.status(500);
