@@ -47,25 +47,39 @@ export class LoginComponent implements OnInit {
       console.log(socialProvider, socialuser);
       console.log(socialuser);
       this.authService.userProfileSubject$.next(socialuser);
-      const reObject = {
+      const reqObject = {
         emailId: socialuser.email,
         userName: socialuser.firstName + socialuser.lastName,
-        password: '123645789',
-        isScrumMaster: null,
+        password: socialuser.authToken,
         image: socialuser.photoUrl
       };
-      this.qsqservice.submitRegister(reObject)
+      this.qsqservice.submitRegister(reqObject)
         .subscribe(
           data => {
-            this._router.navigate(['/home']);
+            this.loginSocialUser(reqObject, true);
           },
           error => {
             if (error.status === 422) {
-              this._router.navigate(['/home']);
+              if (localStorage.getItem('token') !== null) {
+                this._router.navigate(['/profile']);
+              }
+              this.loginSocialUser(reqObject, false);
             }
           }
         );
     });
+  }
+
+  loginSocialUser(reqObject, loginForFirst) {
+    this.qsqservice.login(reqObject)
+      .subscribe(
+        data => {
+          this.authService.userProfileSubject$.next(data);
+          localStorage.setItem('token', data.token);
+          loginForFirst ?  this._router.navigate(['/profile']) : this._router.navigate(['/home']);
+        },
+        error => { }
+      );
   }
 
   login() {
@@ -75,7 +89,7 @@ export class LoginComponent implements OnInit {
       this.qsqservice.login(this.loginForm.value)
         .subscribe(
           data => {
-            console.log(data);
+            this.authService.userProfileSubject$.next(data);
             localStorage.setItem('token', data.toString());
             this._router.navigate(['/home']);
           },
