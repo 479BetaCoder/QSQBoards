@@ -14,7 +14,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import {QsqserviceService} from './services/qsqservice.service';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -36,6 +36,10 @@ import {MatListModule, MatNavList} from '@angular/material/list';
 import { OverviewComponent } from './components/project/overview/overview.component';
 import { BoardComponent } from './components/project/board/board.component';
 //import { BoardComponent } from './components/board/board.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {RouterModule} from '@angular/router';
+import {homeRoutes} from './app-routing/home-routes';
+import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
 
 
 @NgModule({
@@ -74,7 +78,9 @@ import { BoardComponent } from './components/project/board/board.component';
     SocialLoginModule,
     FlexLayoutModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule,
+    RouterModule.forChild(homeRoutes)
   ],
   providers: [
     QsqserviceService,
@@ -83,7 +89,8 @@ import { BoardComponent } from './components/project/board/board.component';
       provide: AuthServiceConfig,
       useFactory: socialConfigs
     },
-    { provide: 'BaseURL', useValue: baseURL }
+    { provide: 'BaseURL', useValue: baseURL },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

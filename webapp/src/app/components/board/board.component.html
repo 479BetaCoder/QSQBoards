@@ -1,0 +1,66 @@
+<!--
+<div>
+  <h3 mat-line style="padding: 10px">Scrum Board</h3>
+  <hr>
+</div>
+
+<div class="container"
+     fxLayout="row"
+     fxLayoutGap="15px">
+
+  <div fxFlex *ngIf="STORIES">
+    <h2 mat-line>Ready</h2>
+    <mat-grid-list cols="1" rowHeight="200px">
+      <mat-grid-tile *ngFor="let task of STORIES">
+        <mat-grid-tile-header>
+          <h2 mat-line>{{task.title}}</h2>
+        </mat-grid-tile-header>
+        <p mat-line>{{task.priority}}</p>
+        <p mat-line>{{task.status}}</p>
+        <mat-grid-tile-footer>
+          <h2 mat-line>{{task.storyPoints}}</h2>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div fxFlex *ngIf="STORIES">
+    <h2 mat-line>In Development</h2>
+    <mat-grid-list cols="1" rowHeight="150px">
+      <mat-card *ngFor="let task of STORIES" style="margin: 10px; background: olive">
+        <mat-card-header>
+          <h2 mat-line>{{task.title}}</h2>
+        </mat-card-header>
+        <mat-card-content>
+          <p mat-line>{{task.description}}</p>
+          <h3 mat-line>{{task.priority}}</h3>
+          <h3 mat-line>{{task.status}}</h3>
+          <h2 mat-line>{{task.storyPoints}}</h2>
+        </mat-card-content>
+        <mat-card-footer>
+          <mat-card-actions class="full-width">
+            <button mat-button color="primary" type="submit" class="mat-background-primary text-floral-white">Submit</button>
+          </mat-card-actions>
+        </mat-card-footer>
+      </mat-card>
+    </mat-grid-list>
+  </div>
+
+  <div fxFlex *ngIf="STORIES">
+    <h2 mat-line>In Testing</h2>
+    <mat-grid-list cols="1" rowHeight="200px">
+      <mat-grid-tile *ngFor="let task of STORIES">
+        <mat-grid-tile-header>
+          <h2 mat-line>{{task.title}}</h2>
+        </mat-grid-tile-header>
+        <p mat-line>{{task.priority}}</p>
+        <p mat-line>{{task.status}}</p>
+        <mat-grid-tile-footer>
+          <h2 mat-line>{{task.storyPoints}}</h2>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+</div>
+-->

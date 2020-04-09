@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
       this._qsqservice.submitRegister(this.myForm.value)
       .subscribe(
         data => {
-          this._router.navigate(['/login']);
+          this._router.navigate(['']);
         },
         error => this.successMessage = 'Error occurred'
       );
