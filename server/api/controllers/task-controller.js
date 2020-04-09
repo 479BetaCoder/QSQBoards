@@ -42,6 +42,7 @@ exports.create = function (request, response) {
       .isUserStoryValid(request.params.storyId)
       .then((userStory) => {
         if (userStory.length > 0) {
+          newTask.storyId = request.params.storyId;
           taskService
             .save(newTask)
             .then(resolve)

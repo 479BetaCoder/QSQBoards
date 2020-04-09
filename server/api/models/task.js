@@ -57,8 +57,12 @@ let taskSchema = new Schema(
      * Assignee for the tasks
      */
     assignee: {
-      type: Schema.Types.ObjectId,
-      ref: "Users",
+      userName: {
+        type: String,
+      },
+      image: {
+        type: String,
+      },
     },
   },
   {

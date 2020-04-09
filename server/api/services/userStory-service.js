@@ -46,33 +46,6 @@ exports.getStories = function (projectId) {
   )
     .populate("tasks", { updatedAt: 0, createdAt: 0 }, [], {})
     .exec();
-  // return promise;
-  // Load parent without children references (children is array of ObjectId)
-  // const promise = UserStory.find(
-  //   { projectId: projectId }).populate("tasks", [], {}).exec(
-  //     function (err, children) {
-  //       if (err) return Promise.reject(new Error(utilConstants.NOT_FOUND));
-  //       let result = parent.toObject();
-  //       result.children = children;
-  //       return Promise.resolve(result);
-  //     });
-  //   )
-  //   function (err, parent) {
-  //     if (err || !parent)
-  //       return Promise.reject(new Error(utilConstants.NOT_FOUND));
-
-  //     // Load children for this parent, populating grandchildren (no need to load parent reference)
-  //     return Task.find({ storyId: parent._id }, { parent: 0 })
-  //       .populate("assignee", [], {})
-  //       .exec(function (err, children) {
-  //         if (err) return Promise.reject(new Error(utilConstants.NOT_FOUND));
-  //         let result = parent.toObject();
-  //         result.children = children;
-  //         return Promise.resolve(result);
-  //       });
-  //   }
-  // ).exec();
-
   return promise;
 };
 
