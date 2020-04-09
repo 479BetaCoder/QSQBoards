@@ -56,7 +56,6 @@ export class UserProfileComponent implements OnInit {
       return false;
     } else {
       if (window.confirm('Are you sure?')) {
-        // const userName = this.actRoute.snapshot.paramMap.get('userName');
         this.qsqService.updateUser(this.updateForm.value)
           .subscribe(res => {
             this.router.navigateByUrl('/home');
