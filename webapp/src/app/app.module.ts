@@ -13,12 +13,13 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import {QsqserviceService} from './services/qsqservice.service';
+import {LoginRegisterService} from './services/LoginRegister.service';
+import {ProjectService} from './services/project.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+//import { FooterComponent } from './components/footer/footer.component';
 import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import {MatIconModule} from '@angular/material/icon';
@@ -33,7 +34,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule, MatNavList} from '@angular/material/list';
-import { BoardComponent } from './components/board/board.component';
+
+//import { BoardComponent } from './components/board/board.component';
 
 
 @NgModule({
@@ -44,10 +46,10 @@ import { BoardComponent } from './components/board/board.component';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent,
+//    FooterComponent,
     UserProfileComponent,
     SideNavComponent,
-    BoardComponent,
+//    BoardComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -73,7 +75,8 @@ import { BoardComponent } from './components/board/board.component';
     MatListModule
   ],
   providers: [
-    QsqserviceService,
+    LoginRegisterService,
+    ProjectService,
     AuthService,
     {
       provide: AuthServiceConfig,

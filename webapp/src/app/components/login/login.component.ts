@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
-import { QsqserviceService } from '../../services/qsqservice.service';
+import { LoginRegisterService } from '../../services/LoginRegister.service';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { Socialusers } from '../Models/socialusers'
 // import { SocialloginService } from '../Service/sociallogin.service';
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   constructor(
-    private qsqservice: QsqserviceService,
+    private qsqservice: LoginRegisterService,
     public OAuth: AuthService,
     public authService: AuthenticationService,
     private _router: Router,

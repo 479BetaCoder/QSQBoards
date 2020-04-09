@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {QsqserviceService} from '../../services/qsqservice.service';
+import {LoginRegisterService} from '../../services/LoginRegister.service';
 import {AuthenticationService} from '../../auth/authentication.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private qsqService: QsqserviceService,
+    private qsqService: LoginRegisterService,
     public authService: AuthenticationService,
     private router: Router) {  }
 
