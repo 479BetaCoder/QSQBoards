@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QsqserviceService } from '../../services/qsqservice.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,7 @@ import { QsqserviceService } from '../../services/qsqservice.service';
 export class RegisterComponent implements OnInit {
   successMessage = '';
   myForm: FormGroup;
-  constructor(private _qsqservice:QsqserviceService,
+  constructor(private _qsqservice:UserService,
     private _router: Router, private _activateRoute:ActivatedRoute) {
     this.myForm = new FormGroup({
       emailId: new FormControl(null, Validators.email),

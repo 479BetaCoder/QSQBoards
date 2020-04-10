@@ -10,7 +10,7 @@ import {User} from "../models/user";
   providedIn: 'root'
 })
 export class ProjectService {
-  
+
   user1: User = {
     UserName : "Dileep"
   };
@@ -44,7 +44,7 @@ export class ProjectService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   getProjects() {
-    return this._http.get<Array<Project>>(baseURL + '/projects'); 
+    return this._http.get<Array<Project>>(baseURL + '/projects');
   }
 
   createNewProject(body: any): Observable<any> {

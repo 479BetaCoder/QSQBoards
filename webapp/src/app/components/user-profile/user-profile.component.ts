@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {QsqserviceService} from '../../services/qsqservice.service';
+import {UserService} from '../../services/user.service';
 import {AuthenticationService} from '../../auth/authentication.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private qsqService: QsqserviceService,
+    private qsqService: UserService,
     public authService: AuthenticationService,
     private router: Router) {  }
 
@@ -27,11 +27,10 @@ export class UserProfileComponent implements OnInit {
       this.router.navigateByUrl('');
     }
     this.updateForm = this.fb.group({
-      userName: ['', [Validators.required]],
-      emailId: ['', [Validators.required]],
+      userName: [{value : '', disabled: true}, [Validators.required]],
+      emailId: [{value : '', disabled: true}, [Validators.required]],
       password: ['', []],
-      conPassword: ['', this.passValid],
-      image: ['', []]
+      conPassword: ['', this.passValid]
     });
     this.setForm();
     this.updateForm.controls.password.valueChanges
@@ -47,8 +46,7 @@ export class UserProfileComponent implements OnInit {
         userName: data.userName,
         emailId: data.emailId,
         password: '',
-        conPassword: '',
-        image: data.image
+        conPassword: ''
       });
     });
   }

@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import {QsqserviceService} from './services/qsqservice.service';
+import {UserService} from './services/user.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -83,7 +83,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule
   ],
   providers: [
-    QsqserviceService,
+    UserService,
     AuthService,
     {
       provide: AuthServiceConfig,
