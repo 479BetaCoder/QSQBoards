@@ -34,7 +34,7 @@
                 {{project.Description}}
               </mat-card-content>
               <mat-card-actions>
-                  <button class="mat-raised-button mat-primary">Open Project</button>
+                  <button mat-menu-item  [routerLink]="['/home/ {{project.Title}}', project.ProjectId]" class="mat-raised-button mat-primary">Open Project</button>
               </mat-card-actions>
             </mat-card>
         </div>

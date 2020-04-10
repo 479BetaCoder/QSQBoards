@@ -51,6 +51,10 @@ export class ProjectService {
       return 
   }
 
+  getProject(projectTitle: String){
+    return this.project1;
+  }
+
   createNewProject(body: any): Observable<any> {
     return this._http.post(baseURL + '/projects', body, {
       observe: 'body'
