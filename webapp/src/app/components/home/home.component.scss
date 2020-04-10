@@ -17,5 +17,21 @@
   .projectButton{
     float: right;
     margin: 5px;
-    margin-right: 200px;
+    margin-right: 50px;
+  }
+  .cardContainer{
+    display: inline-block;
+  }
+
+  button{
+   float: center;
+  }
+
+  mat-card{
+    text-align: center;
+    width: 250px;
+    border: 10px;
+    margin-left: 100px;
+    margin-bottom: 50px;
+    float: left;
   }

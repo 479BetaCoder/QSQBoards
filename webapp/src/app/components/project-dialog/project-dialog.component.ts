@@ -11,12 +11,14 @@ import {ProjectService} from '../../services/project.service';
   styleUrls: ['./project-dialog.component.scss']
 })
 export class ProjectDialogComponent implements OnInit {
-
+  emptyImgUrl:string='../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
-  constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<ProjectDialogComponent>, @Inject(MAT_DIALOG_DATA) data,
+  constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<ProjectDialogComponent>,
   private _projectService:ProjectService) { 
-    this.allUsers = data.users;
+    this._projectService.getAllUsers().subscribe(items => {
+      this.allUsers = items;
+    })
     this.projectForm = new FormGroup({
       title: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
