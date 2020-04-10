@@ -3,7 +3,7 @@ import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ProjectDialogComponent} from '../project-dialog/project-dialog.component';
-import {User} from '../../models/user';
+
 
 @Component({
   selector: 'app-home',
