@@ -37,18 +37,32 @@ export class ProjectService {
       this.user1,this.user2
     ]
   }
-  projects : Project[] = [
-    this.project1,this.project2
-  ];
+  static projects : Project[];
+  projectObservables: any;
+
   constructor(private _http: HttpClient) { }
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   getProjects() {
-    return this._http.get<Array<Project>>(baseURL + '/projects'); 
+    this.projectObservables = this._http.get<Array<Project>>(baseURL + '/projects');
+    this.projectObservables.subscribe((items: Project[]) => {
+      ProjectService.projects = items as Project[];
+    },
+    (err) => {
+      console.log(err);
+    }
+      );
+    return this.projectObservables; 
+  }
+  
+  saveProjects(items: any){
+    ProjectService.projects = items as Project[];
   }
 
   getProject(projectTitle: String){
-    return this.project1;
+    const project: any = ProjectService.projects.find(x => x["title"] == projectTitle);
+    const p = Object.assign(new Project, project);
+    return p;
   }
 
   createNewProject(body: any): Observable<any> {

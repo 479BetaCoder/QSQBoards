@@ -9,10 +9,9 @@ export const homeRoutes: Routes = [
     path: 'home',
     component: HomeComponent,
     children: [
-      { path: ':projectTitle', component: OverviewComponent, data : {projectId : 'werty'}},
       { path : 'board', component: BoardComponent },
       { path: '', component: HomeComponent },
     ]
   },
-
+  { path: 'home/:title', component: OverviewComponent}
 ];

@@ -10,12 +10,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OverviewComponent implements OnInit {
 
-  @Input() projectId: String;
+  projectTitle: String;
+  project: any;
+  projects: Project[];
 
-  project : Project;
-  constructor(projectService: ProjectService, private activatedroute:ActivatedRoute) { 
-    this.projectId = this.activatedroute.snapshot.params.projectId;
-    this.project = projectService.getProject(this.projectId);
+  constructor(private projectService: ProjectService, private activatedroute:ActivatedRoute) { 
+    /*this.projectService.getProjects().subscribe(items => {
+      this.projects = items;
+    });
+    this.project = this.projects[0];
+    */
+    this.projectTitle = this.activatedroute.snapshot.params.title
+    this.project = this.projectService.getProject(this.projectTitle);
+    //alert(this.projectTitle);
   }
 
   ngOnInit(): void {

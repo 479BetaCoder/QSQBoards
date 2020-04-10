@@ -3,19 +3,19 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
     <mat-card class="overview-card">
         <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-            <span fxFlex="100%">{{project.Title}}</span>
+            <span fxFlex="100%">{{project.title}}</span>
           </mat-card-title>
     
           <mat-card-content>
-            {{project.Description}}
+            {{project.description}}
           </mat-card-content>
           <mat-card-content>
               Status - 
-            {{project.Status}}
+            {{project.status}}
           </mat-card-content>
           <mat-card-content>
               Owner -
-            {{project.Owner.UserName}}
+            {{project.owner}}
           </mat-card-content>
           <mat-card-content>
               Team Members -
