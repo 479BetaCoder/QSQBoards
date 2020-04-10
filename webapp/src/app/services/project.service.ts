@@ -10,7 +10,7 @@ import {User} from "../models/user";
   providedIn: 'root'
 })
 export class ProjectService {
-
+  
   user1: User = {
     UserName : "Dileep"
   };

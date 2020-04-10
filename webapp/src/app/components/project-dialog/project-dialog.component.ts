@@ -11,7 +11,7 @@ import {ProjectService} from '../../services/project.service';
   styleUrls: ['./project-dialog.component.scss']
 })
 export class ProjectDialogComponent implements OnInit {
-
+  emptyImgUrl:string='../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
   constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<ProjectDialogComponent>, @Inject(MAT_DIALOG_DATA) data,

@@ -24,7 +24,9 @@
     <mat-form-field>
         <mat-label>Select Users</mat-label>
         <mat-select formControlName="members" multiple>
-          <mat-option *ngFor="let user of allUsers" [value]="user.UserName">{{user.UserName}}</mat-option>
+          
+          <mat-option *ngFor="let user of allUsers" [value]="user.UserName">
+            <img class="avatar"[src]="user.Image!= null ? user.Image : emptyImgUrl">{{user.UserName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
