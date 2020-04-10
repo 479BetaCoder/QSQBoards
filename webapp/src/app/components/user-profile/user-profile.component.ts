@@ -21,6 +21,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     // const id = this.actRoute.snapshot.paramMap.get('id');
+    if (sessionStorage.getItem('User')) {
+      const user = JSON.parse(sessionStorage.getItem('User'));
+    } else {
+      this.router.navigateByUrl('');
+    }
     this.updateForm = this.fb.group({
       userName: ['', [Validators.required]],
       emailId: ['', [Validators.required]],

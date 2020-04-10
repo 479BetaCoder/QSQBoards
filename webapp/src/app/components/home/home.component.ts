@@ -3,6 +3,7 @@ import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ProjectDialogComponent} from '../project-dialog/project-dialog.component';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,13 +14,18 @@ import {ProjectDialogComponent} from '../project-dialog/project-dialog.component
 export class HomeComponent implements OnInit {
 
   projects: Project[];
-  constructor(private projectService: ProjectService,private projectDialog: MatDialog) {
+  constructor(private projectService: ProjectService, private projectDialog: MatDialog, private router: Router) {
     this.projectService.getProjects().subscribe(items => {
       this.projects = items;
     });
    }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('User')) {
+      const user = JSON.parse(sessionStorage.getItem('User'));
+    } else {
+      this.router.navigateByUrl('');
+    }
   }
 
   openProjectDialog() {
