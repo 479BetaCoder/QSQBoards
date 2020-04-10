@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoginRegisterService} from '../../services/LoginRegister.service';
+import {UserService} from '../../services/user.service';
 import {AuthenticationService} from '../../auth/authentication.service';
 
 @Component({
@@ -15,18 +15,22 @@ export class UserProfileComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private qsqService: LoginRegisterService,
+    private qsqService: UserService,
     public authService: AuthenticationService,
     private router: Router) {  }
 
   ngOnInit() {
     // const id = this.actRoute.snapshot.paramMap.get('id');
+    if (sessionStorage.getItem('User')) {
+      const user = JSON.parse(sessionStorage.getItem('User'));
+    } else {
+      this.router.navigateByUrl('');
+    }
     this.updateForm = this.fb.group({
-      userName: ['', [Validators.required]],
-      emailId: ['', [Validators.required]],
+      userName: [{value : '', disabled: true}, [Validators.required]],
+      emailId: [{value : '', disabled: true}, [Validators.required]],
       password: ['', []],
-      conPassword: ['', this.passValid],
-      image: ['', []]
+      conPassword: ['', this.passValid]
     });
     this.setForm();
     this.updateForm.controls.password.valueChanges
@@ -42,8 +46,7 @@ export class UserProfileComponent implements OnInit {
         userName: data.userName,
         emailId: data.emailId,
         password: '',
-        conPassword: '',
-        image: data.image
+        conPassword: ''
       });
     });
   }

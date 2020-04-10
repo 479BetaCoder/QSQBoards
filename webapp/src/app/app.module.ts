@@ -13,8 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import {LoginRegisterService} from './services/LoginRegister.service';
-import {ProjectService} from './services/project.service';
+import {UserService} from './services/user.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -91,8 +90,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule
   ],
   providers: [
-    LoginRegisterService,
-    ProjectService,
+    UserService,
     AuthService,
     {
       provide: AuthServiceConfig,
