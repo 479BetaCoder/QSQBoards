@@ -14,17 +14,20 @@ export class ProjectDialogComponent implements OnInit {
   emptyImgUrl:string='../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
+  isUpdate: boolean = false;
   constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<ProjectDialogComponent>,
   private _projectService:ProjectService) { 
-    this._projectService.getAllUsers().subscribe(items => {
-      this.allUsers = items;
-    })
-    this.projectForm = new FormGroup({
-      title: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
-      members: new FormControl(null,null),
-      status: new FormControl("new",null)
-    });
+    if(!this.isUpdate){
+      this._projectService.getAllUsers().subscribe(items => {
+        this.allUsers = items;
+      })
+      this.projectForm = new FormGroup({
+        title: new FormControl(null, Validators.required),
+        description: new FormControl(null, Validators.required),
+        members: new FormControl(null,null),
+        status: new FormControl("new",null)
+      });
+    }
   }
 
   ngOnInit(): void {
