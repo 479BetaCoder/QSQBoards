@@ -9,8 +9,21 @@
           <mat-card-content>
             {{project.Description}}
           </mat-card-content>
+          <mat-card-content>
+              Status - 
+            {{project.Status}}
+          </mat-card-content>
+          <mat-card-content>
+              Owner -
+            {{project.Owner.UserName}}
+          </mat-card-content>
+          <mat-card-content *ngFor="let member of project.Members">
+            <mat-card-content>
+              {{member.UserName}}
+            </mat-card-content>
+          </mat-card-content>
           <mat-card-actions>
-              <button>Open Project</button>
+              <button>Edit</button>
           </mat-card-actions>
         </mat-card>
 </div>
