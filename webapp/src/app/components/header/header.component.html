@@ -1,13 +1,30 @@
-
 <mat-toolbar color="primary">
   <button mat-button [matMenuTriggerFor]="menu" class="alignmentMenu">
-    <img *ngIf="profile"
+    <img
+      *ngIf="profile"
       [src]="profile.image"
-      alt="Profile picture"
-      class="avatar"/>
+      alt="Profile name"
+      class="avatar"
+      onerror="this.src='../../../assets/avatar-default-icon.png'"
+    />
+    <img
+      *ngIf="!profile"
+      src="../../../assets/avatar-default-icon.png"
+      class="avatar"
+      alt="Profile"
+    />
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/profile"><i class="fa fa-user-circle-o fa-lg"> Profile</i></button>
-    <button mat-menu-item  (click)="logoutProfile()" routerLink="" routerLinkActive="active"><i class="fa fa-sign-out fa-lg"> Logout</i></button>
+    <button mat-menu-item routerLink="/profile">
+      <i class="fa fa-user-circle-o fa-lg"> Profile</i>
+    </button>
+    <button
+      mat-menu-item
+      (click)="logoutProfile()"
+      routerLink=""
+      routerLinkActive="active"
+    >
+      <i class="fa fa-sign-out fa-lg"> Logout</i>
+    </button>
   </mat-menu>
 </mat-toolbar>
