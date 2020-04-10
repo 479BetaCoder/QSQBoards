@@ -35,11 +35,15 @@ export class OverviewComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    alert(project.title);
-    this.projectDialog.open(ProjectDialogComponent, {    
-      data: {
-        isUpdate:true
-      }
- });
+
+    dialogConfig.data = {
+      id: project._id,
+      title: project.title,
+      description: project.description,
+      members: project.members,
+      status: project.status
+  };
+
+    this.projectDialog.open(ProjectDialogComponent, dialogConfig);
 }
 }

@@ -5,6 +5,7 @@ import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Project} from "../models/project";
 import {User} from "../models/user";
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -54,10 +55,7 @@ export class ProjectService {
       );
     return this.projectObservables; 
   }
-  
-  saveProjects(items: any){
-    ProjectService.projects = items as Project[];
-  }
+
 
   getProject(projectTitle: String){
     const project: any = ProjectService.projects.find(x => x["title"] == projectTitle);
@@ -67,6 +65,12 @@ export class ProjectService {
 
   createNewProject(body: any): Observable<any> {
     return this._http.post(baseURL + '/projects', body, {
+      observe: 'body'
+   });
+  }
+
+  updateProject(body: any, projectId: string): Observable<any> {
+    return this._http.put(baseURL + '/projects/' + projectId, body, {
       observe: 'body'
    });
   }
