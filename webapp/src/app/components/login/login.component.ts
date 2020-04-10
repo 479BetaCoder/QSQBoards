@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
-import { QsqserviceService } from '../../services/qsqservice.service';
+import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { Socialusers } from '../Models/socialusers'
 // import { SocialloginService } from '../Service/sociallogin.service';
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   constructor(
-    private qsqservice: QsqserviceService,
+    private qsqservice: UserService,
     public OAuth: AuthService,
     public authService: AuthenticationService,
     private _router: Router,
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    sessionStorage.removeItem('User');
   }
 
   isValid(controlName) {
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.authService.userProfileSubject$.next(data);
-          localStorage.setItem('token', data.token);
+          sessionStorage.setItem('User', JSON.stringify(data));
           loginForFirst ?  this._router.navigate(['/profile']) : this._router.navigate(['/home']);
         },
         error => { }
@@ -81,14 +82,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm.value);
-
     if (this.loginForm.valid) {
       this.qsqservice.login(this.loginForm.value)
         .subscribe(
           data => {
             this.authService.userProfileSubject$.next(data);
-            localStorage.setItem('token', data.token);
+            sessionStorage.setItem('User', JSON.stringify(data));
             this._router.navigate(['/home']);
           },
           error => { }
