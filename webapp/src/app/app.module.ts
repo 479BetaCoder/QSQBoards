@@ -37,6 +37,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {RouterModule} from '@angular/router';
 import {homeRoutes} from './app-routing/home-routes';
 import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -50,6 +53,7 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     UserProfileComponent,
     SideNavComponent,
     BoardComponent,
+    ProjectDialogComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -74,7 +78,9 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    RouterModule.forChild(homeRoutes)
+    RouterModule.forChild(homeRoutes),
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [
     QsqserviceService,
