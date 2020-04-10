@@ -27,11 +27,11 @@
         <div *ngIf="projects?.length > 0">
             <mat-card class="card-picture" *ngFor="let project of projects">
             <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-                <span fxFlex="100%">{{project.Title}}</span>
+                <span fxFlex="100%">{{project.title}}</span>
               </mat-card-title>
         
               <mat-card-content>
-                {{project.Description}}
+                {{project.description}}
               </mat-card-content>
               <mat-card-actions>
                   <button class="mat-raised-button mat-primary">Open Project</button>

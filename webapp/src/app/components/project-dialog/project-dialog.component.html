@@ -26,16 +26,10 @@
         <mat-select formControlName="members" multiple>
           
           <mat-option *ngFor="let user of allUsers" [value]="user.UserName">
-            <img class="avatar"[src]="user.Image!= null ? user.Image : emptyImgUrl">{{user.UserName}}</mat-option>
+            <img class="avatar"[src]="user.image!= null ? user.Image : emptyImgUrl">{{user.userName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-      
-    <!-- <div>
-      <mat-form-field>
-        <input type="hidden" formControlName="status" >
-      </mat-form-field>
-    </div> -->
 </mat-dialog-content>
 
 <mat-dialog-actions>

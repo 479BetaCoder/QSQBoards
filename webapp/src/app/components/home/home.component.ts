@@ -13,14 +13,10 @@ import {User} from '../../models/user';
 export class HomeComponent implements OnInit {
 
   projects: Project[];
-  user1: User = {
-    UserName : "Dileep"
-  };
-  user2: User = {
-    UserName : "Reddy"
-  };
   constructor(private projectService: ProjectService,private projectDialog: MatDialog) {
-    this.projects = projectService.getProjects();
+    this.projectService.getProjects().subscribe(items => {
+      this.projects = items;
+    });
    }
 
   ngOnInit(): void {
@@ -29,9 +25,6 @@ export class HomeComponent implements OnInit {
   openProjectDialog() {
 
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      users: [this.user1,this.user2]
-  };
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 

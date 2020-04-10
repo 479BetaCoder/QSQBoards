@@ -44,17 +44,18 @@ export class ProjectService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   getProjects() {
-    return this.projects;
-  //   return this._http.post(baseURL + '/projects', body, {
-  //     observe: 'body'
-  //  });
-      return 
+    return this._http.get<Array<Project>>(baseURL + '/projects'); 
   }
 
   createNewProject(body: any): Observable<any> {
     return this._http.post(baseURL + '/projects', body, {
       observe: 'body'
    });
+  }
+
+  getAllUsers() : Observable<Array<User>>{
+    const users = this._http.get<Array<User>>(baseURL + '/users');
+    return users;
   }
    // Error handling
    errorHandling(error: HttpErrorResponse) {
