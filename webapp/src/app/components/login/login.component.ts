@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    sessionStorage.removeItem('User');
   }
 
   isValid(controlName) {
