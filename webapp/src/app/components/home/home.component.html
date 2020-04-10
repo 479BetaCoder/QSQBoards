@@ -11,7 +11,6 @@
             <mat-card-content>
               {{project.Description}}
             </mat-card-content>
-
             <mat-card-actions>
                 <button mat-raised-button color="primary">Access Project</button>
                 </mat-card-actions>
@@ -19,7 +18,7 @@
       </div>
     </div>
   </div> -->
-  <button>New Project</button>
+  <button class="mat-raised-button mat-primary projectButton" (click)="openProjectDialog()">New Project</button>
   <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
     
         <div *ngIf="!(projects?.length > 0)">
@@ -35,7 +34,7 @@
                 {{project.Description}}
               </mat-card-content>
               <mat-card-actions>
-                  <button>Open Project</button>
+                  <button class="mat-raised-button mat-primary">Open Project</button>
               </mat-card-actions>
             </mat-card>
         </div>

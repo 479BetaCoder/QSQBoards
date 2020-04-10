@@ -40,6 +40,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {RouterModule} from '@angular/router';
 import {homeRoutes} from './app-routing/home-routes';
 import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
+import {MatSelectModule} from '@angular/material/select';
 
 //import { BoardComponent } from './components/board/board.component';
 
@@ -56,7 +59,7 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     SideNavComponent,
     OverviewComponent,
     BoardComponent,
-    //BoardComponent,
+    ProjectDialogComponent,
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -81,7 +84,9 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    RouterModule.forChild(homeRoutes)
+    RouterModule.forChild(homeRoutes),
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [
     LoginRegisterService,

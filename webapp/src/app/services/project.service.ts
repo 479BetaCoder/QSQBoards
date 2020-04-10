@@ -51,10 +51,11 @@ export class ProjectService {
       return 
   }
 
-  getProject(){
-    return this.project1;
+  createNewProject(body: any): Observable<any> {
+    return this._http.post(baseURL + '/projects', body, {
+      observe: 'body'
+   });
   }
-
    // Error handling
    errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';
