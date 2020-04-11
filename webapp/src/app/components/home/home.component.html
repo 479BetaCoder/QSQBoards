@@ -1,27 +1,27 @@
 <app-header></app-header>
-
+<div class="topButtons">
   <button  class="mat-raised-button mat-primary projectButton" (click)="openProjectDialog()"><mat-icon>add</mat-icon>New Project</button>
   <div class="search">
     <span class="fa fa-search"></span>
     <input placeholder="Filter Projects" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}">
-  </div><br><br><br>
+  </div>
+</div><br><br><br>
   <div class="cardContainer">
     
         <div *ngIf="!(projects?.length > 0)">
             <p>No Projects available! Click on New Project button to create a new project</p>
         </div>
         <div *ngIf="projects?.length > 0">
-            <mat-card class="card-picture" *ngFor="let project of projects | projectFilter:searchTerm">
-            <mat-card-title >
-                <span>{{project.title}}</span>
+            <mat-card class="card" onclick="doStuff()" *ngFor="let project of projects | projectFilter:searchTerm">
+              
+            <mat-card-title class="card-container-left">
+              <div id="profileImage" [ngStyle]="{'background': getRandomColor()}">{{project.title.charAt(0).toUpperCase()}}</div>
+                <span class="projectTitle">{{project.title}}</span>
               </mat-card-title>
         
               <mat-card-content>
                 {{project.description}}
               </mat-card-content>
-              <mat-card-actions>
-                  <button class="mat-raised-button mat-primary">Open Project</button>
-              </mat-card-actions>
             </mat-card>
         </div>
   </div>

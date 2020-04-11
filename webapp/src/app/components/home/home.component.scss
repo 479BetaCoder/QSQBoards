@@ -47,7 +47,7 @@
 
   mat-card{
     text-align: center;
-    width: 250px;
+    width: 275px;
     border: 10px;
     margin-left: 100px;
     margin-bottom: 50px;
@@ -61,6 +61,10 @@ body { margin: 30px; }
   position: relative;
   color: #aaa;
   font-size: 16px;
+}
+
+.card:hover{
+  cursor: pointer;
 }
 
 .search input {
@@ -80,4 +84,33 @@ body { margin: 30px; }
   margin-top: 5px;
   top: 10px;
   left: 10px;
+}
+.card-container-left{
+  display: inline;
+  margin-left: -10px;
+  
+}
+#profileImage {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  //background: #512DA8;
+  font-size: 35px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  margin: 20px 0;
+}
+
+.projectTitle{
+  margin-left: 20px;
+}
+
+mat-card-content{
+  min-height: 50px;
+}
+
+.topButtons{
+  padding: 20px;
 }
