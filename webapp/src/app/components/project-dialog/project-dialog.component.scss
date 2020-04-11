@@ -13,6 +13,14 @@ mat-form-field{
     width: 500px;
 }
 
+.searchUser{
+    width: 200px;
+    border: 2px;
+    border-color: black;
+    margin: 4px;
+
+}
+
 .avatar {
     vertical-align: middle;
     width: 35px;
@@ -22,4 +30,32 @@ mat-form-field{
 
   button{
       margin: 4px;
+  }
+
+  @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+  body { margin: 30px; }
+  .search {
+      margin: 4px;
+    position: relative;
+    color: #aaa;
+    font-size: 16px;
+  }
+  
+  .search input {
+    margin-top: 5px;
+    height: 32px;
+  
+    background: #fcfcfc;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+  }
+  
+  .search input { text-indent: 32px;}
+  .search .fa-search { 
+    vertical-align: middle;
+    position: absolute;
+    margin-top: 5px;
+    top: 10px;
+    left: 10px;
   }

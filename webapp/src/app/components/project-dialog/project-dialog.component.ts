@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {User} from '../../models/user';
@@ -15,6 +15,7 @@ export class ProjectDialogComponent implements OnInit {
   emptyImgUrl:string='../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
+  searchTerm: string;
   dialogTitle: string;
   update: boolean;
   projectId: string;

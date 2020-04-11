@@ -16,6 +16,7 @@ import {AuthenticationService} from "../../auth/authentication.service";
 export class HomeComponent implements OnInit {
 
   projects: Project[];
+  searchTerm : string;
   constructor(private projectService: ProjectService, private projectDialog: MatDialog, private router: Router,
               private authService: AuthenticationService) {
     this.projectService.getProjects().subscribe(items => {
@@ -40,4 +41,10 @@ export class HomeComponent implements OnInit {
 
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
 }
+
+getRandomColor() {
+  var color = Math.floor(0x1000000 * Math.random()).toString(16);
+  return '#' + ('000000' + color).slice(-6);
+  }
+
 }
