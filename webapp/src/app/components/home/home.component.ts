@@ -15,6 +15,7 @@ import {AuthenticationService} from "../../auth/authentication.service";
 export class HomeComponent implements OnInit {
 
   projects: Project[];
+  searchTerm : string;
   constructor(private projectService: ProjectService, private projectDialog: MatDialog, private router: Router,
               private authService: AuthenticationService) {
     this.projectService.getProjects().subscribe(items => {

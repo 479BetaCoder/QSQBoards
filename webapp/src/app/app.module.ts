@@ -41,6 +41,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
 import {UserFilterPipe}  from './shared/user-filter.pipe';
+import {ProjectFilterPipe} from './shared/project-filter.pipe';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {UserFilterPipe}  from './shared/user-filter.pipe';
     SideNavComponent,
     BoardComponent,
     ProjectDialogComponent,
-    UserFilterPipe
+    UserFilterPipe,
+    ProjectFilterPipe
     // UserDashboardComponent,
     // MainDeskComponent
   ],
