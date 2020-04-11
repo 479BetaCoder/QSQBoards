@@ -40,6 +40,7 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
 import {MatDialogModule} from "@angular/material/dialog";
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
+import {UserFilterPipe}  from './shared/user-filter.pipe';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import {MatSelectModule} from '@angular/material/select';
     SideNavComponent,
     BoardComponent,
     ProjectDialogComponent,
+    UserFilterPipe
     // UserDashboardComponent,
     // MainDeskComponent
   ],

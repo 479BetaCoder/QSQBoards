@@ -24,8 +24,10 @@
     <mat-form-field>
         <mat-label>Select Users</mat-label>
         <mat-select formControlName="members" multiple>
-          
-          <mat-option *ngFor="let user of allUsers" [value]="user.userName">
+          <div>
+            <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" />
+          </div>
+          <mat-option *ngFor="let user of allUsers | userFilter:searchTerm" [value]="user.userName">
             <img class="avatar"[src]="user.image!= null ? user.Image : emptyImgUrl">{{user.userName}}</mat-option>
         </mat-select>
       </mat-form-field>
