@@ -1,5 +1,5 @@
 <app-header></app-header>
-<!--<app-side-nav></app-side-nav>-->
+<app-side-nav></app-side-nav>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
     <mat-card class="overview-card">
         <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
@@ -26,7 +26,7 @@
             </mat-card-content>
           </mat-card-content>
           <mat-card-actions>
-              <button (click)="openProjectDialog(project)">Edit</button>
+              <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
           </mat-card-actions>
         </mat-card>
 </div>
