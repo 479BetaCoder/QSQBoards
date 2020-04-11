@@ -37,7 +37,6 @@ import { BoardComponent } from './components/project/board/board.component';
 //import { BoardComponent } from './components/board/board.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {RouterModule} from '@angular/router';
-import {homeRoutes} from './app-routing/home-routes';
 import {navRoutes} from './app-routing/nav-bar-routes';
 import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
 import {MatDialogModule} from "@angular/material/dialog";
@@ -88,7 +87,6 @@ import {ProjectFilterPipe} from './shared/project-filter.pipe';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    RouterModule.forChild(homeRoutes),
     RouterModule.forChild(navRoutes),
     MatDialogModule,
     MatSelectModule
