@@ -44,6 +44,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {UserFilterPipe}  from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
 import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatLineModule} from "@angular/material/core";
+import {routes} from "./app-routing/routes";
+import { NewUserStoryComponent } from './components/project/new-user-story/new-user-story.component';
 
 
 @NgModule({
@@ -60,7 +64,8 @@ import {ProjectDashboardComponent} from './components/project/project-dashboard/
     ProjectDialogComponent,
     UserFilterPipe,
     ProjectFilterPipe,
-    ProjectDashboardComponent
+    ProjectDashboardComponent,
+    NewUserStoryComponent
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -85,9 +90,12 @@ import {ProjectDashboardComponent} from './components/project/project-dashboard/
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
+    RouterModule.forRoot(routes),
     RouterModule.forChild(navRoutes),
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule,
+    MatLineModule
   ],
   providers: [
     UserService,
