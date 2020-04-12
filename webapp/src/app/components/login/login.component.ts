@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 // import { Socialusers } from '../Models/socialusers'
 // import { SocialloginService } from '../Service/sociallogin.service';
 import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
-import {AuthenticationService} from '../../auth/authentication.service';
+import { AuthenticationService } from '../../auth/authentication.service';
+import * as constantRoutes from '../../shared/constants';
 
 @Component({
   selector: 'app-login',
@@ -75,7 +76,7 @@ export class LoginComponent implements OnInit {
         data => {
           this.authService.userProfileSubject$.next(data);
           sessionStorage.setItem('User', JSON.stringify(data));
-          loginForFirst ?  this._router.navigate(['/profile']) : this._router.navigate(['/home']);
+          loginForFirst ? this._router.navigate([constantRoutes.registerRoute]) : this._router.navigate([constantRoutes.homeRoute]);
         },
         error => { }
       );
@@ -88,7 +89,7 @@ export class LoginComponent implements OnInit {
           data => {
             this.authService.userProfileSubject$.next(data);
             sessionStorage.setItem('User', JSON.stringify(data));
-            this._router.navigate(['/home']);
+            this._router.navigate([constantRoutes.homeRoute]);
           },
           error => { }
         );
@@ -96,6 +97,6 @@ export class LoginComponent implements OnInit {
   }
 
   movetoregister() {
-    this._router.navigateByUrl('/register', { relativeTo: this._activatedRoute });
+    this._router.navigateByUrl(constantRoutes.registerRoute, { relativeTo: this._activatedRoute });
   }
 }

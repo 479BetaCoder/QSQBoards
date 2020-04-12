@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {User} from '../../models/user';
-import {ProjectService} from '../../services/project.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { User } from '../../models/user';
+import { ProjectService } from '../../services/project.service';
 
 
 @Component({
@@ -11,20 +11,20 @@ import {ProjectService} from '../../services/project.service';
   styleUrls: ['./project-dialog.component.scss']
 })
 export class ProjectDialogComponent implements OnInit {
-  emptyImgUrl:string='../../../assets/blank-profile-picture.png';
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
   searchTerm: string;
-  constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<ProjectDialogComponent>,
-  private _projectService:ProjectService) { 
+  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
+    private _projectService: ProjectService) {
     this._projectService.getAllUsers().subscribe(items => {
       this.allUsers = items;
     })
     this.projectForm = new FormGroup({
       title: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      members: new FormControl(null,null),
-      status: new FormControl("new",null)
+      members: new FormControl(null, null),
+      status: new FormControl("new", null)
     });
   }
 
@@ -36,7 +36,7 @@ export class ProjectDialogComponent implements OnInit {
   }
 
   save() {
-    
+
     console.log(this.projectForm.value);
 
     if (this.projectForm.valid) {
@@ -49,9 +49,9 @@ export class ProjectDialogComponent implements OnInit {
         );
     }
     this.dialogRef.close(this.projectForm.value);
-}
+  }
 
-close() {
+  close() {
     this.dialogRef.close();
-}
+  }
 }

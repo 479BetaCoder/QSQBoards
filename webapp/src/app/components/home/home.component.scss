@@ -1,61 +1,88 @@
 .img {
-    width: 100%;
-    margin-bottom: 18%;
-  }
-  .card-picture {
-   // width: 23%;
-    margin-bottom: 2%;
-  }
-  .container {
-    min-height: 100%;
-    width: 100%;
-  }
-  .search-form {
-    width: 90%;
-  }
+  width: 100%;
+  margin-bottom: 18%;
+}
+.card-picture {
+  // width: 23%;
+  margin-bottom: 2%;
+}
+.container {
+  min-height: 100%;
+  width: 100%;
+}
+.search-form {
+  width: 90%;
+}
 
-  .projectButton{
-    float: right;
-    margin: 5px;
-    margin-right: 50px;
-  }
+.projectText {
+  color: white;
+}
 
-  mat-icon{
-    vertical-align: middle;
-  }
+.sideNavItem {
+  background-color: black;
+}
 
-  .searchFilter{
-    float: right;
-    vertical-align: middle;
-    margin-top: 5px;
-  }
-  .searchProject{
-    vertical-align: middle;
-    margin-top: 5px;
-    float: right;
-    margin: 5px;
-    font-size: 20px;
-    width: 150px;
-  }
-  .cardContainer{
-    display: inline-block;
-  }
+.mat-list-option:hover,
+.mat-list-option:focus,
+.mat-nav-list .mat-list-item:hover,
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:hover,
+.mat-action-list .mat-list-item:focus {
+  background: black !important;
+}
 
-  button{
-   float: center;
-  }
+.sideNavContainer {
+  width: 200px !important;
+}
 
-  mat-card{
-    text-align: center;
-    width: 275px;
-    border: 10px;
-    margin-left: 100px;
-    margin-bottom: 50px;
-    float: left;
-  }
+.navContainer {
+  top: 80px !important;
+}
 
-  @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
-body { margin: 30px; }
+.projectButton {
+  float: right;
+  margin: 5px;
+  margin-right: 50px;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.searchFilter {
+  float: right;
+  vertical-align: middle;
+  margin-top: 5px;
+}
+.searchProject {
+  vertical-align: middle;
+  margin-top: 5px;
+  float: right;
+  margin: 5px;
+  font-size: 20px;
+  width: 150px;
+}
+.cardContainer {
+  display: inline-block;
+}
+
+button {
+  float: center;
+}
+
+mat-card {
+  text-align: center;
+  width: 275px;
+  border: 10px;
+  margin-left: 100px;
+  margin-bottom: 50px;
+  float: left;
+}
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+body {
+  margin: 30px;
+}
 .search {
   float: right;
   position: relative;
@@ -63,7 +90,7 @@ body { margin: 30px; }
   font-size: 16px;
 }
 
-.card:hover{
+.card:hover {
   cursor: pointer;
 }
 
@@ -77,18 +104,19 @@ body { margin: 30px; }
   box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
 
-.search input { text-indent: 32px;}
-.search .fa-search { 
+.search input {
+  text-indent: 32px;
+}
+.search .fa-search {
   vertical-align: middle;
   position: absolute;
   margin-top: 5px;
   top: 10px;
   left: 10px;
 }
-.card-container-left{
+.card-container-left {
   display: inline;
   margin-left: -10px;
-  
 }
 #profileImage {
   display: inline-block;
@@ -103,14 +131,14 @@ body { margin: 30px; }
   margin: 20px 0;
 }
 
-.projectTitle{
+.projectTitle {
   margin-left: 20px;
 }
 
-mat-card-content{
+mat-card-content {
   min-height: 50px;
 }
 
-.topButtons{
+.topButtons {
   padding: 20px;
 }
