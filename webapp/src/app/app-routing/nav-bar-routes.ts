@@ -3,12 +3,12 @@ import {OverviewComponent} from '../components/project/overview/overview.compone
 import {SideNavComponent} from '../components/side-nav/side-nav.component';
 import {HomeComponent} from '../components/home/home.component';
 import { BoardComponent } from '../components/project/board/board.component';
+import {ProjectDashboardComponent} from '../components/project/project-dashboard/project-dashboard.component';
 
 export const navRoutes: Routes = [
-    { path : 'home', component: SideNavComponent,
+    { path : ':title', component: ProjectDashboardComponent,
     children: [
-        { path: '', component: HomeComponent },
-        { path : ':title', component: OverviewComponent},
-        { path : ':title/board', component: BoardComponent}
+        { path : '', component: OverviewComponent},
+        { path : 'board', component: BoardComponent}
     ]}
 ];

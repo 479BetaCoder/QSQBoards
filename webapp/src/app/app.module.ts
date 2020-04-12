@@ -34,24 +34,21 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule, MatNavList} from '@angular/material/list';
 import { OverviewComponent } from './components/project/overview/overview.component';
 import { BoardComponent } from './components/project/board/board.component';
-//import { BoardComponent } from './components/board/board.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {RouterModule} from '@angular/router';
 import {navRoutes} from './app-routing/nav-bar-routes';
 import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from '@angular/material/dialog';
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
 import {UserFilterPipe}  from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
-
-//import { BoardComponent } from './components/board/board.component';
+import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    // LoginComponent,
     RegisterComponent,
     LoginComponent,
     HomeComponent,
@@ -62,7 +59,8 @@ import {ProjectFilterPipe} from './shared/project-filter.pipe';
     BoardComponent,
     ProjectDialogComponent,
     UserFilterPipe,
-    ProjectFilterPipe
+    ProjectFilterPipe,
+    ProjectDashboardComponent
     // UserDashboardComponent,
     // MainDeskComponent
   ],
