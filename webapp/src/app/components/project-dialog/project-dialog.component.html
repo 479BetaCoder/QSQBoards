@@ -6,7 +6,6 @@
     <div>
       <mat-form-field>
         <span>Title<i class="mandatoryField">*</i></span>
-
         <input class="title" type="text" formControlName="title" matInput>
       </mat-form-field>
       <span class="mandatoryField" *ngIf="isValid('title')">Title cannot be blank</span>
@@ -14,26 +13,37 @@
     <div>
       <mat-form-field>
         <span>Description<i class="mandatoryField">*</i></span>
-        <textarea cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="10" formControlName="description"
-          matInput></textarea>
+        <textarea class="projectDesc" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="10"
+          formControlName="description" matInput></textarea>
       </mat-form-field>
       <span class="mandatoryField" *ngIf="isValid('description')">Description cannot be blank</span>
     </div>
     <div>
       <mat-form-field>
-        <mat-label>Select Users</mat-label>
-        <mat-select formControlName="members" multiple>
+        <mat-label>Select Members</mat-label>
+        <mat-select [formControl]="members" placeholder="Select Members" multiple>
           <div class="search">
-            <span class="fa fa-search"></span>
+            <span class="fa fa-search searchIcn"></span>
             <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm"
               [ngModelOptions]="{standalone: true}" />
           </div>
-          <!-- <div>
-            <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" />
-          </div> -->
-          <mat-option *ngFor="let user of allUsers | userFilter:searchTerm" [value]="user.userName">
+          <mat-select-trigger>
+            <mat-chip-list>
+              <mat-chip class="memberChip" *ngFor="let user of members.value" [removable]="true"
+                (removed)="onMemberRemoved(user)">
+                <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+                  onerror="this.src='../../../assets/blank-profile-picture.png'">
+                {{ user.userName }}
+                <mat-icon class="icnRemove" matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-select-trigger>
+          <mat-option *ngFor="let user of allUsers | userFilter:searchTerm" [value]="user">
             <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
-              onerror="this.src='../../../assets/blank-profile-picture.png'">{{user.userName}}</mat-option>
+              onerror="this.src='../../../assets/blank-profile-picture.png'">
+            {{user.userName}}
+          </mat-option>
+
         </mat-select>
       </mat-form-field>
     </div>

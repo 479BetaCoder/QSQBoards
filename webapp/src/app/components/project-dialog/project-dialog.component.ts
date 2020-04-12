@@ -14,6 +14,7 @@ export class ProjectDialogComponent implements OnInit {
   emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
   allUsers: User[];
+  members = new FormControl([]);
   searchTerm: string;
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
     private _projectService: ProjectService) {
@@ -23,8 +24,8 @@ export class ProjectDialogComponent implements OnInit {
     this.projectForm = new FormGroup({
       title: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      members: new FormControl(null, null),
-      status: new FormControl("new", null)
+      members: this.members,
+      status: new FormControl("New", null)
     });
   }
 
@@ -35,20 +36,37 @@ export class ProjectDialogComponent implements OnInit {
     return this.projectForm.get(controlName).invalid && this.projectForm.get(controlName).touched;
   }
 
+  onMemberRemoved(member: User) {
+    const members = this.members.value as User[];
+    this.removeFirst(members, member);
+    this.members.setValue(members); // To trigger change detection
+  }
+
+  private removeFirst<T>(array: T[], toRemove: T): void {
+    const index = array.indexOf(toRemove);
+    if (index !== -1) {
+      array.splice(index, 1);
+    }
+  }
+
+  modifyMembersValue(members) {
+    let memberUserNames = [];
+    members.forEach(member => memberUserNames.push(member.userName))
+    return memberUserNames;
+  }
+
   save() {
-
-    console.log(this.projectForm.value);
-
     if (this.projectForm.valid) {
+      const validMembers = this.modifyMembersValue(this.projectForm.value.members);
+      this.projectForm.value.members = validMembers;
       this._projectService.createNewProject(this.projectForm.value)
         .subscribe(
-          data => {
-            console.log(data);
+          (_data) => {
+            this.dialogRef.close();
           },
           error => { }
         );
     }
-    this.dialogRef.close(this.projectForm.value);
   }
 
   close() {

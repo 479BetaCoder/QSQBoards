@@ -14,8 +14,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
-      // this.data = JSON.parse(sessionStorage.getItem('User'));
-      this.authService.userProfile$.subscribe(prof => this.profile = prof);
+      this.profile = JSON.parse(sessionStorage.getItem('User'));
+      //this.authService.userProfile$.subscribe(prof => this.profile = prof);
     }
   }
   logoutProfile(): void {

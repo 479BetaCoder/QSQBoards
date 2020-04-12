@@ -14,6 +14,18 @@
   width: 90%;
 }
 
+// .searchContainer {
+//   width: 180px;
+// }
+
+// .projectFilter {
+//   width: 100%;
+// }
+
+.searchIcn {
+  color: #da4453;
+}
+
 .projectText {
   color: white;
 }
@@ -43,6 +55,7 @@
   float: right;
   margin: 5px;
   margin-right: 50px;
+  margin-left: 15px;
 }
 
 mat-icon {
@@ -88,6 +101,7 @@ body {
   position: relative;
   color: #aaa;
   font-size: 16px;
+  width: 180px;
 }
 
 .card:hover {
@@ -96,8 +110,8 @@ body {
 
 .search input {
   margin-top: 5px;
-  height: 32px;
-
+  height: 34px;
+  width: 100%;
   background: #fcfcfc;
   border: 1px solid #aaa;
   border-radius: 5px;
@@ -118,12 +132,17 @@ body {
   display: inline;
   margin-left: -10px;
 }
+mat-card {
+  min-width: 400px;
+  padding: 20px;
+  width: auto;
+  height: 180px;
+}
 #profileImage {
   display: inline-block;
-  width: 50px;
+  width: 60px;
   height: 50px;
   border-radius: 10%;
-  //background: #512DA8;
   font-size: 35px;
   color: #fff;
   text-align: center;

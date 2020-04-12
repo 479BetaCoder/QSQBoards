@@ -45,8 +45,8 @@ export class HomeComponent implements OnInit {
   getRandomColor(index) {
     const totalProjects = this.projects.length
     const minIndex = index / totalProjects;
-    const color = Math.floor(0x1000000 * minIndex).toString(16);
-    return '#' + ('000000' + color).slice(-6);
+    const color = Math.ceil(0x101111 * minIndex).toString(16);
+    return '#' + ('d9a16b' + color).slice(-6);
   }
 
   getProjectTitleAvatar(project) {
