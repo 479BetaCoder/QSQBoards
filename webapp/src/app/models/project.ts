@@ -1,10 +1,10 @@
 import {User} from "./User";
 
-export interface Project {
+export class Project {
     ProjectId : string;
     Title : string;
     Owner : User;
-    Description: string,
+    Description: string;
     Members? : User[];
     Status : string;
 }

@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+    <mat-card class="overview-card">
+        <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+            <span fxFlex="100%">{{project.title}}</span>
+          </mat-card-title>
+    
+          <mat-card-content>
+            {{project.description}}
+          </mat-card-content>
+          <mat-card-content>
+              Status - 
+            {{project.status}}
+          </mat-card-content>
+          <mat-card-content>
+              Owner -
+            {{project.owner}}
+          </mat-card-content>
+          <mat-card-content>
+            Team Members -
+            <!--<mat-list>
+              <mat-list-item *ngFor="let member of project.Members">
+                <h3 matLine>  {{member.userName}} </h3>
+              </mat-list-item>
+            </mat-list>-->
+          </mat-card-content>
+          <mat-card-actions>
+              <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+</div>
