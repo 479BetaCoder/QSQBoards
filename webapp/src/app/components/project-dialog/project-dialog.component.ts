@@ -1,9 +1,12 @@
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { User } from '../../models/user';
+import { User } from '../../store/models/user';
 import { ProjectService } from '../../services/project.service';
-import { Project } from '../../models/project';
+import * as ProjectActions from '../../store/actions/project.action';
+import Project from '../../store/models/project';
+import ProjectState from '../../store/states/project.state';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -22,7 +25,9 @@ export class ProjectDialogComponent implements OnInit {
   projectId: string;
 
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
-    private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data) {
+    private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data,
+    private store: Store<{ projects: ProjectState }>
+  ) {
     if (data == null) {
       this.dialogTitle = "New Project";
       this._projectService.getAllUsers().subscribe(items => {
@@ -31,8 +36,8 @@ export class ProjectDialogComponent implements OnInit {
       this.projectForm = new FormGroup({
         title: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
-        members: new FormControl(null, null),
-        status: new FormControl("new", null)
+        members: this.members,
+        status: new FormControl("NEW", null)
       });
     } else {
       this.dialogTitle = "Update Project";
@@ -72,15 +77,23 @@ export class ProjectDialogComponent implements OnInit {
 
   modifyMembersValue(members) {
     let memberUserNames = [];
-    members.forEach(member => memberUserNames.push(member.userName))
+    if (members.length > 0) {
+      members.forEach(member => memberUserNames.push(member.userName))
+    }
     return memberUserNames;
+  }
+
+  createProject(project) {
+    const todo: Project = project;
+    this.store.dispatch(ProjectActions.BeginCreateProject({ payload: todo }));
   }
 
   save() {
     if (this.projectForm.valid) {
+
       const validMembers = this.modifyMembersValue(this.projectForm.value.members);
       this.projectForm.value.members = validMembers;
-      this._projectService.createNewProject(this.projectForm.value)
+      this.createProject(this.projectForm.value)
       if (this.update) {
         this._projectService.updateProject(this.projectForm.value, this.projectId)
           .subscribe(

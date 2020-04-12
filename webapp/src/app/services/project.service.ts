@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { baseURL } from '../shared/baseurl';
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { Project } from "../models/project";
-import { User } from "../models/user";
+import Project from "../store/models/project";
+import { User } from "../store/models/user";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Injectable({

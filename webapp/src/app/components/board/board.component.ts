@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../../models/task';
+import { Task } from '../../store/models/task';
 
 @Component({
   selector: 'app-board',

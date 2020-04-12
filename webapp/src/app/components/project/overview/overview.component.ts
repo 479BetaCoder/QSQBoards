@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Project } from '../../../models/project';
+import Project from '../../../store/models/project';
 import { ProjectService } from '../../../services/project.service';
 import { ActivatedRoute } from '@angular/router';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {ProjectDialogComponent} from '../../project-dialog/project-dialog.component';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { ProjectDialogComponent } from '../../project-dialog/project-dialog.component';
 
 @Component({
   selector: 'app-overview',
@@ -16,7 +16,7 @@ export class OverviewComponent implements OnInit {
   project: any;
   projects: Project[];
 
-  constructor(private projectService: ProjectService, private activatedroute:ActivatedRoute, private projectDialog: MatDialog) { 
+  constructor(private projectService: ProjectService, private activatedroute: ActivatedRoute, private projectDialog: MatDialog) {
     /*this.projectService.getProjects().subscribe(items => {
       this.projects = items;
     });
@@ -42,8 +42,8 @@ export class OverviewComponent implements OnInit {
       description: project.description,
       members: project.members,
       status: project.status
-  };
+    };
 
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
-}
+  }
 }

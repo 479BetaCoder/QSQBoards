@@ -45,6 +45,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
+import { ProjectReducer } from './store/reducers/project.reducer';
+import { StoreModule } from '@ngrx/store';
+import { ProjectEffects } from './effects/project.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 //import { BoardComponent } from './components/board/board.component';
 
@@ -92,7 +96,9 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     MatGridListModule,
     RouterModule.forChild(navRoutes),
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    StoreModule.forRoot({ projects: ProjectReducer }),
+    EffectsModule.forRoot([ProjectEffects])
   ],
   providers: [
     UserService,

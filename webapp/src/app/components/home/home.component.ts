@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from '../../models/project';
-import { ProjectService } from '../../services/project.service';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as ProjectActions from '../../store/actions/project.action';
+import Project from '../../store/models/project';
+import ProjectState from '../../store/states/project.state';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ProjectDialogComponent } from '../project-dialog/project-dialog.component';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../auth/authentication.service";
 import * as constantRoutes from '../../shared/constants';
-
-
 
 @Component({
   selector: 'app-home',
@@ -15,20 +17,33 @@ import * as constantRoutes from '../../shared/constants';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  projects: Project[];
   searchTerm: string;
-  constructor(private projectService: ProjectService, private projectDialog: MatDialog, private router: Router,
-    private authService: AuthenticationService) {
-    this.projectService.getProjects().subscribe(items => {
-      this.projects = items;
-    });
+  project$: Observable<ProjectState>;
+  ProjectSubscription: Subscription;
+  projectList: Project[] = [];
+  projectsError: Error = null;
+
+  constructor(private projectDialog: MatDialog, private router: Router,
+    private authService: AuthenticationService,
+    private store: Store<{ projects: ProjectState }>
+  ) {
+    this.project$ = store.pipe(select('projects'));
   }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
       const user = JSON.parse(sessionStorage.getItem('User'));
       this.authService.userProfileSubject$.next(user);
+      this.ProjectSubscription = this.project$
+        .pipe(
+          map(res => {
+            this.projectList = res.projects;
+            this.projectsError = res.projectsError;
+          })
+        )
+        .subscribe();
+
+      this.store.dispatch(ProjectActions.BeginGetProjectsAction());
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
@@ -44,7 +59,7 @@ export class HomeComponent implements OnInit {
   }
 
   getRandomColor(index) {
-    const totalProjects = this.projects.length
+    const totalProjects = this.projectList.length
     const minIndex = index / totalProjects;
     const color = Math.ceil(0x101111 * minIndex).toString(16);
     return '#' + ('d9a16b' + color).slice(-6);
@@ -56,6 +71,12 @@ export class HomeComponent implements OnInit {
       return projAvatarArr[0].charAt(0).concat(projAvatarArr[1].charAt(0)).toUpperCase();
     } else {
       return projAvatarArr[0].charAt(0).toUpperCase();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.ProjectSubscription) {
+      this.ProjectSubscription.unsubscribe();
     }
   }
 
