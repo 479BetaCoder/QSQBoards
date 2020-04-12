@@ -6,11 +6,13 @@ import {catchError} from "rxjs/operators";
 import {Project} from "../models/project";
 import {User} from "../models/user";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Task } from "../models/task";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
+
 
   user1: User = {
     UserName : "Dileep"
@@ -38,8 +40,39 @@ export class ProjectService {
       this.user1,this.user2
     ]
   }
+
+  task1: Task = {
+    title : "Dummy Task 1",
+    description : "Dummy Task 1 Description",
+    comments: [
+        {
+          text: "comment1 for task 1",
+          postedBy: this.user1
+        }
+      ],
+    status : "New",
+    priority: 1,
+    storyId: "storyId",
+    assignee: this.user2
+}
+task2: Task = {
+  title : "Dummy Task 2",
+  description : "Dummy Task 12Description",
+  comments: [
+      {
+        text: "comment1 for task 2",
+        postedBy: this.user2
+      }
+    ],
+  status : "New",
+  priority: 5,
+  storyId: "storyId",
+  assignee: this.user1
+}
+
   static projects : Project[];
   projectObservables: any;
+
 
   constructor(private _http: HttpClient) { }
   headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -78,6 +111,11 @@ export class ProjectService {
   getAllUsers() : Observable<Array<User>>{
     const users = this._http.get<Array<User>>(baseURL + '/users');
     return users;
+  }
+
+  getPendingTasks(){
+    const tasks = [this.task1, this.task2];
+    return tasks;
   }
    // Error handling
    errorHandling(error: HttpErrorResponse) {

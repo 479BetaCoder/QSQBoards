@@ -45,6 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {UserFilterPipe}  from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatTableModule} from '@angular/material/table';
+import { BacklogComponent } from './components/project/backlog/backlog.component';
 
 //import { BoardComponent } from './components/board/board.component';
 
@@ -63,7 +65,8 @@ import { MatChipsModule } from '@angular/material/chips';
     BoardComponent,
     ProjectDialogComponent,
     UserFilterPipe,
-    ProjectFilterPipe
+    ProjectFilterPipe,
+    BacklogComponent
     // UserDashboardComponent,
     // MainDeskComponent
   ],
@@ -91,7 +94,8 @@ import { MatChipsModule } from '@angular/material/chips';
     RouterModule.forChild(navRoutes),
     MatDialogModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTableModule
   ],
   providers: [
     UserService,

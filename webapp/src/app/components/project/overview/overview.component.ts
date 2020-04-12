@@ -1,15 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Project } from '../../../models/project';
 import { ProjectService } from '../../../services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ProjectDialogComponent} from '../../project-dialog/project-dialog.component';
 import {ThemePalette} from '@angular/material/core';
-
-export interface ChipColor {
-  name: string;
-  color: ThemePalette;
-}
 
 @Component({
   selector: 'app-overview',
@@ -18,17 +13,11 @@ export interface ChipColor {
 })
 export class OverviewComponent implements OnInit {
 
+  @Output() titleOutput = new EventEmitter();
   projectTitle: String;
   project: any;
   projects: Project[];
   
-  availableColors: ChipColor[] = [
-    {name: 'none', color: undefined},
-    {name: 'Primary', color: 'primary'},
-    {name: 'Accent', color: 'accent'},
-    {name: 'Warn', color: 'warn'}
-  ];
-
   constructor(private projectService: ProjectService, private activatedroute:ActivatedRoute, private projectDialog: MatDialog) { 
     /*this.projectService.getProjects().subscribe(items => {
       this.projects = items;
@@ -37,10 +26,12 @@ export class OverviewComponent implements OnInit {
     */
     this.projectTitle = this.activatedroute.snapshot.params.title
     this.project = this.projectService.getProject(this.projectTitle);
+    this.titleOutput.emit(this.projectTitle);
     //alert(this.projectTitle);
   }
 
   ngOnInit(): void {
+
   }
 
   openProjectDialog(project: any) {
