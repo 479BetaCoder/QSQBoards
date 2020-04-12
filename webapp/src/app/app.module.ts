@@ -32,10 +32,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatNavList } from '@angular/material/list';
-import { BoardComponent } from './components/board/board.component';
+import { OverviewComponent } from './components/project/overview/overview.component';
+import { BoardComponent } from './components/project/board/board.component';
+//import { BoardComponent } from './components/board/board.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RouterModule } from '@angular/router';
-import { homeRoutes } from './app-routing/home-routes';
+import { navRoutes } from './app-routing/nav-bar-routes';
 import { TokenInterceptorService } from './interceptors/TokenInterceptorService';
 import { MatDialogModule } from "@angular/material/dialog";
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
@@ -43,6 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
+
+//import { BoardComponent } from './components/board/board.component';
 
 
 @NgModule({
@@ -55,6 +59,7 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     HeaderComponent,
     UserProfileComponent,
     SideNavComponent,
+    OverviewComponent,
     BoardComponent,
     ProjectDialogComponent,
     UserFilterPipe,
@@ -85,7 +90,7 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    RouterModule.forChild(homeRoutes),
+    RouterModule.forChild(navRoutes),
     MatDialogModule,
     MatSelectModule
   ],
