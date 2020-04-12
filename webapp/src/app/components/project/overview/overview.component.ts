@@ -4,6 +4,12 @@ import { ProjectService } from '../../../services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ProjectDialogComponent} from '../../project-dialog/project-dialog.component';
+import {ThemePalette} from '@angular/material/core';
+
+export interface ChipColor {
+  name: string;
+  color: ThemePalette;
+}
 
 @Component({
   selector: 'app-overview',
@@ -15,6 +21,13 @@ export class OverviewComponent implements OnInit {
   projectTitle: String;
   project: any;
   projects: Project[];
+  
+  availableColors: ChipColor[] = [
+    {name: 'none', color: undefined},
+    {name: 'Primary', color: 'primary'},
+    {name: 'Accent', color: 'accent'},
+    {name: 'Warn', color: 'warn'}
+  ];
 
   constructor(private projectService: ProjectService, private activatedroute:ActivatedRoute, private projectDialog: MatDialog) { 
     /*this.projectService.getProjects().subscribe(items => {

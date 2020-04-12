@@ -44,6 +44,7 @@ import { ProjectDialogComponent } from './components/project-dialog/project-dial
 import {MatSelectModule} from '@angular/material/select';
 import {UserFilterPipe}  from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
+import { MatChipsModule } from '@angular/material/chips';
 
 //import { BoardComponent } from './components/board/board.component';
 
@@ -89,7 +90,8 @@ import {ProjectFilterPipe} from './shared/project-filter.pipe';
     MatGridListModule,
     RouterModule.forChild(navRoutes),
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule
   ],
   providers: [
     UserService,

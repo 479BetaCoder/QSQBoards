@@ -1,30 +1,42 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-    <mat-card class="overview-card">
-        <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-            <span fxFlex="100%">{{project.title}}</span>
-          </mat-card-title>
-    
-          <mat-card-content>
-            {{project.description}}
-          </mat-card-content>
-          <mat-card-content>
-              Status - 
-            {{project.status}}
-          </mat-card-content>
-          <mat-card-content>
-              Owner -
-            {{project.owner}}
-          </mat-card-content>
-          <mat-card-content>
-            Team Members -
-            <!--<mat-list>
-              <mat-list-item *ngFor="let member of project.Members">
-                <h3 matLine>  {{member.userName}} </h3>
-              </mat-list-item>
-            </mat-list>-->
-          </mat-card-content>
-          <mat-card-actions>
-              <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
-          </mat-card-actions>
-        </mat-card>
+  <mat-toolbar>
+   <h1>
+    {{project.title}}
+   </h1>
+  </mat-toolbar>
+  <div class="container" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <mat-card fxFlex="0 1 calc(50% - 20px)" class="overview-card">
+      <mat-card-content class="content-title">
+          About the project
+      </mat-card-content>
+      <mat-card-content>
+        {{project.description}}
+      </mat-card-content>
+      <mat-card-content class="content-title">
+          Status 
+      </mat-card-content>
+      <mat-chip>
+        {{project.status}}
+      </mat-chip>
+      <mat-card-actions>
+          <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card fxFlex="0 1 calc(30% - 20px)" class="right-card">
+      <mat-card-content>
+        <div class="content-title">
+          Owner
+        </div>
+        <mat-chip class="mat-chip-list-stacked">
+          {{project.owner}}
+        </mat-chip>
+        <div class="content-title">
+          Team Members
+        </div>
+        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+          <mat-chip *ngFor="let member of project.members" >
+            {{member.userName}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
 </div>
