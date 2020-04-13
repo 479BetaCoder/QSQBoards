@@ -4,9 +4,10 @@ import {Board} from '../../../models/board.model';
 import {Column} from '../../../models/column.model';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
-import {Observable, Subject} from "rxjs";
-import {UserStoryService} from "../../../services/user-story.service";
-import {ProjectService} from "../../../services/project.service";
+import {Observable, Subject} from 'rxjs';
+import {UserStoryService} from '../../../services/user-story.service';
+import {ProjectService} from '../../../services/project.service';
+import UserStory from '../../../models/userStory';
 
 @Component({
   selector: 'app-board',
@@ -15,6 +16,9 @@ import {ProjectService} from "../../../services/project.service";
 })
 export class BoardComponent implements OnInit {
   allUserStories: Observable<any> = new Subject();
+  todoUserStories: UserStory[];
+  inProgressUserStories: UserStory[];
+  doneUserStories: UserStory[];
   projectId: string;
   todoColumn: Column;
   inProgressColumn: Column;
@@ -50,14 +54,23 @@ export class BoardComponent implements OnInit {
   drawTheBoard() {
     this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
     this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
+      this.todoUserStories = data.filter(item => item.priority === 'medium');
+      this.inProgressUserStories = data.filter(item => item.priority === 'low');
+      this.doneUserStories = data.filter(item => item.priority === 'high');
+      this.todoColumn = new Column('Todo', this.todoUserStories);
+      this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
+      this.doneColumn = new Column('Done', this.doneUserStories);
+    });
+    /*this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
+      let highPr = data.filter();
       this.todoColumn = new Column('Todo', data);
       this.inProgressColumn = new Column('In Progress', data);
       this.doneColumn = new Column('Done', data);
       this.board.columns.push(this.todoColumn, this.inProgressColumn, this.doneColumn);
-    });
+    });*/
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  dropInTodo(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -65,7 +78,31 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+      event.item.data.status = 'Todo';
       console.log(event.item);
+    }
+  }
+
+  dropInProgress(event: CdkDragDrop<UserStory[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      event.item.data.status = 'In Progress';
+      console.log(event.item);
+    }
+  }
+
+  dropDone(event: CdkDragDrop<UserStory[]>) {
+    if (event.previousContainer !== event.container) {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      event.item.data.status = 'Done';
+      console.log(event.item);
+    } else {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
   }
 

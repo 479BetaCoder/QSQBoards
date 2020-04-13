@@ -7,4 +7,5 @@ export default class UserStory {
   storyPoints: string;
   priority: string;
   tasks: string[];
+  comment: string[];
 }

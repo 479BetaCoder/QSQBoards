@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {baseURL} from '../shared/baseurl';
 import {catchError} from 'rxjs/operators';
+import UserStory from "../models/userStory";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class UserStoryService {
     );
   }
 
-  getAllUserStories(projectId): Observable<any>  {
+  getAllUserStories(projectId): Observable<Array<UserStory>>  {
+    // @ts-ignore
     return this.http.get(`${baseURL}/user-stories/${projectId}`);
   }
   // Error handling
