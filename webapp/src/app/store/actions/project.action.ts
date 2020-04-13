@@ -23,6 +23,7 @@ export const BeginCreateProject = createAction(
 
 export const SuccessCreateProject = createAction(
     '[ToDo] - Success Create Project',
+    props<{ payload: Project }>()
 );
 
 export const ErrorProjectAction = createAction('[Project] - Error', props<Error>());
