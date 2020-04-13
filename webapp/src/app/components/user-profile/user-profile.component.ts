@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
-import {AuthenticationService} from '../../auth/authentication.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { AuthenticationService } from '../../auth/authentication.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,18 +17,15 @@ export class UserProfileComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private qsqService: UserService,
     public authService: AuthenticationService,
-    private router: Router) {  }
+    private router: Router) { }
 
   ngOnInit() {
-    // const id = this.actRoute.snapshot.paramMap.get('id');
-    if (sessionStorage.getItem('User')) {
-      const user = JSON.parse(sessionStorage.getItem('User'));
-    } else {
+    if (!sessionStorage.getItem('User')) {
       this.router.navigateByUrl('');
     }
     this.updateForm = this.fb.group({
-      userName: [{value : '', disabled: true}, [Validators.required]],
-      emailId: [{value : '', disabled: true}, [Validators.required]],
+      userName: [{ value: '', disabled: true }, [Validators.required]],
+      emailId: [{ value: '', disabled: true }, [Validators.required]],
       password: ['', []],
       conPassword: ['', this.passValid]
     });

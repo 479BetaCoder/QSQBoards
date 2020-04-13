@@ -1,48 +1,48 @@
-<div class="formcontainer">
-    <div class="formbody">
-        <form  [formGroup]="myForm">
-            <div class="header">Register</div>
-            <div>
-                <mat-form-field >
-                    <input type="text" formControlName="emailId" matInput placeholder="Email" id="emailId">
-                </mat-form-field>
-                <span *ngIf="isValid('emailId')">Entered email is invalid</span>
-            </div>
-            <div>
-                <mat-form-field >
-                    <input type="text" formControlName="userName" matInput placeholder="Username" id="userName">
-                </mat-form-field>
-                <span *ngIf="isValid('userName')">Username is required</span>
-            </div>
-            <div>
-                <mat-form-field >
-                    <input type="password" formControlName="password" matInput placeholder="Password" id="pass">
-                </mat-form-field>
-                <span *ngIf="isValid('password')">Password is a mandatory field</span>
-            </div>
-            <div>
-                <mat-form-field >
-                    <input type="password" formControlName="cnfpass" matInput placeholder="Re-enter Password" id="cnfpass">
-                </mat-form-field>
-                <span *ngIf="isValid('cnfpass')">Password and confirm password should match</span>
-            </div>
-
-
-            <div>
-                <button class="form-btn" (click)="register()">Register</button>
-
-            </div>
-
-
-            <div>
-                <a class="alreadyMember" (click)="movetologin()">Already a member? click here to login!</a>
-            </div>
-        </form>
+<div class="registerContainer">
+    <div class="titleContainer">
+        <h1 class="projectTitle">QSQ Boards</h1>
     </div>
-<!--
-    <div>
-        <div>
-            <button class="form-btn-hollow" (click)="movetologin()">Login</button>
+    <div class="formcontainer">
+        <div class="formbody">
+            <form [formGroup]="myForm">
+                <div class="header">Register</div>
+                <div>
+                    <mat-form-field>
+                        <input type="text" formControlName="emailId" matInput placeholder="Email" id="emailId">
+                    </mat-form-field>
+                    <span *ngIf="isValid('emailId')">Entered email is invalid</span>
+                </div>
+                <div>
+                    <mat-form-field>
+                        <input type="text" formControlName="userName" matInput placeholder="Username" id="userName">
+                    </mat-form-field>
+                    <span *ngIf="isValid('userName')">Username is required</span>
+                </div>
+                <div>
+                    <mat-form-field>
+                        <input type="password" formControlName="password" matInput placeholder="Password" id="pass">
+                    </mat-form-field>
+                    <span *ngIf="isValid('password')">Password is a mandatory field</span>
+                </div>
+                <div>
+                    <mat-form-field>
+                        <input type="password" formControlName="cnfpass" matInput placeholder="Re-enter Password"
+                            id="cnfpass">
+                    </mat-form-field>
+                    <span *ngIf="isValid('cnfpass')">Password and confirm password should match</span>
+                </div>
+
+
+                <div>
+                    <button mat-raised-button color="primary" class="form-btn" (click)="register()">Sign Up</button>
+
+                </div>
+
+
+                <div>
+                    <a class="alreadyMember" (click)="movetologin()">Already a member? click here to login!</a>
+                </div>
+            </form>
         </div>
-    </div> -->
+    </div>
 </div>

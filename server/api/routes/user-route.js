@@ -13,6 +13,6 @@ module.exports = function (app) {
   // Route for updating user details and getting list of registered users
   app
     .route("/v1/users")
-    .put(checkAuth, userController.validateUser(), userController.updateUser)
+    .put(checkAuth, userController.updateUser)
     .get(checkAuth, userController.getUsers);
 };
