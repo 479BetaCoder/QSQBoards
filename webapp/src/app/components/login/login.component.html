@@ -1,0 +1,37 @@
+<div class="loginContainer">
+  <div class="titleContainer">
+    <h1 class="projectTitle">QSQ Boards</h1>
+  </div>
+  <div class="formcontainer">
+    <div class="formbody">
+      <form [formGroup]="loginForm">
+        <div class="header">Welcome</div>
+        <img (click)="socialSignIn('google')" class="socialButtons googleIcon"
+          src="../../../assets/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" />
+        <br><br>
+        <button mat-button class="btn-facebook" (click)="socialSignIn('facebook')" class="background-fb socialButtons">
+          <i class="fa fa-facebook-square fa-2x fbicon" aria-hidden="true"></i><span> Login with
+            Facebook</span></button>
+        <div class="separator">OR</div>
+        <div class="userNameContainer">
+          <mat-form-field>
+            <input type="text" formControlName="userName" matInput placeholder="Username / Email">
+          </mat-form-field>
+          <span *ngIf="isValid('userName')">Username cannot be blank</span>
+        </div>
+        <div>
+          <mat-form-field>
+            <input type="password" formControlName="password" matInput placeholder="Password">
+          </mat-form-field>
+          <span *ngIf="isValid('password')">Password cannot be blank</span>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" class="form-btn" (click)="login()">Log In</button>
+        </div>
+        <div>
+          <a class="alreadyMember" (click)="movetoregister()">Not a member yet? click here to register!</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

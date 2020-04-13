@@ -1,0 +1,118 @@
+.formcontainer {
+    align-self: center;
+}
+.loginContainer {
+    background-image: linear-gradient(to right, #da4453, #89216b);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.titleContainer {
+    align-self: center;
+}
+
+.projectTitle {
+    margin-top: 0;
+    padding-top: 10px;
+    color: white;
+    font-family: serif;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.formbody {
+    width: 290px;
+    min-height: 200px;
+    background-color: white;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.userNameContainer {
+    margin-top: 10px;
+}
+
+div > span {
+    font-size: 0.75rem;
+    color: firebrick;
+}
+
+.socialButtons {
+    margin: 0px 30px 0px 40px;
+    padding-left: 8px !important;
+    cursor: pointer;
+}
+
+.background-fb {
+    height: 40px;
+    border-radius: 0;
+    border: 1px solid #4267b2;
+    background-color: white !important;
+    margin-left: 52px !important;
+}
+
+.fbicon {
+    color: #4267b2;
+    padding-right: 5px;
+    padding-left: 0 !important;
+}
+
+.header {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+form {
+    width: 100%;
+}
+
+.form-btn {
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    width: 160px;
+    padding: 4px;
+    margin-left: 60px;
+}
+.alreadyMember:hover {
+    cursor: pointer;
+}
+.alreadyMember {
+    font-size: smaller;
+    font-style: italic;
+    text-decoration: underline;
+    margin-bottom: 15px;
+    margin-left: 30px;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 80px;
+    margin-left: 35%;
+    margin-top: 30px;
+    font-family: serif;
+    color: #b92b27;
+}
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid rgb(120, 205, 233);
+}
+.separator::before {
+    margin-right: 0.25em;
+}
+.separator::after {
+    margin-left: 0.25em;
+}
