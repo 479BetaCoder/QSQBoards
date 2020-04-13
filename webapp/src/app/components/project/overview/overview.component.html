@@ -1,10 +1,11 @@
   <mat-toolbar>
-   <h1>
-    {{project.title}}
-   </h1>
+    <div id="profileImage" [ngStyle]="{'background': getRandomColor()}">
+      {{getProjectTitleAvatar()}}
+    </div>
+    <span class=" projectTitle">{{project.title}}</span>
   </mat-toolbar>
-  <div class="container" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px">
-    <mat-card fxFlex="0 1 calc(50% - 20px)" class="overview-card">
+  <div class="aboutContainer" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="50px">
+    <mat-card fxFlex="0 1 calc(60% - 10px)" class="overview-card">
       <mat-card-content class="content-title">
           About the project
       </mat-card-content>
@@ -12,11 +13,11 @@
         {{project.description}}
       </mat-card-content>
       <mat-card-content class="content-title">
-          Status 
+          Project Status 
+          <mat-chip class="statusChip">
+            {{project.status}}
+          </mat-chip>
       </mat-card-content>
-      <mat-chip>
-        {{project.status}}
-      </mat-chip>
       <mat-card-actions>
           <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
       </mat-card-actions>
@@ -26,16 +27,20 @@
         <div class="content-title">
           Owner
         </div>
-        <mat-chip class="mat-chip-list-stacked">
-          {{project.owner}}
-        </mat-chip>
+        <mat-chip class="ownerChip" [removable]="false">
+          <img class="avatar" [src]="project.owner.image!= null ? project.owner.Image : emptyImgUrl"
+              onerror="this.src='../../../assets/blank-profile-picture.png'">
+                {{ project.owner }}
+          </mat-chip>
         <div class="content-title">
           Team Members
         </div>
         <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-          <mat-chip *ngFor="let member of project.members" >
-            {{member}}
-          </mat-chip>
+          <mat-chip class="memberChip" *ngFor="let user of project.members" [removable]="false">
+            <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+                onerror="this.src='../../../assets/blank-profile-picture.png'">
+                  {{ user }}
+                </mat-chip>
         </mat-chip-list>
       </mat-card-content>
     </mat-card>

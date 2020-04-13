@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from '../../auth/authentication.service';
-import {Router} from "@angular/router";
+import { AuthenticationService } from '../../auth/authentication.service';
+import { Router } from "@angular/router";
+import * as constantRoutes from '../../shared/constants';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +14,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
-      // this.data = JSON.parse(sessionStorage.getItem('User'));
-      this.authService.userProfile$.subscribe(prof =>  this.profile = prof);
+      this.profile = JSON.parse(sessionStorage.getItem('User'));
+      //this.authService.userProfile$.subscribe(prof => this.profile = prof);
     }
   }
   logoutProfile(): void {
     this.authService.userProfile$.subscribe().unsubscribe();
     sessionStorage.removeItem('User');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl(constantRoutes.emptyRoute);
+  }
+
+  editProfile(): void {
+    this.router.navigateByUrl(constantRoutes.userProfileRoute);
   }
 }
