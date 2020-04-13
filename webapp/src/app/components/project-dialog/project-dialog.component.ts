@@ -86,6 +86,7 @@ export class ProjectDialogComponent implements OnInit {
   createProject(project) {
     const todo: Project = project;
     this.store.dispatch(ProjectActions.BeginCreateProject({ payload: todo }));
+    this.dialogRef.close();
   }
 
   save() {
@@ -93,7 +94,7 @@ export class ProjectDialogComponent implements OnInit {
 
       const validMembers = this.modifyMembersValue(this.projectForm.value.members);
       this.projectForm.value.members = validMembers;
-      this.createProject(this.projectForm.value)
+
       if (this.update) {
         this._projectService.updateProject(this.projectForm.value, this.projectId)
           .subscribe(
@@ -103,13 +104,7 @@ export class ProjectDialogComponent implements OnInit {
             error => { }
           );
       } else {
-        this._projectService.createNewProject(this.projectForm.value)
-          .subscribe(
-            (_data) => {
-              this.dialogRef.close();
-            },
-            error => { }
-          );
+        this.createProject(this.projectForm.value)
       }
     }
   }

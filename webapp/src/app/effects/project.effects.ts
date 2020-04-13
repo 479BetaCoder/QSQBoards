@@ -40,7 +40,7 @@ export class ProjectEffects {
                     })
                     .pipe(
                         map((_data) => {
-                            return ProjectActions.SuccessCreateProject();
+                            return ProjectActions.SuccessCreateProject({ payload: action.payload });
                         }),
                         catchError((error: Error) => {
                             return of(ProjectActions.ErrorProjectAction(error));

@@ -14,8 +14,8 @@ const reducer = createReducer(
     on(ProjectActions.SuccessGetProjectsAction, (state: ProjectState, { payload }) => {
         return { ...state, projects: payload };
     }),
-    on(ProjectActions.SuccessCreateProject, (state: ProjectState) => {
-        return { ...state, projects: [...state.projects], projectsError: null };
+    on(ProjectActions.SuccessCreateProject, (state: ProjectState, { payload }) => {
+        return { ...state, projects: [...state.projects, payload], projectsError: null };
     }),
     on(ProjectActions.ErrorProjectAction, (state: ProjectState, error: Error) => {
         console.log(error);
