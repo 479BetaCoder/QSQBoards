@@ -14,12 +14,4 @@ export const routes: Routes = [
   { path: constantRoutes.userProfileRoute, component: UserProfileComponent },
   { path: constantRoutes.projectDashboard, component: ProjectDashboardComponent},
   { path: constantRoutes.emptyRoute, redirectTo: 'qsqboards', pathMatch: 'full' },
-/*=======
-  { path: '', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'project-dashboard', component: ProjectDashboardComponent},
-  { path: 'profile', component: UserProfileComponent },
-  { path: '',   redirectTo: '', pathMatch: 'full' }
->>>>>>> Stashed changes*/
 ];

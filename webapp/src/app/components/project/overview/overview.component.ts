@@ -28,6 +28,9 @@ export class OverviewComponent implements OnInit {
               private projectDialog: MatDialog,
               private store: Store<{ projects: ProjectState}>) {
     this.project$ = store.pipe(select('projects'));
+    this.activatedroute.parent.params.subscribe(params => {
+      this.projectTitle = params.title;
+    });
     /*this.projectService.getProjects().subscribe(items => {
       this.projects = items;
     });
@@ -47,7 +50,7 @@ export class OverviewComponent implements OnInit {
       .subscribe();
 
     this.store.dispatch(ProjectActions.BeginGetProjectsAction());
-    this.projectTitle = this.activatedroute.snapshot.params.title;
+    // this.projectTitle = this.activatedroute.snapshot.params.title;
     this.project = this.projectList.find(x => x.title === this.projectTitle);
     this.projectService.userProjectSubject$.next(this.project);
   }

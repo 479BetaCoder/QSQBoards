@@ -1,5 +1,6 @@
-import UserStory from './userStory';
+import userStory from './userStory';
+import {Observable} from "rxjs";
 
 export class Column {
-    constructor(public name: string, public userStories: string[]) {}
+  constructor(public name: string, public userStories: Observable<any>) {}
 }

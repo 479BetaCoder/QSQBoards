@@ -18,6 +18,10 @@ export class UserStoryService {
       catchError(this.errorHandling)
     );
   }
+
+  getAllUserStories(projectId): Observable<any>  {
+    return this.http.get(`${baseURL}/user-stories/${projectId}`);
+  }
   // Error handling
   errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';

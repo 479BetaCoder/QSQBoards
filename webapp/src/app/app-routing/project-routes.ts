@@ -6,7 +6,8 @@ import {ProjectDashboardComponent} from '../components/project/project-dashboard
 export const navRoutes: Routes = [
     { path : 'project-dashboard/:title', component: ProjectDashboardComponent,
     children: [
-        { path : 'board', component: BoardComponent},
-        { path : '', component: OverviewComponent},
+      { path : 'board', component: BoardComponent},
+      { path : 'overview', component: OverviewComponent},
+      {path: '', redirectTo: 'overview', pathMatch: 'prefix'},
     ]}
 ];

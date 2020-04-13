@@ -23,10 +23,10 @@ export class SideNavComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private projectService: ProjectService) { }
 
   ngOnInit(): void {
-     this.projectService.userProject$.subscribe(pr => this.projectTitle = pr.title);
+     // this.projectService.userProject$.subscribe(pr => this.projectTitle = pr.title);
   }
 
   back() {
-    this.router.navigate(['../', { title: this.projectTitle}], { relativeTo: this.route });
+    // this.router.navigate(['../', { title: this.projectTitle}], { relativeTo: this.route });
   }
 }
