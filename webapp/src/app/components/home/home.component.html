@@ -13,7 +13,7 @@
         <div class="topButtons">
           <button class="mat-raised-button mat-primary projectButton" (click)="openProjectDialog()">
             <mat-icon>add</mat-icon>
-            New ProjectNF
+            New Project
           </button>
           <div class="search">
             <span class="fa fa-search searchIcn"></span>
@@ -39,6 +39,10 @@
               <mat-card-content>
                 {{project.description}}
               </mat-card-content>
+              <mat-card-footer>
+                <span>Project Owner: {{project.owner}}</span>
+                <!-- <mat-icon class="deleteIcon">delete</mat-icon> -->
+              </mat-card-footer>
             </mat-card>
           </div>
         </div>

@@ -25,7 +25,7 @@
 }
 
 .formbody {
-  width: 290px;
+  width: 390px;
   min-height: 200px;
   background-color: white;
   box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -38,7 +38,7 @@
   font-style: italic;
   text-decoration: underline;
   margin-bottom: 15px;
-  margin-left: 30px;
+  margin-left: 50px;
 }
 
 .scrummaster {
@@ -46,6 +46,8 @@
 }
 .alreadyMember:hover {
   cursor: pointer;
+  text-align: center;
+  
 }
 .header {
   font-size: 2rem;
@@ -66,10 +68,23 @@ div > span {
 }
 
 .form-btn {
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
-  margin: 5px;
+  margin: 2px;
   width: 160px;
-  padding: 4px;
-  margin-left: 60px;
+  padding: 2px;
+  margin-left: 85px;
+}
+
+.errorMessage{
+  //text-align: center;
+  color: red;
+}
+
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+@import url("//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+
+.alert{
+  padding: none;
 }

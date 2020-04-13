@@ -15,16 +15,16 @@ export class UserService {
     .set('Content-Type', 'application/json')
     .set('token', localStorage.getItem('token'));*/
 
-  submitRegister(body: any) {
-    return this._http.post( baseURL + '/users/signup', body, {
-      observe: 'body'
-    });
-  }
+    submitRegister(body: any) {
+      return this._http.post( baseURL + '/users/signup', body, {
+        observe: 'body'
+      }).pipe(catchError(this.errorHandling));
+    }
 
   login(body: any): Observable<any> {
     return this._http.post(baseURL + '/users/login', body, {
       observe: 'body'
-   });
+   }).pipe(catchError(this.errorHandling));
   }
 
   updateUser(updateUser): Observable<any> {
@@ -44,6 +44,6 @@ export class UserService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error);
   }
 }

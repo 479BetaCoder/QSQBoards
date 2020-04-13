@@ -25,6 +25,9 @@
           </mat-form-field>
           <span *ngIf="isValid('password')">Password cannot be blank</span>
         </div>
+        <div class="errorMessage">
+          <strong>{{successMessage}}</strong> 
+      </div>
         <div>
           <button mat-raised-button color="primary" class="form-btn" (click)="login()">Log In</button>
         </div>
