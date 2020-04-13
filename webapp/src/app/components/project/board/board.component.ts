@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Task} from '../../../../model/task';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Board} from '../../../models/board.model';
 import {Column} from '../../../models/column.model';
+import {MatDialog} from '@angular/material/dialog';
+import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
 
 @Component({
   selector: 'app-board',
@@ -10,7 +11,7 @@ import {Column} from '../../../models/column.model';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   board: Board = new Board('Test Board', [
     new Column('Todo', [
@@ -52,7 +53,15 @@ export class BoardComponent implements OnInit {
     column.tasks.splice(index, 1);
   }
 
-  createUserStory() {
+ /* createUserStory() {
     this.board.columns[0].userStories.push('Item');
+  }*/
+
+  createUserStory() {
+    /*const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;*/
+    this.dialog.open(NewUserStoryComponent, {width: '500px'});
+    //this.dialog.open(NewUserStoryComponent, dialogConfig);
   }
 }

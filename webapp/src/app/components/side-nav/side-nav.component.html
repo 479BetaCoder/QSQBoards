@@ -1,19 +1,15 @@
 <app-header></app-header>
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" opened>
+<mat-sidenav-container fullScreen class="navContainer">
+  <mat-sidenav class="sideNavContainer" mode="side" opened>
     <mat-nav-list>
-
-      <a mat-list-item routerLink="/overview"> Overview </a>
-      <a mat-list-item routerLink="/board"> Board </a>
-
-
+      <h3 matSubheader class="projectText">Project</h3>
+      <a mat-list-item (click)="back()" routerLinkActive="active"> Overview </a>
+      <a mat-list-item routerLink="board"> Board </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;">
-
+    <div style="height: 92vh;">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-

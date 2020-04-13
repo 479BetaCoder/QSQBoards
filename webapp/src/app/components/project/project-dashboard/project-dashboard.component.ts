@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-project-dashboard',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('User')) {
+      const user = JSON.parse(sessionStorage.getItem('User'));
+    } else {
+      this.router.navigateByUrl('');
+    }
   }
 
 }
