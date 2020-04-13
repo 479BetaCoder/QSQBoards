@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../../services/project.service';
-import { Task } from '../../../models/task';
+//import { Task } from '../../../models/task';
 
 export interface PeriodicElement {
   name: string;
@@ -23,14 +23,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class BacklogComponent implements OnInit {
 
-  tasks: Task[]
+  //tasks: Task[]
   dataSource: any;
   displayedColumns: string[] = ['number', 'title', 'assignee', 'priority', 'status'];
 
   constructor(private projectService: ProjectService,) {
     //ToDo: modify getpendingtasks to get tasks based on projectid
-      this.tasks = this.projectService.getPendingTasks();
-      this.dataSource = this.tasks;
+      //this.tasks = this.projectService.getPendingTasks();
+      //this.dataSource = this.tasks;
    }
 
   ngOnInit(): void {

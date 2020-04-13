@@ -4,7 +4,7 @@ import { baseURL } from '../shared/baseurl';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import Project from '../store/models/project';
 import { User } from '../store/models/user';
-import { Task } from "../models/task";
+//import { Task } from "../models/task";
 
 @Injectable({
   providedIn: 'root'
@@ -18,27 +18,7 @@ export class ProjectService {
   user2: User = {
     UserName : "Reddy"
   };
-  project1: Project ={
-    ProjectId : "werty",
-    Title: "Project Name 1",
-    Owner: this.user1,
-    Description: "This is the description",
-    Status: "new",
-    Members:[
-      this.user1,this.user2
-    ]
-  }
-  project2: Project ={
-    ProjectId : "werty",
-    Title: "Project Name 2",
-    Owner: this.user2,
-    Description: "Go to Hell",
-    Status: "new",
-    Members:[
-      this.user1,this.user2
-    ]
-  }
-
+/*
   task1: Task = {
     title : "Dummy Task 1",
     description : "Dummy Task 1 Description",
@@ -67,7 +47,7 @@ task2: Task = {
   storyId: "storyId",
   assignee: this.user1
 }
-
+*/
   static projects : Project[];
   projectObservables: any;
 
@@ -113,11 +93,12 @@ task2: Task = {
     const users = this._http.get<Array<User>>(baseURL + '/users');
     return users;
   }
-
+/*
   getPendingTasks(){
     const tasks = [this.task1, this.task2];
     return tasks;
   }
+  */
    // Error handling
    errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';

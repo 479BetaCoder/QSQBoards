@@ -54,7 +54,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatLineModule} from '@angular/material/core';
 import {routes} from './app-routing/routes';
 import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
-import { MatChipsModule } from '@angular/material/chips';
 import {MatTableModule} from '@angular/material/table';
 import { BacklogComponent } from './components/project/backlog/backlog.component';
 
@@ -107,9 +106,8 @@ import { BacklogComponent } from './components/project/backlog/backlog.component
     MatLineModule,
     MatSelectModule,
     StoreModule.forRoot({ projects: ProjectReducer }),
-    EffectsModule.forRoot([ProjectEffects])
+    EffectsModule.forRoot([ProjectEffects]),
     MatSelectModule,
-    MatChipsModule,
     MatTableModule
   ],
   providers: [

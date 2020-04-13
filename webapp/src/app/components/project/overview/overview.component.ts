@@ -18,6 +18,7 @@ import {ThemePalette} from '@angular/material/core';
 })
 export class OverviewComponent implements OnInit {
 
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   projectTitle: String;;
   project: any;
   project$: Observable<ProjectState>;
@@ -71,5 +72,22 @@ export class OverviewComponent implements OnInit {
     };
 
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
+  }
+
+  getRandomColor() {
+    const index = this.projectList.indexOf(this.project);
+    const totalProjects = this.projectList.length
+    const minIndex = index / totalProjects;
+    const color = Math.ceil(0x101111 * minIndex).toString(16);
+    return '#' + ('d9a16b' + color).slice(-6);
+  }
+
+  getProjectTitleAvatar() {
+    const projAvatarArr = this.project.title.split(" ")
+    if (projAvatarArr.length > 1) {
+      return projAvatarArr[0].charAt(0).concat(projAvatarArr[1].charAt(0)).toUpperCase();
+    } else {
+      return projAvatarArr[0].charAt(0).toUpperCase();
+    }
   }
 }

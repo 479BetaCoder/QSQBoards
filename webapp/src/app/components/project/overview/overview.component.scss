@@ -1,17 +1,18 @@
 @use "@material/chips/mdc-chips";
-
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 .overview-title{
     align-self: center;
     width: 100%;
     margin-right: 0%;
 }
-.overview-card {
-    margin-top: 5%;
+.aboutContainer {
+    margin-top: 3%;
+    margin-left: 2%;
 }
 
 .right-card{
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 mat-card-content{
@@ -20,10 +21,53 @@ mat-card-content{
 
 .content-title{
     font-weight: bold;
+    margin-top: 5px;
     height: 30px;
     font-size: larger;
 }
+.statusChip{
+    
+}
 
-mat-chip {
-    max-width: 200px;
+  #profileImage {
+    display: inline-block;
+    width: 60px;
+    height: 50px;
+    border-radius: 10%;
+    font-size: 35px;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    margin: 20px 0;
   }
+
+  .projectTitle {
+    margin-left: 20px;
+    font-size: larger;
+    font-weight: bolder;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+  }
+  .memberChip {
+    background: #3a3c49;
+    color: white;
+    & .avatar {
+      border-radius: 20px;
+      height: 30px;
+      width: 30px;
+    }
+}
+
+.ownerChip{
+    background: #3f51b5;
+    color: white;
+    & .avatar {
+      border-radius: 20px;
+      height: 30px;
+      width: 30px;
+    }
+}
