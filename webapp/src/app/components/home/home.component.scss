@@ -96,7 +96,7 @@ body {
   width: 180px;
 }
 
-.card:hover {
+.hoverClass:hover {
   cursor: pointer;
 }
 
@@ -153,6 +153,14 @@ mat-card-content {
 .topButtons {
   padding: 20px;
 }
-.deleteIcon{
+mat-card-footer{
+  margin-right: 10px;
   float: right;
+}
+
+mat-icon:hover{
+  cursor: pointer;
+}
+.owner{
+  margin-right: 30px;
 }
