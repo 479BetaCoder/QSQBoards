@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
-import { ProjectService } from '../../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import {ProjectService} from "../../services/project.service";
+import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-side-nav',
@@ -15,18 +16,20 @@ export class SideNavComponent implements OnInit {
   project: any;
 
   reason = '';
+  projectTitle = '';
 
   close(reason: string) {
     this.reason = reason;
     this.sidenav.close();
   }
 
-  constructor(private projectService: ProjectService, private activatedroute:ActivatedRoute) {
-    this.projectTitle = this.activatedroute.snapshot.params.title
-    this.project = this.projectService.getProject(this.projectTitle);
-   }
+  constructor(private router: Router, private route: ActivatedRoute, private projectService: ProjectService) { }
 
   ngOnInit(): void {
+     // this.projectService.userProject$.subscribe(pr => this.projectTitle = pr.title);
   }
 
+  back() {
+    // this.router.navigate(['../', { title: this.projectTitle}], { relativeTo: this.route });
+  }
 }

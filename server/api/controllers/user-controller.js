@@ -140,16 +140,7 @@ exports.loginUser = (request, response) => {
  */
 exports.updateUser = (request, response) => {
   try {
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-      response.status(400).json({
-        message: utilConstants.CLIENT_ERR,
-      });
-      return;
-    }
-    // after validating
     const updatedUser = Object.assign({}, request.body);
-
     const resolve = () => {
       response.status(200).json();
     };

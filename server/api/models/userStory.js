@@ -59,8 +59,8 @@ let userStorySchema = new Schema(
      * Priority for the userStory
      */
     priority: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "Low",
     },
     /**
      * Tasks for the userStory
