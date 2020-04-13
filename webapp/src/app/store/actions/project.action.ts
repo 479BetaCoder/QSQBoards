@@ -8,7 +8,7 @@ export const CreateProject = createAction(
     props<Project>()
 );
 
-props<Project>()
+props<Project>();
 export const BeginGetProjectsAction = createAction('[Project] - Begin Get Projects');
 
 export const SuccessGetProjectsAction = createAction(

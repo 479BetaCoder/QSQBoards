@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
-import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
-import Project from "../store/models/project";
-import { User } from "../store/models/user";
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import Project from '../store/models/project';
+import { User } from '../store/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +15,9 @@ export class ProjectService {
   constructor(private _http: HttpClient) { }
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
+  userProjectSubject$ = new BehaviorSubject<any>(null);
+  userProject$: Observable<any> = this.userProjectSubject$.asObservable();
+
   getProjects() {
     this.projectObservables = this._http.get<Array<Project>>(baseURL + '/projects');
     this.projectObservables.subscribe((items: Project[]) => {
@@ -26,12 +27,13 @@ export class ProjectService {
         console.log(err);
       }
     );
+
     return this.projectObservables;
   }
 
 
-  getProject(projectTitle: String) {
-    const project: any = ProjectService.projects.find(x => x["title"] == projectTitle);
+  getProject(projectTitle: string) {
+    const project: any = ProjectService.projects.find(x => x.title == projectTitle);
     const p = Object.assign(new Project, project);
     return p;
   }

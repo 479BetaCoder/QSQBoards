@@ -112,4 +112,8 @@ export class ProjectDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+
+  onSelectClose(){
+    this.searchTerm = "";
+  }
 }

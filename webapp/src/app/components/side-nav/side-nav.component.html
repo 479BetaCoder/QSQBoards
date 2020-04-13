@@ -3,14 +3,12 @@
   <mat-sidenav class="sideNavContainer" mode="side" opened>
     <mat-nav-list>
       <h3 matSubheader class="projectText">Project</h3>
-      <a mat-list-item [routerLink]="'/overview'">Overview</a>
-      <a mat-list-item [routerLink]="'/home/board'">Board
-      </a>
+      <a mat-list-item routerLink="overview" routerLinkActive="active"> Overview </a>
+      <a mat-list-item routerLink="board"> Board </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;">
-
+    <div style="height: 92vh;">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
