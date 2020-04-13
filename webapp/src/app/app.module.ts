@@ -34,25 +34,30 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { OverviewComponent } from './components/project/overview/overview.component';
 import { BoardComponent } from './components/project/board/board.component';
-//import { BoardComponent } from './components/board/board.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RouterModule } from '@angular/router';
-import { navRoutes } from './app-routing/nav-bar-routes';
+import { navRoutes } from './app-routing/project-routes';
 import { TokenInterceptorService } from './interceptors/TokenInterceptorService';
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
-
-//import { BoardComponent } from './components/board/board.component';
-
+import { ProjectReducer } from './store/reducers/project.reducer';
+import { StoreModule } from '@ngrx/store';
+import { ProjectEffects } from './effects/project.effects';
+// @ts-ignore
+import { EffectsModule } from '@ngrx/effects';
+import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatLineModule} from '@angular/material/core';
+import {routes} from './app-routing/routes';
+import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // LoginComponent,
     RegisterComponent,
     LoginComponent,
     HomeComponent,
@@ -63,9 +68,9 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     BoardComponent,
     ProjectDialogComponent,
     UserFilterPipe,
-    ProjectFilterPipe
-    // UserDashboardComponent,
-    // MainDeskComponent
+    ProjectFilterPipe,
+    ProjectDashboardComponent,
+    NewUserStoryComponent
   ],
   imports: [
     BrowserModule,
@@ -90,9 +95,15 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
+    RouterModule.forRoot(routes),
     RouterModule.forChild(navRoutes),
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule,
+    MatLineModule,
+    MatSelectModule,
+    StoreModule.forRoot({ projects: ProjectReducer }),
+    EffectsModule.forRoot([ProjectEffects])
   ],
   providers: [
     UserService,
@@ -104,6 +115,7 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
     { provide: 'BaseURL', useValue: baseURL },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
   ],
+  entryComponents: [NewUserStoryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
