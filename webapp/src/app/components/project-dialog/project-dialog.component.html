@@ -19,7 +19,7 @@
     <div>
       <mat-form-field>
         <mat-label>Select Members</mat-label>
-        <mat-select [formControl]="members" placeholder="Select Members" multiple>
+        <mat-select [formControl]="members" (closed)="onSelectClose()" placeholder="Select Members" multiple>
           <div class="search">
             <span class="fa fa-search searchIcn"></span>
             <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm"
