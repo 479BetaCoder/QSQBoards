@@ -45,6 +45,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { ProjectReducer } from './store/reducers/project.reducer';
+import { SelectedProjectReducer } from './store/reducers/selectedProject.reducer';
 import { StoreModule } from '@ngrx/store';
 import { ProjectEffects } from './effects/project.effects';
 // @ts-ignore
@@ -105,7 +106,7 @@ import { BacklogComponent } from './components/project/backlog/backlog.component
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    StoreModule.forRoot({ projects: ProjectReducer }),
+    StoreModule.forRoot({ projects: ProjectReducer, selectedProject: SelectedProjectReducer }),
     EffectsModule.forRoot([ProjectEffects]),
     MatSelectModule,
     MatTableModule

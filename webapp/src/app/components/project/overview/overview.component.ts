@@ -6,10 +6,12 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProjectDialogComponent } from '../../project-dialog/project-dialog.component';
 import {map} from "rxjs/operators";
 import * as ProjectActions from "../../../store/actions/project.action";
+import * as SelectedProjectActions from "../../../store/actions/selectedProject.action";
 import {Observable, Subscription} from "rxjs";
 import ProjectState from "../../../store/states/project.state";
 import {select, Store} from "@ngrx/store";
 import {ThemePalette} from '@angular/material/core';
+import SelectedProjectState from 'app/store/states/selectedProject.state';
 
 @Component({
   selector: 'app-overview',
@@ -28,7 +30,7 @@ export class OverviewComponent implements OnInit {
   
   constructor(private projectService: ProjectService, private activatedroute: ActivatedRoute,
               private projectDialog: MatDialog,
-              private store: Store<{ projects: ProjectState}>) {
+              private store: Store<{ projects: ProjectState, selectedProject: SelectedProjectState}>,) {
     this.project$ = store.pipe(select('projects'));
     this.activatedroute.parent.params.subscribe(params => {
       this.projectTitle = params.title;
@@ -54,7 +56,8 @@ export class OverviewComponent implements OnInit {
     this.store.dispatch(ProjectActions.BeginGetProjectsAction());
     // this.projectTitle = this.activatedroute.snapshot.params.title;
     this.project = this.projectList.find(x => x.title === this.projectTitle);
-    this.projectService.userProjectSubject$.next(this.project);
+    this.store.dispatch(SelectedProjectActions.BeginCreateSelectedProject({ payload: this.project }));
+    //this.projectService.userProjectSubject$.next(this.project);
   }
 
   openProjectDialog(project: any) {
