@@ -44,6 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
+import { ProjectDetailsReducer } from './store/reducers/project-details.reducer';
 import { StoreModule } from '@ngrx/store';
 
 // @ts-ignore
@@ -53,6 +54,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatLineModule } from '@angular/material/core';
 import { routes } from './app-routing/routes';
 import { ProjectDashboardComponent } from './components/project/project-dashboard/project-dashboard.component';
+import {MatTableModule} from '@angular/material/table';
+import { BacklogComponent } from './components/project/backlog/backlog.component';
 
 // Reducers and effects
 import { ProjectReducer } from './store/reducers/project.reducer';
@@ -63,7 +66,8 @@ import { UserEffects } from './effects/user.effects';
 let rootReducer =
 {
   projects: ProjectReducer,
-  user: UserReducer
+  user: UserReducer,
+  projectDetails: ProjectDetailsReducer
 }
 
 @NgModule({
@@ -81,7 +85,8 @@ let rootReducer =
     UserFilterPipe,
     ProjectFilterPipe,
     ProjectDashboardComponent,
-    NewUserStoryComponent
+    NewUserStoryComponent,
+    BacklogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +118,7 @@ let rootReducer =
     DragDropModule,
     MatLineModule,
     MatSelectModule,
+    MatTableModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, UserEffects])
   ],

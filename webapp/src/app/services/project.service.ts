@@ -4,14 +4,53 @@ import { baseURL } from '../shared/baseurl';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import Project from '../store/models/project';
 import User from '../store/models/user';
+//import { Task } from "../models/task";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  static projects: Project[];
+
+  user1: User = {
+    UserName : "Dileep"
+  };
+  user2: User = {
+    UserName : "Reddy"
+  };
+/*
+  task1: Task = {
+    title : "Dummy Task 1",
+    description : "Dummy Task 1 Description",
+    comments: [
+        {
+          text: "comment1 for task 1",
+          postedBy: this.user1
+        }
+      ],
+    status : "New",
+    priority: 1,
+    storyId: "storyId",
+    assignee: this.user2
+}
+task2: Task = {
+  title : "Dummy Task 2",
+  description : "Dummy Task 12Description",
+  comments: [
+      {
+        text: "comment1 for task 2",
+        postedBy: this.user2
+      }
+    ],
+  status : "New",
+  priority: 5,
+  storyId: "storyId",
+  assignee: this.user1
+}
+*/
+  static projects : Project[];
   projectObservables: any;
+
   constructor(private _http: HttpClient) { }
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -54,8 +93,14 @@ export class ProjectService {
     const users = this._http.get<Array<User>>(baseURL + '/users');
     return users;
   }
-  // Error handling
-  errorHandling(error: HttpErrorResponse) {
+/*
+  getPendingTasks(){
+    const tasks = [this.task1, this.task2];
+    return tasks;
+  }
+  */
+   // Error handling
+   errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
