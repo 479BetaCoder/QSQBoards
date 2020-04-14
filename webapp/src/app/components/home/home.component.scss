@@ -68,22 +68,36 @@ mat-icon {
   width: 150px;
 }
 .cardContainer {
-  display: inline-block;
+  display: inline;
 }
 
 button {
   float: center;
 }
 
-mat-card {
+.bottomCards{
+  width: 1024px;
+  margin-left: 50px;
+  margin-bottom: 4px;
+}
+
+
+.card, mat-card{
+  display: inline-block;
+}
+.topCard {
   text-align: center;
   width: 275px;
   border: 10px;
-  margin-left: 100px;
+  margin-left: 50px;
+    padding: 20px;
+    height: 180px;
+    text-align: left;
   margin-bottom: 50px;
-  float: left;
 }
-
+.topCardContainer{
+  display: inline;
+}
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 body {
   margin: 30px;
@@ -120,36 +134,61 @@ body {
   top: 10px;
   left: 10px;
 }
-.card-container-left {
-  display: inline;
-  margin-left: -10px;
-}
-mat-card {
-  min-width: 400px;
-  padding: 20px;
-  width: auto;
-  height: 180px;
-}
+
 #profileImage {
   display: inline-block;
   width: 60px;
   height: 50px;
   border-radius: 10%;
-  font-size: 35px;
+  font-size: 30px;
   color: #fff;
   text-align: center;
   line-height: 50px;
-  margin: 20px 0;
+  margin: 4px;
 }
 
-.projectTitle {
-  margin-left: 20px;
+
+#bottomprofileImage {
+  width: 60px;
+  height: 50px;
+  border-radius: 10%;
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  margin: 4px;
 }
 
-mat-card-content {
-  min-height: 50px;
+mat-card-title{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 300px; 
+}
+.topProjectDescription {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 50px;
+  width: 275px;
 }
 
+ .inlineDisplay{
+  display: inline;
+}
+
+.bottomProjectTitle{
+  font-size: 24px;
+  font-weight: 100;
+}
+.flex-container {
+  display: flex;
+  height: 30px;
+  width: 800px;
+}
+
+.titleDescriptionContainer{
+  margin-left: 10px;
+}
 .topButtons {
   padding: 20px;
 }
@@ -163,4 +202,26 @@ mat-icon:hover{
 }
 .owner{
   margin-right: 30px;
+}
+
+.bottomProjectTitle{
+  font-size: 24px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 600px;
+}
+
+.bottomDescriptionContainer{
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 600px;
+}
+
+.bottomDeleteIcon{
+  text-align: right;
+  float: right;
+
 }

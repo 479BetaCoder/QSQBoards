@@ -5,13 +5,14 @@
   border-radius: 50%;
 }
 .mat-toolbar-row,
-.mat-toolbar-single-row {
+.mat-toolbar-single-row ,
+.headerContainer{
   height: 100%;
   background-image: linear-gradient(to right, #da4453, #89216b);
 }
 
 .alignmentMenu {
-  margin-left: 85%;
+  margin-left: 75%;
 }
 
 .headerContainer {
@@ -23,4 +24,8 @@
   font-family: sans-serif;
   color: white;
   cursor: pointer;
+}
+
+.homeBtn{
+  display: inline-block;
 }

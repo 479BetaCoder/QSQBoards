@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
           error => {
             if(error.status == 401)
             {
-              this.successMessage = "Incorrect Username/Email/Password!";
+              this.successMessage = "Invalid Credentials!";
             }
             else{
               this.successMessage = "Error occured while login!";

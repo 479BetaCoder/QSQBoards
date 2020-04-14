@@ -28,26 +28,49 @@
 
           </div>
           <div *ngIf="projectList?.length > 0">
+            <div class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
             
-            <mat-card class="card" 
-                      *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
-                      <div class="hoverClass" [routerLink]="['/project-dashboard',project.title]">
-              <mat-card-title class="card-container-left">
-                <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
-                  {{getProjectTitleAvatar(project)}}
-                </div>
-                <span class=" projectTitle">{{project.title}}</span>
-              </mat-card-title>
-              <mat-card-content>
-                {{project.description}}
-              </mat-card-content>
-            </div>
-              <mat-card-footer>
-                <span class="owner">Project Owner: {{project.owner}}</span>
-                <mat-icon [routerLink]="['/project-dashboard',project.title]">edit</mat-icon>
-                <mat-icon class="deleteIcon">delete</mat-icon>
-              </mat-card-footer>
-            </mat-card>
+                      <div class="topCardContainer" *ngIf="i<3">
+                        <mat-card class="topCard">
+                        <div class="hoverClass" [routerLink]="['/project-dashboard',project.title]">
+                          <mat-card-title class="card-container-left">
+                            <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
+                              {{getProjectTitleAvatar(project)}}
+                            </div>
+                            <span class=" projectTitle">{{project.title}}</span>
+                          </mat-card-title>
+                          <mat-card-content class="topProjectDescription">
+                            {{project.description}}
+                          </mat-card-content>
+                        </div>
+                          <mat-card-footer>
+                            <span class="owner">Owner: {{project.owner}}</span>
+                            <mat-icon class="deleteIcon">delete</mat-icon>
+                          </mat-card-footer>
+                        </mat-card>
+                      </div>
+                     <div class="bottomProjectContainer" *ngIf="i>=3">
+                      <mat-card class="bottomCards">
+                        <span>
+                          <mat-card-content class="card-container-left">
+                            <div class="bottomTitleContainer" >
+                              <div class="flex-container hoverClass" [routerLink]="['/project-dashboard',project.title]">
+                                <div id="bottomprofileImage" [ngStyle]="{'background': getRandomColor(i)}">{{getProjectTitleAvatar(project)}}</div>
+                                <div class="titleDescriptionContainer"> 
+                                  <div class="bottomProjectTitle">{{project.title}}</div>
+                                  <div class="bottomDescriptionContainer">{{project.description}}</div> </div>
+                              </div>
+                              <div class="bottomDeleteIcon">
+                                <mat-icon class="deleteIcon">delete</mat-icon>
+                              </div>
+                            </div>
+                          </mat-card-content>
+                        </span>
+                        
+                      </mat-card>
+                     </div>
+            
+          </div>
           </div>
         </div>
       </mat-sidenav-content>
