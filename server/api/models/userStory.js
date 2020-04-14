@@ -27,18 +27,6 @@ let userStorySchema = new Schema(
       type: String,
       required: "projectId is required",
     },
-    /**
-     * User Story comments.
-     */
-    comments: [
-      {
-        text: String,
-        postedBy: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
 
     /**
      * UserStory status.

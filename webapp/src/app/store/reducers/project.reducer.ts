@@ -1,6 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ProjectActions from '../actions/project.action';
-import Project from '../models/project';
 import ProjectState, { initializeState } from '../states/project.state';
 
 export const intialState = initializeState();
@@ -8,14 +7,25 @@ export const intialState = initializeState();
 const reducer = createReducer(
     intialState,
     on(ProjectActions.GetProjects, state => state),
-    on(ProjectActions.CreateProject, (state: ProjectState, project: Project) => {
-        return { ...state, projects: [...state.projects, project], projectsError: null };
-    }),
+    on(ProjectActions.CreateProject, state => state),
+    on(ProjectActions.DeleteProject, state => state),
     on(ProjectActions.SuccessGetProjectsAction, (state: ProjectState, { payload }) => {
         return { ...state, projects: payload };
     }),
     on(ProjectActions.SuccessCreateProject, (state: ProjectState, { payload }) => {
         return { ...state, projects: [...state.projects, payload], projectsError: null };
+    }),
+    on(ProjectActions.SuccessDeleteProject, (state: ProjectState, { payload }) => {
+        let currentProjects = [...state.projects];
+        // get index of object with projectId
+        let removeIndex = currentProjects.map(function (project) { return project._id; }).indexOf(payload);
+        // remove object
+        currentProjects.splice(removeIndex, 1)
+        return {
+            ...state,
+            projects: [...currentProjects],
+            projectsError: null
+        }
     }),
     on(ProjectActions.ErrorProjectAction, (state: ProjectState, error: Error) => {
         console.log(error);
