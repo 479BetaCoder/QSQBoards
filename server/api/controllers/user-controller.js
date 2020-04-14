@@ -133,7 +133,7 @@ exports.loginUser = (request, response) => {
 };
 
 /**
- * Returns todo response.
+ * Returns updatedUser response.
  *
  * @param request
  * @param response
