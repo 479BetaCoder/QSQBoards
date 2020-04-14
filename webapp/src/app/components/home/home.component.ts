@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as ProjectActions from '../../store/actions/project.action';
+import * as UserActions from '../../store/actions/user.action';
 import Project from '../../store/models/project';
 import ProjectState from '../../store/states/project.state';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
@@ -42,11 +43,16 @@ export class HomeComponent implements OnInit {
           })
         )
         .subscribe();
-
       this.store.dispatch(ProjectActions.BeginGetProjectsAction());
+      this.store.dispatch(UserActions.BeginGetActiveUsers());
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
+  }
+
+  deleteProject(projectId) {
+    console.log(projectId);
+    this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
   }
 
   openProjectDialog() {

@@ -44,9 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
-import { ProjectReducer } from './store/reducers/project.reducer';
 import { StoreModule } from '@ngrx/store';
-import { ProjectEffects } from './effects/project.effects';
 // @ts-ignore
 import { EffectsModule } from '@ngrx/effects';
 import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
@@ -54,8 +52,20 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatLineModule} from '@angular/material/core';
 import {routes} from './app-routing/routes';
 import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
-import {BoardReducer} from "./store/reducers/userStory.reducer";
-import {BoardEffects} from "./effects/board.effects";
+import {BoardReducer} from './store/reducers/userStory.reducer';
+import {BoardEffects} from './effects/board.effects';
+
+// Reducers and effects
+import { ProjectReducer } from './store/reducers/project.reducer';
+import { ProjectEffects } from './effects/project.effects';
+import { UserReducer } from './store/reducers/user.reducer';
+import { UserEffects } from './effects/user.effects';
+
+const rootReducer = {
+  projects: ProjectReducer,
+  board: BoardReducer,
+  user: UserReducer
+};
 
 @NgModule({
   declarations: [
@@ -104,8 +114,8 @@ import {BoardEffects} from "./effects/board.effects";
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    StoreModule.forRoot({ projects: ProjectReducer, board: BoardReducer}),
-    EffectsModule.forRoot([ProjectEffects, BoardEffects])
+    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects]),
+    StoreModule.forRoot(rootReducer)
   ],
   providers: [
     UserService,

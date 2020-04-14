@@ -40,39 +40,81 @@ exports.isProjectValid = function (projectId) {
  * @param {string} projectId {Id of the project object}
  */
 exports.getStories = function (projectId) {
-  const promise = UserStory.find(
-    { projectId: projectId },
-    { createdAt: 0, updatedAt: 0, projectId: 0 }
-  )
-    .populate("tasks", { updatedAt: 0, createdAt: 0 }, [], {})
-    .exec();
+  // const promise = UserStory.find(
+  //   { projectId: projectId },
+  //   { createdAt: 0, updatedAt: 0, projectId: 0 }
+  // )
+  //   .populate("tasks", { updatedAt: 0, createdAt: 0 }, [], {})
+  //   .exec();
+
+  const promise = new Promise(async function (resolve, reject) {
+    await UserStory.aggregate([
+      {
+        $match: {
+          projectId: projectId
+        }
+      },
+      // Unwind the source
+      {
+        $unwind: {
+          path: "$tasks",
+          preserveNullAndEmptyArrays: true
+        }
+
+      },
+      // // Do the lookup matching
+      {
+        $lookup: {
+          "from": Task.collection.name,
+          "localField": "tasks",
+          "foreignField": "_id",
+          "as": "taskObjects"
+        }
+      },
+      // Unwind the result arrays ( likely one or none )
+      {
+        $unwind: {
+          path: "$taskObjects",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      // Group back to arrays
+      {
+        "$group": {
+          "_id": "$_id",
+          "title": { $first: "$title" },
+          "description": { $first: "$description" },
+          "status": { $first: "$status" },
+          "storyPoints": { $first: "$storyPoints" },
+          "priority": { $first: "$priority" },
+          "tasks": { "$push": "$taskObjects" }
+        }
+      }
+    ]).then(result => {
+      return resolve(result);
+    }).catch(error => {
+      return reject(error);
+    })
+  })
+
   return promise;
 };
 
 /**
- * Updates and returns the project object.
+ * Updates and returns the userStory object.
  *
- * @param {Object} project {project object}
+ * @param {Object} updatedUserStory {userStory object}
+ * @param {String} storyId
  */
-exports.update = async function (project, userName) {
-  try {
-    const validProject = await Project.findOne({ _id: project._id });
-
-    if (validProject && validProject.owner === userName) {
-      project.modifiedDate = new Date();
-      return validProject.update(project);
-    } else {
-      return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
-    }
-  } catch (err) {
-    return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
-  }
+exports.updateUserStory = function (updatedUserStory, storyId) {
+  const promise = UserStory.findOneAndUpdate({ _id: storyId }, updatedUserStory).exec();
+  return promise;
 };
 
 /**
  * Deletes the userStory object matching the id.
  *
- * @param {string} projectId {Id of the project object}
+ * @param {string} storyId {Id of the Story object}
  */
 exports.delete = async function (storyId) {
   try {

@@ -10,7 +10,7 @@ import {ProjectService} from '../../../services/project.service';
 import UserStory from '../../../models/userStory';
 import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {map} from "rxjs/operators";
 
 @Component({
@@ -33,19 +33,19 @@ export class BoardComponent implements OnInit {
   allErrors: Error = null;
   constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
               private projectService: ProjectService, private store: Store<{userStories: BoardState }>) {
-    this.boardState$ = store.select('userStories');
+    this.boardState$ = store.pipe(select('userStories'));
   }
 
   board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
     this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
-    this.boardSubscription = this.boardState$.
-    pipe(
-      map(response => {
-        this.allUserStories = response.userStories;
-        this.allErrors = response.userStoriesError;
-      })
+    this.boardSubscription = this.boardState$
+      .pipe(
+        map(response => {
+          this.allUserStories = response.userStories;
+          this.allErrors = response.userStoriesError;
+        })
     ).subscribe();
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
     this.drawTheBoard();

@@ -93,6 +93,33 @@ exports.delete = function (request, response) {
 };
 
 /**
+ * Returns Updated UserStory response.
+ *
+ * @param request
+ * @param response
+ */
+exports.updateUserStory = (request, response) => {
+  try {
+    const updatedUserStory = Object.assign({}, request.body);
+    const resolve = (updatedUserStory) => {
+      if (updatedUserStory) {
+        response.status(200).json();
+      } else {
+        response.status(400).json({
+          message: "Update failed"
+        })
+      }
+    };
+    userStoryService
+      .updateUserStory(updatedUserStory, request.params.storyId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
+  }
+};
+
+/**
  * Throws error if error object is present.
  *
  * @param {Response} response The response object
