@@ -5,8 +5,8 @@ import User from '../../store/models/user';
 import { ProjectService } from '../../services/project.service';
 import Project from '../../store/models/project';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 
 
@@ -60,9 +60,6 @@ export class ProjectDialogComponent implements OnInit {
       this.dialogTitle = "Update Project";
       this.update = true;
       this.projectId = data["id"];
-      this._projectService.getAllUsers().subscribe(items => {
-        this.allUsers = items;
-      })
       this.projectForm = new FormGroup({
         title: new FormControl(data["title"], Validators.required),
         description: new FormControl(data["description"], Validators.required),
