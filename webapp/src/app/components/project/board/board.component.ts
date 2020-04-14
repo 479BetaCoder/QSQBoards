@@ -32,8 +32,8 @@ export class BoardComponent implements OnInit {
   allUserStories: UserStory[];
   allErrors: Error = null;
   constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
-              private projectService: ProjectService, private store: Store<{userStories: BoardState }>) {
-    this.boardState$ = store.pipe(select('userStories'));
+              private projectService: ProjectService, private store: Store<{board: BoardState }>) {
+    this.boardState$ = store.pipe(select('board'));
   }
 
   board: Board = new Board('Sprint Board', []);
@@ -45,10 +45,10 @@ export class BoardComponent implements OnInit {
         map(response => {
           this.allUserStories = response.userStories;
           this.allErrors = response.userStoriesError;
+          this.drawTheBoard();
         })
     ).subscribe();
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
-    this.drawTheBoard();
   }
 
   drawTheBoard() {
