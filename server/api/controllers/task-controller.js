@@ -26,7 +26,7 @@ exports.create = function (request, response) {
     const resolve = (task) => {
       // add the created task id to userStory tasks array
       taskService
-        .updateUserStory(task._id, request.params.storyId)
+        .updateUserStory(task._id, request.params.storyId, true)
         .then((userStory) => {
           if (userStory) {
             response.status(201).json();
@@ -37,12 +37,11 @@ exports.create = function (request, response) {
           }
         });
     };
-    // check if project exists
+    // check if userStory exists
     taskService
       .isUserStoryValid(request.params.storyId)
       .then((userStory) => {
         if (userStory.length > 0) {
-          newTask.storyId = request.params.storyId;
           taskService
             .save(newTask)
             .then(resolve)
@@ -59,6 +58,71 @@ exports.create = function (request, response) {
           message: "User Story not found",
         });
       });
+  } catch (err) {
+    renderErrorResponse(err);
+  }
+};
+
+/**
+ * Deletes a Task object.
+ *
+ * @param {request} {HTTP request object}
+ * @param {response} {HTTP response object}
+ */
+exports.delete = function (request, response) {
+  const resolve = (task) => {
+    if (task) {
+      taskService.getAssociatedStoryId(task._id).then((userStory) => {
+        const storyId = userStory._id;
+        taskService
+          .updateUserStory(task._id, storyId, false)
+          .then((userStory) => {
+            if (userStory) {
+              response.status(200).json();
+            } else {
+              console.log('hello');
+              response.status(400).json({
+                message: utilConstants.CLIENT_ERR,
+              });
+            }
+          })
+          .catch(renderErrorResponse(response));
+      })
+        .catch(renderErrorResponse(response));
+    } else {
+      response.status(400).json({
+        message: utilConstants.CLIENT_ERR,
+      });
+    }
+  };
+  taskService
+    .delete(request.params.taskId)
+    .then(resolve)
+    .catch(renderErrorResponse(response));
+};
+
+/**
+ * Returns Updated Task response.
+ *
+ * @param request
+ * @param response
+ */
+exports.updateTask = (request, response) => {
+  try {
+    const updatedTask = Object.assign({}, request.body);
+    const resolve = (updatedTask) => {
+      if (updatedTask) {
+        response.status(200).json();
+      } else {
+        response.status(400).json({
+          message: "Update failed"
+        })
+      }
+    };
+    taskService
+      .updateTask(updatedTask, request.params.taskId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
   } catch (err) {
     renderErrorResponse(err);
   }
