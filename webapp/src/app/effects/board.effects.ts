@@ -47,4 +47,21 @@ export class BoardEffects {
       )
     )
   );
+
+  UpdateUserStory$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(BoardActions.BeginUpdateUserStory),
+      mergeMap(action =>
+        this.http.put(this.baseUrlBoard + '/' + action.storyId, JSON.stringify(action.payload))
+          .pipe(
+            map(() => {
+              return BoardActions.SuccessUpdateStory({ payload: action.payload });
+            }),
+            catchError((error: Error) => {
+              return of(ProjectActions.ErrorProjectAction(error));
+            })
+          )
+      )
+    )
+  );
 }

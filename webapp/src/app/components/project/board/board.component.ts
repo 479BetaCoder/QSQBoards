@@ -90,7 +90,9 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      event.item.data.status = 'In Progress';
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'In Progress';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
       console.log(event.item);
     }
   }

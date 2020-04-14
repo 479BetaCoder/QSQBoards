@@ -28,4 +28,14 @@ export const SuccessCreateUserStory = createAction(
   props<{ payload: UserStory }>()
 );
 
+export const BeginUpdateUserStory = createAction(
+  '[UserStory] - Begin Create UserStory',
+  props<{ storyId: string,  payload: UserStory}>()
+);
+
+export const SuccessUpdateStory = createAction(
+  '[UserStory] - Success Create UserStory',
+  props<{ payload: UserStory }>()
+);
+
 export const ErrorUserStoryAction = createAction('[UserStory] - Error', props<Error>());

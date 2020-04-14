@@ -11,10 +11,16 @@ const reducer = createReducer(
   on(BoardActions.CreateUserStoryAction, (state: BoardState, userStory: UserStory) => {
     return { ...state, userStories: [...state.userStories, userStory], userStoriesError: null };
   }),
+  /*on(BoardActions.BeginUpdateUserStory, (state: BoardState, userStory: UserStory) => {
+    return { ...state, userStories: [...state.userStories,], userStoriesError: null };
+  }),*/
   on(BoardActions.SuccessGetAllUserStoriesAction, (state: BoardState, { payload }) => {
     return { ...state, userStories: payload };
   }),
   on(BoardActions.SuccessCreateUserStory, (state: BoardState, { payload }) => {
+    return { ...state, userStories: [...state.userStories, payload], userStoriesError: null };
+  }),
+  on(BoardActions.SuccessUpdateStory, (state: BoardState, { payload }) => {
     return { ...state, userStories: [...state.userStories, payload], userStoriesError: null };
   }),
   on(BoardActions.ErrorUserStoryAction, (state: BoardState, error: Error) => {
