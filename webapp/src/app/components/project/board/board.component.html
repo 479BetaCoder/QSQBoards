@@ -14,7 +14,7 @@
       <button mat-button (click)="createUserStory()">Create</button>
     </div>
 
-    <div class="board-wrapper" cdkDropListGroup>
+    <div class="board-wrapper">
 
       <div class="board-columns" cdkDropListGroup>
         <div class="board-column">
@@ -29,13 +29,13 @@
             <mat-grid-list cols="1" [cdkDragData]="item" *ngFor="let item of todoColumn.userStories; let i = index"
                            cdkDrag>
               <mat-card class="task">
-                <mat-card-header>
-                  <h2>{{item.title}}</h2>
-                </mat-card-header>
+                <mat-card-subtitle>
+                  <h3>{{item.title}}</h3>
+                </mat-card-subtitle>
                 <mat-card-content>
-                  <mat-label><h3>Status {{item.status}}</h3></mat-label>
-                  <mat-label><h3>Priority {{item.priority}}</h3></mat-label>
-                  <mat-label><h3>Story Point {{item.storyPoints}}</h3></mat-label>
+                  <mat-label><li>Status {{item.status}}</li></mat-label>
+                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
+                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
                   <mat-label><p>Priority {{item.description}}</p></mat-label>
                 </mat-card-content>
                 <mat-card-actions>
