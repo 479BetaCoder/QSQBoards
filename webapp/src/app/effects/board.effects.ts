@@ -5,7 +5,7 @@ import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as BoardActions from '../store/actions/board.action';
 import {catchError, map, mergeMap} from 'rxjs/operators';
-import UserStory from '../models/userStory';
+import UserStory from '../store/models/userStory';
 import * as ProjectActions from '../store/actions/project.action';
 import {Injectable} from '@angular/core';
 

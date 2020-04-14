@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {baseURL} from '../shared/baseurl';
 import {catchError} from 'rxjs/operators';
-import UserStory from "../models/userStory";
+import UserStory from "../store/models/userStory";
 
 @Injectable({
   providedIn: 'root'

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Board} from '../../../models/board.model';
-import {Column} from '../../../models/column.model';
+import {Board} from '../../../store/models/board';
+import {Column} from '../../../store/models/column';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {UserStoryService} from '../../../services/user-story.service';
 import {ProjectService} from '../../../services/project.service';
-import UserStory from '../../../models/userStory';
+import UserStory from '../../../store/models/userStory';
 import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
 import {select, Store} from "@ngrx/store";

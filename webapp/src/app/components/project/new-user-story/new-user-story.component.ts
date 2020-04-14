@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ProjectService} from '../../../services/project.service';
 import {UserStoryService} from '../../../services/user-story.service';
-import UserStory from '../../../models/userStory';
+import UserStory from '../../../store/models/userStory';
 import {Store} from '@ngrx/store';
 import * as BoardActions from '../../../store/actions/board.action';
 import BoardState from '../../../store/states/board.state';

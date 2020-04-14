@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import UserStory from '../../models/userStory';
+import UserStory from '../models/userStory';
 
 export const GetAllUserStories = createAction('[UserStory] - Get UserStories');
 
