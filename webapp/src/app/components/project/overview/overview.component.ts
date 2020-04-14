@@ -6,12 +6,13 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProjectDialogComponent } from '../../project-dialog/project-dialog.component';
 import {map} from "rxjs/operators";
 import * as ProjectActions from "../../../store/actions/project.action";
-import * as SelectedProjectActions from "../../../store/actions/selectedProject.action";
+import * as ProjectDetailsActions from "../../../store/actions/project-details.action";
 import {Observable, Subscription} from "rxjs";
 import ProjectState from "../../../store/states/project.state";
 import {select, Store} from "@ngrx/store";
 import {ThemePalette} from '@angular/material/core';
-import SelectedProjectState from 'app/store/states/selectedProject.state';
+import ProjectDetailsState from 'app/store/states/project-details.state';
+import ProjectDetails from '../../../store/models/project-details';
 
 @Component({
   selector: 'app-overview',
@@ -21,17 +22,23 @@ import SelectedProjectState from 'app/store/states/selectedProject.state';
 export class OverviewComponent implements OnInit {
 
   emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
-  projectTitle: String;;
+  projectTitle: String;
+
   project: any;
   project$: Observable<ProjectState>;
   ProjectSubscription: Subscription;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
+  projectDetails: any;
   projectList: Project[] = [];
   projectsError: Error = null;
+  projectsDetailsError: Error = null;
   
   constructor(private projectService: ProjectService, private activatedroute: ActivatedRoute,
               private projectDialog: MatDialog,
-              private store: Store<{ projects: ProjectState, selectedProject: SelectedProjectState}>,) {
+              private store: Store<{ projects: ProjectState, projectDetails: ProjectDetailsState}>) {
     this.project$ = store.pipe(select('projects'));
+    this.projectDetails$ = store.pipe(select('projectDetails'));
     this.activatedroute.parent.params.subscribe(params => {
       this.projectTitle = params.title;
     });
@@ -42,7 +49,6 @@ export class OverviewComponent implements OnInit {
     */
   }
 
-  /*This implementation is temporary as this is a blocker for me, @Bhavya please ch*/
   ngOnInit(): void {
     this.ProjectSubscription = this.project$
       .pipe(
@@ -54,10 +60,26 @@ export class OverviewComponent implements OnInit {
       .subscribe();
 
     this.store.dispatch(ProjectActions.BeginGetProjectsAction());
-    // this.projectTitle = this.activatedroute.snapshot.params.title;
+
+    this.ProjectDetailsSubscription = this.projectDetails$
+      .pipe(
+        map(res => {
+          this.projectDetails = res.selectedProjectDetails;
+          this.projectsDetailsError = res.projectsDetailsError;
+        })
+      )
+      .subscribe();
+
+    this.store.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction());
+    if(this.projectTitle == undefined){
+      this.projectTitle = this.projectDetails.title
+    }
+    else{
+      this.projectDetails = new ProjectDetails();
+      this.projectDetails.title = this.projectTitle;
+      this.store.dispatch(ProjectDetailsActions.BeginCreateProjectDetails({ payload : this.projectDetails}));
+    }  
     this.project = this.projectList.find(x => x.title === this.projectTitle);
-    this.store.dispatch(SelectedProjectActions.BeginCreateSelectedProject({ payload: this.project }));
-    //this.projectService.userProjectSubject$.next(this.project);
   }
 
   openProjectDialog(project: any) {
