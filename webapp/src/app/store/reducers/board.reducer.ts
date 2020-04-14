@@ -12,10 +12,10 @@ const reducer = createReducer(
     return { ...state, userStories: [...state.userStories, userStory], userStoriesError: null };
   }),
   on(BoardActions.SuccessGetAllUserStoriesAction, (state: BoardState, { payload }) => {
-    return { ...state, projects: payload };
+    return { ...state, userStories: payload };
   }),
   on(BoardActions.SuccessCreateUserStory, (state: BoardState, { payload }) => {
-    return { ...state, projects: [...state.userStories, payload], projectsError: null };
+    return { ...state, userStories: [...state.userStories, payload], userStoriesError: null };
   }),
   on(BoardActions.ErrorUserStoryAction, (state: BoardState, error: Error) => {
     console.log(error);

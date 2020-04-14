@@ -17,7 +17,7 @@
     <div class="board-wrapper">
 
       <div class="board-columns" cdkDropListGroup>
-        <div class="board-column">
+        <div class="board-column" *ngIf="todoColumn">
 
           <div class="column-title">
             {{ todoColumn.name }}
@@ -46,7 +46,7 @@
             </mat-grid-list>
           </div>
         </div>
-        <div class="board-column">
+        <div class="board-column" *ngIf="inProgressColumn">
 
           <div class="column-title">
             {{ inProgressColumn.name }}
@@ -75,8 +75,7 @@
             </mat-grid-list>
           </div>
         </div>
-
-        <div class="board-column">
+        <div class="board-column" *ngIf="doneColumn">
 
           <div class="column-title">
             {{ doneColumn.name }}
