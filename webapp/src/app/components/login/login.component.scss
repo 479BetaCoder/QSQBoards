@@ -24,7 +24,7 @@
 }
 
 .formbody {
-    width: 290px;
+    width: 340px;
     min-height: 200px;
     background-color: white;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -116,3 +116,8 @@ form {
 .separator::after {
     margin-left: 0.25em;
 }
+
+.errorMessage{
+    //text-align: center;
+    color: red;
+  }

@@ -13,7 +13,7 @@
         <div class="topButtons">
           <button class="mat-raised-button mat-primary projectButton" (click)="openProjectDialog()">
             <mat-icon>add</mat-icon>
-            New ProjectNF
+            New Project
           </button>
           <div class="search">
             <span class="fa fa-search searchIcn"></span>
@@ -28,17 +28,23 @@
 
           </div>
           <div *ngIf="projectList?.length > 0">
-            <mat-card class="card" [routerLink]="['/project-dashboard',project.title]"
-                      *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
-              <mat-card-title class="card-container-left">
-                <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
-                  {{getProjectTitleAvatar(project)}}
-                </div>
-                <span class=" projectTitle">{{project.title}}</span>
-              </mat-card-title>
-              <mat-card-content>
-                {{project.description}}
-              </mat-card-content>
+
+            <mat-card class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
+              <div class="hoverClass" [routerLink]="['/project-dashboard',project.title]">
+                <mat-card-title class="card-container-left">
+                  <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
+                    {{getProjectTitleAvatar(project)}}
+                  </div>
+                  <span class=" projectTitle">{{project.title}}</span>
+                </mat-card-title>
+                <mat-card-content>
+                  {{project.description}}
+                </mat-card-content>
+              </div>
+              <mat-card-footer>
+                <span class="owner">Project Owner: {{project.owner}}</span>
+                <mat-icon class="deleteIcon" (click)="deleteProject(project._id)">delete</mat-icon>
+              </mat-card-footer>
             </mat-card>
           </div>
         </div>

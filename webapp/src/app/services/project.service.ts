@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { baseURL } from '../shared/baseurl';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import Project from '../store/models/project';
-import { User } from '../store/models/user';
+import User from '../store/models/user';
 //import { Task } from "../models/task";
 
 @Injectable({

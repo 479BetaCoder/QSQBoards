@@ -44,19 +44,31 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
-import { ProjectReducer } from './store/reducers/project.reducer';
 import { ProjectDetailsReducer } from './store/reducers/project-details.reducer';
 import { StoreModule } from '@ngrx/store';
-import { ProjectEffects } from './effects/project.effects';
+
 // @ts-ignore
 import { EffectsModule } from '@ngrx/effects';
-import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatLineModule} from '@angular/material/core';
-import {routes} from './app-routing/routes';
-import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
+import { NewUserStoryComponent } from './components/project/new-user-story/new-user-story.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatLineModule } from '@angular/material/core';
+import { routes } from './app-routing/routes';
+import { ProjectDashboardComponent } from './components/project/project-dashboard/project-dashboard.component';
 import {MatTableModule} from '@angular/material/table';
 import { BacklogComponent } from './components/project/backlog/backlog.component';
+
+// Reducers and effects
+import { ProjectReducer } from './store/reducers/project.reducer';
+import { ProjectEffects } from './effects/project.effects';
+import { UserReducer } from './store/reducers/user.reducer';
+import { UserEffects } from './effects/user.effects';
+
+let rootReducer =
+{
+  projects: ProjectReducer,
+  user: UserReducer,
+  projectDetails: ProjectDetailsReducer
+}
 
 @NgModule({
   declarations: [
@@ -106,10 +118,9 @@ import { BacklogComponent } from './components/project/backlog/backlog.component
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    StoreModule.forRoot({ projects: ProjectReducer, projectDetails: ProjectDetailsReducer }),
-    EffectsModule.forRoot([ProjectEffects]),
-    MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    StoreModule.forRoot(rootReducer),
+    EffectsModule.forRoot([ProjectEffects, UserEffects])
   ],
   providers: [
     UserService,

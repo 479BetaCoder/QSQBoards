@@ -12,7 +12,7 @@ import { baseURL } from '../shared/baseurl';
 export class ProjectEffects {
     constructor(private http: HttpClient, private action$: Actions) { }
 
-    private getOrCreateProjectsURL: string = baseURL + '/projects';
+    private getOrCreateProjectsURL: string = baseURL.concat('/projects');
 
     GetProjects$: Observable<Action> = createEffect(() =>
         this.action$.pipe(
@@ -41,6 +41,26 @@ export class ProjectEffects {
                     .pipe(
                         map((_data) => {
                             return ProjectActions.SuccessCreateProject({ payload: action.payload });
+                        }),
+                        catchError((error: Error) => {
+                            return of(ProjectActions.ErrorProjectAction(error));
+                        })
+                    )
+            )
+        )
+    );
+
+    DeleteProject$: Observable<Action> = createEffect(() =>
+        this.action$.pipe(
+            ofType(ProjectActions.BeginDeleteProject),
+            mergeMap(action =>
+                this.http
+                    .delete(this.getOrCreateProjectsURL.concat('/').concat(action.payload), {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .pipe(
+                        map((_data) => {
+                            return ProjectActions.SuccessDeleteProject({ payload: action.payload });
                         }),
                         catchError((error: Error) => {
                             return of(ProjectActions.ErrorProjectAction(error));

@@ -1,12 +1,23 @@
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { User } from '../../store/models/user';
+import User from '../../store/models/user';
 import { ProjectService } from '../../services/project.service';
-import * as ProjectActions from '../../store/actions/project.action';
 import Project from '../../store/models/project';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+
+
+// States
+import UserState from 'app/store/states/user.state';
 import ProjectState from '../../store/states/project.state';
-import { Store } from '@ngrx/store';
+
+
+// Actions
+import * as ProjectActions from '../../store/actions/project.action';
+
 
 
 @Component({
@@ -24,15 +35,21 @@ export class ProjectDialogComponent implements OnInit {
   update: boolean;
   projectId: string;
 
+  activeUsers: UserState;
+  ActiveUserSubscription: Subscription;
+  projectList: Project[] = [];
+  projectsError: Error = null;
+  userError: Error = null;
+
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
     private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data,
-    private store: Store<{ projects: ProjectState }>
+    private store: Store<{ projects: ProjectState, user: UserState }>
   ) {
+    store.pipe(select('user'), take(1)).subscribe(
+      s => this.allUsers = s.activeUsers
+    );
     if (data == null) {
       this.dialogTitle = "New Project";
-      this._projectService.getAllUsers().subscribe(items => {
-        this.allUsers = items;
-      })
       this.projectForm = new FormGroup({
         title: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
@@ -43,9 +60,6 @@ export class ProjectDialogComponent implements OnInit {
       this.dialogTitle = "Update Project";
       this.update = true;
       this.projectId = data["id"];
-      this._projectService.getAllUsers().subscribe(items => {
-        this.allUsers = items;
-      })
       this.projectForm = new FormGroup({
         title: new FormControl(data["title"], Validators.required),
         description: new FormControl(data["description"], Validators.required),
@@ -83,9 +97,13 @@ export class ProjectDialogComponent implements OnInit {
     return memberUserNames;
   }
 
-  createProject(project) {
-    const todo: Project = project;
-    this.store.dispatch(ProjectActions.BeginCreateProject({ payload: todo }));
+  createProject(newProject) {
+    const project: Project = newProject;
+
+    // assign owner from session. 
+    const loggedInUser = JSON.parse(sessionStorage.getItem('User'));
+    project.owner = loggedInUser.userName;
+    this.store.dispatch(ProjectActions.BeginCreateProject({ payload: project }));
     this.dialogRef.close();
   }
 
@@ -111,5 +129,9 @@ export class ProjectDialogComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  onSelectClose() {
+    this.searchTerm = "";
   }
 }
