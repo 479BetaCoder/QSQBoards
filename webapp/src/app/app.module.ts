@@ -60,6 +60,7 @@ import { ProjectReducer } from './store/reducers/project.reducer';
 import { ProjectEffects } from './effects/project.effects';
 import { UserReducer } from './store/reducers/user.reducer';
 import { UserEffects } from './effects/user.effects';
+import { UserStoryDetailsComponent } from './components/user-story-details/user-story-details.component';
 
 const rootReducer = {
   projects: ProjectReducer,
@@ -82,7 +83,8 @@ const rootReducer = {
     UserFilterPipe,
     ProjectFilterPipe,
     ProjectDashboardComponent,
-    NewUserStoryComponent
+    NewUserStoryComponent,
+    UserStoryDetailsComponent
   ],
   imports: [
     BrowserModule,

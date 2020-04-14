@@ -31,12 +31,11 @@ export class BoardEffects {
     )
   );
 
-  createUserStory$: Observable<Action> = createEffect(() =>
+  CreateUserStory$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
-      ofType(BoardActions.SuccessCreateUserStory),
+      ofType(BoardActions.BeginCreateUserStory),
       mergeMap(action =>
-        this.http
-          .post(this.baseUrlBoard, JSON.stringify(action.payload))
+        this.http.post(this.baseUrlBoard + '/' + action.projectId, JSON.stringify(action.payload))
           .pipe(
             map(() => {
               return BoardActions.SuccessCreateUserStory({ payload: action.payload });
