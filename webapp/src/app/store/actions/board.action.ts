@@ -9,7 +9,10 @@ export const CreateUserStoryAction = createAction(
 );
 
 props<UserStory>();
-export const BeginGetUserStoriesAction = createAction('[UserStory] - Begin Get UserStories');
+export const BeginGetUserStoriesAction = createAction(
+  '[UserStory] - Begin Get UserStories',
+  props<{ projectId: string }>()
+  );
 
 export const SuccessGetAllUserStoriesAction = createAction(
   '[UserStory] - Success Get UserStories',

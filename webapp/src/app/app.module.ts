@@ -55,6 +55,7 @@ import {MatLineModule} from '@angular/material/core';
 import {routes} from './app-routing/routes';
 import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
 import {BoardReducer} from "./store/reducers/userStory.reducer";
+import {BoardEffects} from "./effects/board.effects";
 
 @NgModule({
   declarations: [
@@ -104,7 +105,7 @@ import {BoardReducer} from "./store/reducers/userStory.reducer";
     MatLineModule,
     MatSelectModule,
     StoreModule.forRoot({ projects: ProjectReducer, board: BoardReducer}),
-    EffectsModule.forRoot([ProjectEffects])
+    EffectsModule.forRoot([ProjectEffects, BoardEffects])
   ],
   providers: [
     UserService,
