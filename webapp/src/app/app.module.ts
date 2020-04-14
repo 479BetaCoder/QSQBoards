@@ -54,6 +54,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatLineModule} from '@angular/material/core';
 import {routes} from './app-routing/routes';
 import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
+import {BoardReducer} from "./store/reducers/userStory.reducer";
 
 @NgModule({
   declarations: [
@@ -102,7 +103,7 @@ import {ProjectDashboardComponent} from './components/project/project-dashboard/
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    StoreModule.forRoot({ projects: ProjectReducer }),
+    StoreModule.forRoot({ projects: ProjectReducer, board: BoardReducer}),
     EffectsModule.forRoot([ProjectEffects])
   ],
   providers: [

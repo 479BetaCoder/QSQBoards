@@ -35,11 +35,9 @@ export class BoardEffects {
       ofType(BoardActions.BeginCreateUserStory),
       mergeMap(action =>
         this.http
-          .post(this.baseUrlBoard, JSON.stringify(action.payload), {
-            headers: { 'Content-Type': 'application/json' }
-          })
+          .post(this.baseUrlBoard, JSON.stringify(action.payload))
           .pipe(
-            map((_data) => {
+            map(() => {
               return BoardActions.SuccessCreateUserStory({ payload: action.payload });
             }),
             catchError((error: Error) => {

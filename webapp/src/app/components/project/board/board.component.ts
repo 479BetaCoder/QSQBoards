@@ -4,10 +4,14 @@ import {Board} from '../../../models/board.model';
 import {Column} from '../../../models/column.model';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {UserStoryService} from '../../../services/user-story.service';
 import {ProjectService} from '../../../services/project.service';
 import UserStory from '../../../models/userStory';
+import BoardState from '../../../store/states/board.state';
+import * as BoardActions from '../../../store/actions/board.action';
+import {Store} from "@ngrx/store";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-board',
@@ -15,7 +19,7 @@ import UserStory from '../../../models/userStory';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  allUserStories: Observable<any> = new Subject();
+
   todoUserStories: UserStory[];
   inProgressUserStories: UserStory[];
   doneUserStories: UserStory[];
@@ -23,36 +27,31 @@ export class BoardComponent implements OnInit {
   todoColumn: Column;
   inProgressColumn: Column;
   doneColumn: Column;
-  constructor(private dialog: MatDialog, private userStoryService: UserStoryService, private projectService: ProjectService) { }
+  boardState$: Observable<BoardState>;
+  boardSubscription: Subscription;
+  allUserStories: UserStory[];
+  allErrors: Error = null;
+  constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
+              private projectService: ProjectService, private store: Store<{userStories: BoardState }>) {
+    this.boardState$ = store.select('userStories');
+  }
 
-  board: Board = new Board('Sprint Board', [
-   /* new Column('Todo', [
-      'Some random idea',
-      'This is another random idea',
-      'build an awesome application'
-    ]),
-    new Column('In Progress', [
-      'Get to work',
-      'Pick up groceries',
-      'Go home',
-      'Fall asleep'
-    ]),
-    new Column('Done', [
-      'Get up',
-      'Brush teeth',
-      'Take a shower',
-      'Check e-mail',
-      'Walk dog'
-    ])*/
-  ]);
+  board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
+    this.boardSubscription = this.boardState$.
+    pipe(
+      map(response => {
+        this.allUserStories = response.userStories;
+        this.allErrors = response.userStoriesError;
+      })
+    ).subscribe();
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction());
     this.drawTheBoard();
-    // this.column = new Column('todo', this.allUserStories);
   }
 
   drawTheBoard() {
-    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    /*this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
     this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
       this.todoUserStories = data.filter(item => item.priority === 'medium');
       this.inProgressUserStories = data.filter(item => item.priority === 'low');
@@ -60,14 +59,16 @@ export class BoardComponent implements OnInit {
       this.todoColumn = new Column('Todo', this.todoUserStories);
       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
       this.doneColumn = new Column('Done', this.doneUserStories);
-    });
-    /*this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
-      let highPr = data.filter();
-      this.todoColumn = new Column('Todo', data);
-      this.inProgressColumn = new Column('In Progress', data);
-      this.doneColumn = new Column('Done', data);
-      this.board.columns.push(this.todoColumn, this.inProgressColumn, this.doneColumn);
     });*/
+    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+     this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
+       this.todoUserStories = data.filter(item => item.priority === 'medium');
+       this.inProgressUserStories = data.filter(item => item.priority === 'low');
+       this.doneUserStories = data.filter(item => item.priority === 'high');
+       this.todoColumn = new Column('Todo', this.todoUserStories);
+       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
+       this.doneColumn = new Column('Done', this.doneUserStories);
+     });
   }
 
   dropInTodo(event: CdkDragDrop<UserStory[]>) {
