@@ -29,13 +29,23 @@ export const SuccessCreateUserStory = createAction(
 );
 
 export const BeginUpdateUserStory = createAction(
-  '[UserStory] - Begin Create UserStory',
+  '[UserStory] - Begin Update UserStory',
   props<{ storyId: string,  payload: UserStory}>()
 );
 
 export const SuccessUpdateStory = createAction(
-  '[UserStory] - Success Create UserStory',
+  '[UserStory] - Success Update UserStory',
   props<{ payload: UserStory }>()
+);
+
+export const BeginDeleteUserStory = createAction(
+  '[UserStory] - Begin Delete UserStory',
+  props<{ storyId: string}>()
+);
+
+export const SuccessDeleteStory = createAction(
+  '[UserStory] - Success Delete UserStory',
+  props<{ storyId: string }>()
 );
 
 export const ErrorUserStoryAction = createAction('[UserStory] - Error', props<Error>());

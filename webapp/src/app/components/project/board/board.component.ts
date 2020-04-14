@@ -108,7 +108,8 @@ export class BoardComponent implements OnInit {
   }
 
   deleteStory(item, column, index) {
-    column.tasks.splice(index, 1);
+    this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
+    // column.tasks.splice(index, 1);
   }
 
  /* createUserStory() {

@@ -64,4 +64,21 @@ export class BoardEffects {
       )
     )
   );
+
+  DeleteUserStory$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(BoardActions.BeginDeleteUserStory),
+      mergeMap(action =>
+        this.http.delete(this.baseUrlBoard + '/' + action.storyId)
+          .pipe(
+            map(() => {
+              return BoardActions.SuccessDeleteStory({ storyId: action.storyId });
+            }),
+            catchError((error: Error) => {
+              return of(ProjectActions.ErrorProjectAction(error));
+            })
+          )
+      )
+    )
+  );
 }
