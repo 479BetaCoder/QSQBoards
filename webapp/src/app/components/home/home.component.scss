@@ -50,6 +50,10 @@
   margin-left: 15px;
 }
 
+.deleteIcon {
+  color: red;
+}
+
 mat-icon {
   vertical-align: middle;
 }
@@ -153,14 +157,14 @@ mat-card-content {
 .topButtons {
   padding: 20px;
 }
-mat-card-footer{
+mat-card-footer {
   margin-right: 10px;
   float: right;
 }
 
-mat-icon:hover{
+mat-icon:hover {
   cursor: pointer;
 }
-.owner{
+.owner {
   margin-right: 30px;
 }
