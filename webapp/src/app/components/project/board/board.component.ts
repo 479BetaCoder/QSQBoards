@@ -61,9 +61,9 @@ export class BoardComponent implements OnInit {
       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
       this.doneColumn = new Column('Done', this.doneUserStories);
     });*/
-      this.todoUserStories = this.allUserStories.filter(item => item.priority === 'medium');
-      this.inProgressUserStories = this.allUserStories.filter(item => item.priority === 'low');
-      this.doneUserStories = this.allUserStories.filter(item => item.priority === 'high');
+      this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'todo');
+      this.inProgressUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'in progress');
+      this.doneUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'done');
       this.todoColumn = new Column('Todo', this.todoUserStories);
       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
       this.doneColumn = new Column('Done', this.doneUserStories);
@@ -77,8 +77,10 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      event.item.data.status = 'Todo';
-      console.log(event.item);
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'ToDo';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
     }
   }
 
@@ -93,6 +95,7 @@ export class BoardComponent implements OnInit {
       const updateStory = Object.assign({}, event.item.data);
       updateStory.status = 'In Progress';
       this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
       console.log(event.item);
     }
   }
@@ -100,8 +103,10 @@ export class BoardComponent implements OnInit {
   dropDone(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      event.item.data.status = 'Done';
-      console.log(event.item);
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'Done';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
     } else {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }

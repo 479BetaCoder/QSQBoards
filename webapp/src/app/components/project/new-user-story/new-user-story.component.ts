@@ -16,7 +16,7 @@ import BoardState from '../../../store/states/board.state';
 })
 export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
-  newStatus: 'New';
+  newStatus: 'Todo';
   userProject: any;
   priorities = [
     {value: 'low', viewValue: 'Low'},
@@ -43,7 +43,7 @@ export class NewUserStoryComponent implements OnInit {
     this.createStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: [{value : 'New', disabled: true}, [Validators.required, Validators.pattern]],
+      status: [{value : 'Todo', disabled: true}, [Validators.required, Validators.pattern]],
       storyPoints: ['', [Validators.required]],
       priority: ['', [Validators.required]],
     });
