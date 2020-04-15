@@ -12,8 +12,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class SideNavComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
+  project: any;
+
   reason = '';
-  projectTitle = '';
+  projectTitle: String;
 
   close(reason: string) {
     this.reason = reason;

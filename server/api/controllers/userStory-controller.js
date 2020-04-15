@@ -24,7 +24,7 @@ exports.create = function (request, response) {
   try {
     const newUserStory = Object.assign({}, request.body);
     const resolve = () => {
-      response.status(201).json();
+      response.status(201).json(newUserStory);
     };
     // check if project exists
     userStoryService

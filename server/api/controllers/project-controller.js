@@ -43,8 +43,8 @@ exports.post = function (request, response) {
   try {
     const newProject = Object.assign({}, request.body);
     newProject.owner = request.userData.userName;
-    const resolve = () => {
-      response.status(201).json();
+    const resolve = (newProject) => {
+      response.status(201).json(newProject);
     };
     projectService
       .save(newProject)

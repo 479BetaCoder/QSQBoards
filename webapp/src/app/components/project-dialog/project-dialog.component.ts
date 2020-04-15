@@ -5,19 +5,20 @@ import User from '../../store/models/user';
 import { ProjectService } from '../../services/project.service';
 import Project from '../../store/models/project';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+
+// import { take } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
 // States
 import UserState from 'app/store/states/user.state';
 import ProjectState from '../../store/states/project.state';
-
+import ProjectDetailsState from '../../store/states/project-details.state';
 
 // Actions
 import * as ProjectActions from '../../store/actions/project.action';
-
 
 
 @Component({
@@ -28,27 +29,42 @@ import * as ProjectActions from '../../store/actions/project.action';
 export class ProjectDialogComponent implements OnInit {
   emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
-  allUsers: User[];
   members = new FormControl([]);
   searchTerm: string;
   dialogTitle: string;
   update: boolean;
   projectId: string;
 
-  activeUsers: UserState;
-  ActiveUserSubscription: Subscription;
-  projectList: Project[] = [];
-  projectsError: Error = null;
+  activeUsers$: Observable<UserState>;
+  activeUsers: User[];
+  ActiveUsersSubscription: Subscription;
   userError: Error = null;
-  selectedUsers: string[] = [];
+  dialogData: any;
+
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
-    private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data,
-    private store: Store<{ projects: ProjectState, user: UserState }>
+    @Inject(MAT_DIALOG_DATA) data,
+    private store: Store<{ projects: ProjectState, user: UserState, projectDetails: ProjectDetailsState }>
   ) {
-    store.pipe(select('user'), take(1)).subscribe(
-      s => this.allUsers = s.activeUsers
-    );
-    if (data == null) {
+    this.activeUsers$ = store.pipe(select('user'));
+    this.dialogData = data;
+  }
+
+  // compareFn(c1: User, c2: User) {
+  //   return c1 && c2 ? c1.userName === c2.userName : c1 === c2;
+  // }
+  ngOnInit(): void {
+    this.ActiveUsersSubscription = this.activeUsers$
+      .pipe(
+        map(res => {
+          this.activeUsers = res.activeUsers;
+          this.userError = res.userError;
+        })
+      )
+      .subscribe();
+
+    // Test
+
+    if (this.dialogData == null) {
       this.dialogTitle = "New Project";
       this.projectForm = new FormGroup({
         title: new FormControl(null, Validators.required),
@@ -57,19 +73,31 @@ export class ProjectDialogComponent implements OnInit {
         status: new FormControl("NEW", null)
       });
     } else {
+
       this.dialogTitle = "Update Project";
       this.update = true;
-      this.projectId = data["id"];
+      this.projectId = this.dialogData["id"];
       this.projectForm = new FormGroup({
-        title: new FormControl(data["title"], Validators.required),
-        description: new FormControl(data["description"], Validators.required),
-        members: new FormControl(data["members"], null),
-        status: new FormControl(data["status"], null)
+        title: new FormControl(this.dialogData["title"], Validators.required),
+        description: new FormControl(this.dialogData["description"], Validators.required),
+        members: this.members,
+        status: new FormControl(this.dialogData["status"], null)
       });
+      let selectedMembers = [];
+      this.dialogData["members"].forEach(member => {
+        selectedMembers.push({
+          userName: member,
+          image: (this.activeUsers.find(activeUser => activeUser.userName === member)).image
+        })
+      })
+      this.projectForm.controls['members'].setValue(selectedMembers, { onlySelf: true });
     }
+
   }
 
-  ngOnInit(): void {
+  compareFn(x: User, y: User): boolean {
+    console.log(JSON.stringify(y));
+    return x && y ? x.userName === y.userName : x === y;
   }
 
   isValid(controlName) {
@@ -99,7 +127,6 @@ export class ProjectDialogComponent implements OnInit {
 
   createProject(newProject) {
     const project: Project = newProject;
-
     // assign owner from session. 
     const loggedInUser = JSON.parse(sessionStorage.getItem('User'));
     project.owner = loggedInUser.userName;
@@ -107,20 +134,22 @@ export class ProjectDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  updateProject(updatedProject) {
+    const project: Project = updatedProject;
+    // assign owner from session. 
+    const loggedInUser = JSON.parse(sessionStorage.getItem('User'));
+    project.owner = loggedInUser.userName;
+    project._id = this.projectId;
+    this.store.dispatch(ProjectActions.BeginUpdateProject({ payload: project }));
+    this.dialogRef.close();
+  }
+
   save() {
     if (this.projectForm.valid) {
-
       const validMembers = this.modifyMembersValue(this.projectForm.value.members);
       this.projectForm.value.members = validMembers;
-
       if (this.update) {
-        this._projectService.updateProject(this.projectForm.value, this.projectId)
-          .subscribe(
-            data => {
-              console.log(data);
-            },
-            error => { }
-          );
+        this.updateProject(this.projectForm.value);
       } else {
         this.createProject(this.projectForm.value)
       }

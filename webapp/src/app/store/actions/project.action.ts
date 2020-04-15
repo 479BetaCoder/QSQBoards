@@ -13,6 +13,11 @@ export const DeleteProject = createAction(
     props<String>()
 );
 
+export const UpdateProject = createAction(
+    '[Project] - Update Project',
+    props<Project>()
+);
+
 export const BeginGetProjectsAction = createAction('[Project] - Begin Get Projects');
 
 export const SuccessGetProjectsAction = createAction(
@@ -27,6 +32,16 @@ export const BeginCreateProject = createAction(
 
 export const SuccessCreateProject = createAction(
     '[Project] - Success Create Project',
+    props<{ payload: Project }>()
+);
+
+export const BeginUpdateProject = createAction(
+    '[Project] - Begin Update Project Action',
+    props<{ payload: Project }>()
+);
+
+export const SuccessUpdateProjectAction = createAction(
+    '[Project] - Success Update Project',
     props<{ payload: Project }>()
 );
 

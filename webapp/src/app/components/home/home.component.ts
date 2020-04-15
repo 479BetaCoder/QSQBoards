@@ -2,16 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as ProjectActions from '../../store/actions/project.action';
-import * as UserActions from '../../store/actions/user.action';
-import Project from '../../store/models/project';
-import ProjectState from '../../store/states/project.state';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ProjectDialogComponent } from '../project-dialog/project-dialog.component';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../auth/authentication.service";
 import * as constantRoutes from '../../shared/constants';
 import { Actions, ofType } from '@ngrx/effects';
+
+//Actions
+import * as UserActions from '../../store/actions/user.action';
+import * as ProjectActions from '../../store/actions/project.action';
+
+//State
+import ProjectState from '../../store/states/project.state';
+
+//Models
+import Project from '../../store/models/project';
 
 @Component({
   selector: 'app-home',
@@ -76,6 +82,23 @@ export class HomeComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+
+    this.projectDialog.open(ProjectDialogComponent, dialogConfig);
+  }
+
+  openUpdateDialog(project: Project) {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: project._id,
+      title: project.title,
+      description: project.description,
+      members: [...project.members],
+      status: project.status
+    };
 
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
   }

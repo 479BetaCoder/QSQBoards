@@ -39,8 +39,9 @@ export class ProjectEffects {
                         headers: { 'Content-Type': 'application/json' }
                     })
                     .pipe(
-                        map((_data) => {
-                            return ProjectActions.SuccessCreateProject({ payload: action.payload });
+                        map((data: Project) => {
+                            console.log(JSON.stringify(data));
+                            return ProjectActions.SuccessCreateProject({ payload: data });
                         }),
                         catchError((error: Error) => {
                             return of(ProjectActions.ErrorProjectAction(error));
@@ -61,6 +62,26 @@ export class ProjectEffects {
                     .pipe(
                         map((_data) => {
                             return ProjectActions.SuccessDeleteProject({ payload: action.payload });
+                        }),
+                        catchError((error: Error) => {
+                            return of(ProjectActions.ErrorProjectAction(error));
+                        })
+                    )
+            )
+        )
+    );
+
+    UpdateProject$: Observable<Action> = createEffect(() =>
+        this.action$.pipe(
+            ofType(ProjectActions.BeginUpdateProject),
+            mergeMap(action =>
+                this.http
+                    .put(this.getOrCreateProjectsURL.concat('/').concat(action.payload._id), JSON.stringify(action.payload), {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .pipe(
+                        map((_data) => {
+                            return ProjectActions.SuccessUpdateProjectAction({ payload: action.payload });
                         }),
                         catchError((error: Error) => {
                             return of(ProjectActions.ErrorProjectAction(error));

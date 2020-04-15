@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Board} from '../../../models/board.model';
-import {Column} from '../../../models/column.model';
+import {Board} from '../../../store/models/board';
+import {Column} from '../../../store/models/column';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
-import {Observable, Subject} from "rxjs";
-import {UserStoryService} from "../../../services/user-story.service";
-import {ProjectService} from "../../../services/project.service";
+import {Observable, Subject, Subscription} from 'rxjs';
+import {UserStoryService} from '../../../services/user-story.service';
+import {ProjectService} from '../../../services/project.service';
+import UserStory from '../../../store/models/userStory';
+import BoardState from '../../../store/states/board.state';
+import * as BoardActions from '../../../store/actions/board.action';
+import {select, Store} from "@ngrx/store";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-board',
@@ -14,50 +19,57 @@ import {ProjectService} from "../../../services/project.service";
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  allUserStories: Observable<any> = new Subject();
+
+  todoUserStories: UserStory[];
+  inProgressUserStories: UserStory[];
+  doneUserStories: UserStory[];
   projectId: string;
   todoColumn: Column;
   inProgressColumn: Column;
   doneColumn: Column;
-  constructor(private dialog: MatDialog, private userStoryService: UserStoryService, private projectService: ProjectService) { }
+  boardState$: Observable<BoardState>;
+  boardSubscription: Subscription;
+  allUserStories: UserStory[];
+  allErrors: Error = null;
+  constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
+              private projectService: ProjectService, private store: Store<{board: BoardState }>) {
+    this.boardState$ = store.pipe(select('board'));
+  }
 
-  board: Board = new Board('Sprint Board', [
-   /* new Column('Todo', [
-      'Some random idea',
-      'This is another random idea',
-      'build an awesome application'
-    ]),
-    new Column('In Progress', [
-      'Get to work',
-      'Pick up groceries',
-      'Go home',
-      'Fall asleep'
-    ]),
-    new Column('Done', [
-      'Get up',
-      'Brush teeth',
-      'Take a shower',
-      'Check e-mail',
-      'Walk dog'
-    ])*/
-  ]);
+  board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
-    this.drawTheBoard();
-    // this.column = new Column('todo', this.allUserStories);
+    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    this.boardSubscription = this.boardState$
+      .pipe(
+        map(response => {
+          this.allUserStories = response.userStories;
+          this.allErrors = response.userStoriesError;
+          this.drawTheBoard();
+        })
+    ).subscribe();
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
   }
 
   drawTheBoard() {
-    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    /*this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
     this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
-      this.todoColumn = new Column('Todo', data);
-      this.inProgressColumn = new Column('In Progress', data);
-      this.doneColumn = new Column('Done', data);
-      this.board.columns.push(this.todoColumn, this.inProgressColumn, this.doneColumn);
-    });
+      this.todoUserStories = data.filter(item => item.priority === 'medium');
+      this.inProgressUserStories = data.filter(item => item.priority === 'low');
+      this.doneUserStories = data.filter(item => item.priority === 'high');
+      this.todoColumn = new Column('Todo', this.todoUserStories);
+      this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
+      this.doneColumn = new Column('Done', this.doneUserStories);
+    });*/
+      this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'todo');
+      this.inProgressUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'in progress');
+      this.doneUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'done');
+      this.todoColumn = new Column('Todo', this.todoUserStories);
+      this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
+      this.doneColumn = new Column('Done', this.doneUserStories);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  dropInTodo(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -65,12 +77,44 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'ToDo';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+    }
+  }
+
+  dropInProgress(event: CdkDragDrop<UserStory[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'In Progress';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
       console.log(event.item);
     }
   }
 
+  dropDone(event: CdkDragDrop<UserStory[]>) {
+    if (event.previousContainer !== event.container) {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      const updateStory = Object.assign({}, event.item.data);
+      updateStory.status = 'Done';
+      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+    } else {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
+
   deleteStory(item, column, index) {
-    column.tasks.splice(index, 1);
+    this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
+    // column.tasks.splice(index, 1);
   }
 
  /* createUserStory() {

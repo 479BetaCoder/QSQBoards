@@ -20,7 +20,7 @@ const reducer = createReducer(
             ...state,
             activeUsers: [...payload],
             projectsError: null
-        }
+        };
     }),
     on(UserActions.ErrorUserAction, (state: UserState, error: Error) => {
         console.log(error);

@@ -1,5 +1,5 @@
 export default class UserStory {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   projectId: string;
@@ -7,4 +7,5 @@ export default class UserStory {
   storyPoints: string;
   priority: string;
   tasks: string[];
+  comment: string[];
 }
