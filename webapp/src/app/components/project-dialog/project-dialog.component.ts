@@ -135,18 +135,18 @@ export class ProjectDialogComponent implements OnInit {
     this.searchTerm = "";
   }
 
-  change(event)
+   change(event)
   {
     if(event.isUserInput) {
 
-      console.log(event.source.value, event.source.selected);
-      if(event.source.selected){
-        this.selectedUsers.push(event.source.value.userName);
-      }
-      if(!event.source.selected){
-        this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
-      }
-    }
-
-  }
+  //     console.log(event.source.value, event.source.selected);
+  //     if(event.source.selected){
+  //       this.members.push(event.source.value.userName);
+  //     }
+  //     if(!event.source.selected){
+  //       this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
+  //     }
+     }
+    
+   }
 }
