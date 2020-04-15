@@ -31,7 +31,6 @@
 
           </div>
           <div *ngIf="projectList?.length > 0">
-<<<<<<< HEAD
             <div class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
             
                       <div class="topCardContainer" *ngIf="i<3">
@@ -49,6 +48,7 @@
                         </div>
                           <mat-card-footer>
                             <span class="owner">Owner: {{project.owner}}</span>
+                            <mat-icon *ngIf="currentUserName==project.owner"  class="editIcon" (click)="openUpdateDialog(project)">edit</mat-icon>
                             <mat-icon *ngIf="currentUserName==project.owner" class="deleteIcon" (click)="confirmDelete(project._id,project.title)" >delete</mat-icon>
                           </mat-card-footer>
                         </mat-card>
@@ -65,6 +65,7 @@
                                   <div class="bottomDescriptionContainer">{{project.description}}</div> </div>
                               </div>
                               <div *ngIf="currentUserName==project.owner" class="bottomDeleteIcon">
+                                <mat-icon class="editIcon" (click)="openUpdateDialog(project)">edit</mat-icon>
                                 <mat-icon class="deleteIcon" (click)="confirmDelete(project._id,project.title)">delete</mat-icon>
                               </div>
                             </div>
@@ -75,27 +76,6 @@
                      </div>
             
           </div>
-=======
-
-            <mat-card class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
-              <div class="hoverClass" [routerLink]="['/project-dashboard',project._id]">
-                <mat-card-title class="card-container-left">
-                  <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
-                    {{getProjectTitleAvatar(project)}}
-                  </div>
-                  <span class=" projectTitle">{{project.title}}</span>
-                </mat-card-title>
-                <mat-card-content>
-                  {{project.description}}
-                </mat-card-content>
-              </div>
-              <mat-card-footer>
-                <span class="owner">Project Owner: {{project.owner}}</span>
-                <mat-icon class="editIcon" (click)="openUpdateDialog(project)">edit</mat-icon>
-                <mat-icon class="deleteIcon" (click)="deleteProject(project._id)">delete</mat-icon>
-              </mat-card-footer>
-            </mat-card>
->>>>>>> bef86dd1a67e6845e5e70ac09ca26f3505286da5
           </div>
         </div>
       </mat-sidenav-content>
