@@ -4,6 +4,10 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ProjectService} from '../../../services/project.service';
 import {UserStoryService} from '../../../services/user-story.service';
+import UserStory from '../../../store/models/userStory';
+import {Store} from '@ngrx/store';
+import * as BoardActions from '../../../store/actions/board.action';
+import BoardState from '../../../store/states/board.state';
 
 @Component({
   selector: 'app-new-user-story',
@@ -12,7 +16,7 @@ import {UserStoryService} from '../../../services/user-story.service';
 })
 export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
-  newStatus: 'New';
+  newStatus: 'Todo';
   userProject: any;
   priorities = [
     {value: 'low', viewValue: 'Low'},
@@ -25,7 +29,8 @@ export class NewUserStoryComponent implements OnInit {
     private dialogRef: MatDialogRef<NewUserStoryComponent>,
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
-    @Inject(MAT_DIALOG_DATA) data
+    @Inject(MAT_DIALOG_DATA) data,
+    private store: Store<{ projects: BoardState }>
   ) {
     this.mainForm();
   }
@@ -38,7 +43,7 @@ export class NewUserStoryComponent implements OnInit {
     this.createStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: [{value : 'New', disabled: true}, [Validators.required, Validators.pattern]],
+      status: [{value : 'Todo', disabled: true}, [Validators.required, Validators.pattern]],
       storyPoints: ['', [Validators.required]],
       priority: ['', [Validators.required]],
     });
@@ -51,14 +56,17 @@ export class NewUserStoryComponent implements OnInit {
     if (!this.createStoryForm.valid) {
       return false;
     } else {
-      this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
-        (res) => {
+      const newUserStory: UserStory = this.createStoryForm.value;
+      this.store.dispatch(BoardActions.BeginCreateUserStory({ projectId:  this.userProject._id, payload: newUserStory }));
+      this.dialogRef.close();
+      /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
+        () => {
           console.log('Stories successfully created!');
           // this.ngZone.run(() => this.router.navigateByUrl('/boards'));
           this.dialogRef.close();
         }, (error) => {
           console.log(error);
-        });
+        });*/
     }
   }
 

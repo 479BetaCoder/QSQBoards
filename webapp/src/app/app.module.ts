@@ -45,26 +45,28 @@ import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { StoreModule } from '@ngrx/store';
-
 // @ts-ignore
 import { EffectsModule } from '@ngrx/effects';
-import { NewUserStoryComponent } from './components/project/new-user-story/new-user-story.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatLineModule } from '@angular/material/core';
-import { routes } from './app-routing/routes';
-import { ProjectDashboardComponent } from './components/project/project-dashboard/project-dashboard.component';
+import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatLineModule} from '@angular/material/core';
+import {routes} from './app-routing/routes';
+import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
+import {BoardReducer} from './store/reducers/board.reducer';
+import {BoardEffects} from './effects/board.effects';
 
 // Reducers and effects
 import { ProjectReducer } from './store/reducers/project.reducer';
 import { ProjectEffects } from './effects/project.effects';
 import { UserReducer } from './store/reducers/user.reducer';
 import { UserEffects } from './effects/user.effects';
+import { UserStoryDetailsComponent } from './components/project/user-story-details/user-story-details.component';
 
-let rootReducer =
-{
+const rootReducer = {
   projects: ProjectReducer,
+  board: BoardReducer,
   user: UserReducer
-}
+};
 
 @NgModule({
   declarations: [
@@ -81,7 +83,8 @@ let rootReducer =
     UserFilterPipe,
     ProjectFilterPipe,
     ProjectDashboardComponent,
-    NewUserStoryComponent
+    NewUserStoryComponent,
+    UserStoryDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -113,8 +116,8 @@ let rootReducer =
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([ProjectEffects, UserEffects])
+    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects]),
+    StoreModule.forRoot(rootReducer)
   ],
   providers: [
     UserService,
