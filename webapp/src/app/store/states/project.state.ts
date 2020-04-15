@@ -6,5 +6,5 @@ export default class ProjectState {
 }
 
 export const initializeState = (): ProjectState => {
-    return { projects: Array<Project>(), projectsError: null };
+    return { projects: Array<Project>(), projectsError: null};
 };

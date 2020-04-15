@@ -47,25 +47,30 @@ import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { StoreModule } from '@ngrx/store';
 // @ts-ignore
 import { EffectsModule } from '@ngrx/effects';
-import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatLineModule} from '@angular/material/core';
-import {routes} from './app-routing/routes';
-import {ProjectDashboardComponent} from './components/project/project-dashboard/project-dashboard.component';
-import {BoardReducer} from './store/reducers/board.reducer';
-import {BoardEffects} from './effects/board.effects';
+import { NewUserStoryComponent } from './components/project/new-user-story/new-user-story.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatLineModule } from '@angular/material/core';
+import { routes } from './app-routing/routes';
+import { ProjectDashboardComponent } from './components/project/project-dashboard/project-dashboard.component';
+import { UserStoryDetailsComponent } from './components/project/user-story-details/user-story-details.component';
+import { MatTableModule } from '@angular/material/table';
+import { BacklogComponent } from './components/project/backlog/backlog.component';
 
 // Reducers and effects
 import { ProjectReducer } from './store/reducers/project.reducer';
 import { ProjectEffects } from './effects/project.effects';
 import { UserReducer } from './store/reducers/user.reducer';
 import { UserEffects } from './effects/user.effects';
-import { UserStoryDetailsComponent } from './components/project/user-story-details/user-story-details.component';
+import { ProjectDetailsReducer } from './store/reducers/project-details.reducer';
+import { ProjectDetailsEffects } from './effects/project-details.effects';
+import { BoardReducer } from './store/reducers/board.reducer';
+import { BoardEffects } from './effects/board.effects';
 
 const rootReducer = {
   projects: ProjectReducer,
+  user: UserReducer,
+  projectDetails: ProjectDetailsReducer,
   board: BoardReducer,
-  user: UserReducer
 };
 
 @NgModule({
@@ -84,6 +89,7 @@ const rootReducer = {
     ProjectFilterPipe,
     ProjectDashboardComponent,
     NewUserStoryComponent,
+    BacklogComponent,
     UserStoryDetailsComponent
   ],
   imports: [
@@ -116,8 +122,9 @@ const rootReducer = {
     DragDropModule,
     MatLineModule,
     MatSelectModule,
-    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects]),
-    StoreModule.forRoot(rootReducer)
+    MatTableModule,
+    StoreModule.forRoot(rootReducer),
+    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects])
   ],
   providers: [
     UserService,

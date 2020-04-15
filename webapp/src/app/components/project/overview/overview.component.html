@@ -1,30 +1,47 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-    <mat-card class="overview-card">
-        <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-            <span fxFlex="100%">{{project.title}}</span>
-          </mat-card-title>
-
-          <mat-card-content>
-            {{project.description}}
-          </mat-card-content>
-          <mat-card-content>
-              Status -
-            {{project.status}}
-          </mat-card-content>
-          <mat-card-content>
-              Owner -
-            {{project.owner}}
-          </mat-card-content>
-          <mat-card-content>
-            Team Members -
-            <!--<mat-list>
-              <mat-list-item *ngFor="let member of project.Members">
-                <h3 matLine>  {{member.userName}} </h3>
-              </mat-list-item>
-            </mat-list>-->
-          </mat-card-content>
-          <mat-card-actions>
-              <button class="mat-raised-button mat-primary" (click)="openProjectDialog(project)">Edit</button>
-          </mat-card-actions>
-        </mat-card>
+<div *ngIf="projectDetails">
+  <mat-toolbar>
+    <div id="profileImage" [ngStyle]="{'background': '#3f51b5'}">
+      {{getProjectTitleAvatar()}}
+    </div>
+    <span class=" projectTitle">{{projectDetails.title}}</span>
+  </mat-toolbar>
+  <div class="aboutContainer" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="50px">
+    <mat-card fxFlex="0 1 calc(60% - 10px)" class="overview-card">
+      <mat-card-content class="content-title">
+        About this project
+      </mat-card-content>
+      <mat-card-content>
+        {{projectDetails.description}}
+      </mat-card-content>
+      <mat-card-content class="content-title">
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-chip class="statusChip">
+          {{projectDetails.status}}
+        </mat-chip>
+      </mat-card-footer>
+    </mat-card>
+    <mat-card fxFlex="0 1 calc(30% - 20px)" class="right-card">
+      <mat-card-content>
+        <div class="content-title">
+          Owner
+        </div>
+        <mat-chip class="ownerChip" [removable]="false">
+          <img class="avatar" [src]="projectDetails.owner.image!= null ? projectDetails.owner.image : emptyImgUrl"
+            onerror="this.src='../../../assets/blank-profile-picture.png'">
+          {{ projectDetails.owner.userName }}
+        </mat-chip>
+        <div class="content-title">
+          Team Members
+        </div>
+        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+          <mat-chip class="memberChip" *ngFor="let user of projectDetails.members" [removable]="false">
+            <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
+              onerror="this.src='../../../assets/blank-profile-picture.png'">
+            {{ user.userName }}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
