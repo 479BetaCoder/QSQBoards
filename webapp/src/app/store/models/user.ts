@@ -1,6 +1,6 @@
 export default class User {
-    UserName: string;
-    Password?: string;
-    Image?: string;
-    Token?: string;
+    userName: string;
+    password?: string;
+    image?: string;
+    token?: string;
 }

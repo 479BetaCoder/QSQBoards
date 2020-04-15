@@ -9,6 +9,7 @@ const reducer = createReducer(
     on(ProjectActions.GetProjects, state => state),
     on(ProjectActions.CreateProject, state => state),
     on(ProjectActions.DeleteProject, state => state),
+    on(ProjectActions.UpdateProject, state => state),
     on(ProjectActions.SuccessGetProjectsAction, (state: ProjectState, { payload }) => {
         return { ...state, projects: payload };
     }),
@@ -26,6 +27,12 @@ const reducer = createReducer(
             projects: [...currentProjects],
             projectsError: null
         }
+    }),
+    on(ProjectActions.SuccessUpdateProjectAction, (state: ProjectState, { payload }) => {
+        let currentProjects = [...state.projects];
+        let foundIndex = currentProjects.findIndex(project => project._id === payload._id);
+        currentProjects[foundIndex] = payload;
+        return { ...state, projects: [...currentProjects], projectsError: null };
     }),
     on(ProjectActions.ErrorProjectAction, (state: ProjectState, error: Error) => {
         console.log(error);

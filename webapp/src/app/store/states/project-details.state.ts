@@ -1,10 +1,10 @@
-import ProjectDetails from '../models/project-details';
+import Project from '../models/project';
 
 export default class ProjectDetailsState {
-    selectedProjectDetails: ProjectDetails;
+    selectedProjectDetails: Project;
     projectsDetailsError: Error;
 }
 
 export const initializeState = (): ProjectDetailsState => {
-    return { selectedProjectDetails: new ProjectDetails(), projectsDetailsError: null };
+    return { selectedProjectDetails: null, projectsDetailsError: null };
 };

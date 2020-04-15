@@ -29,7 +29,7 @@ exports.create = function (request, response) {
         .updateUserStory(task._id, request.params.storyId, true)
         .then((userStory) => {
           if (userStory) {
-            response.status(201).json();
+            response.status(201).json(task);
           } else {
             response.status(400).json({
               message: utilConstants.CLIENT_ERR,
