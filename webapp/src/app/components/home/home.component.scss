@@ -19,11 +19,14 @@
 }
 
 .projectText {
-  color: white;
+  color: black;
 }
 
+mat-nav-list{
+  margin: 4px;
+}
 .sideNavItem {
-  background-color: black;
+  //background-color: skyblue;
 }
 
 .mat-list-option:hover,
@@ -32,7 +35,7 @@
 .mat-nav-list .mat-list-item:focus,
 .mat-action-list .mat-list-item:hover,
 .mat-action-list .mat-list-item:focus {
-  background: black !important;
+  background: lightgray !important;
 }
 
 .sideNavContainer {
@@ -85,6 +88,9 @@ button {
   margin-bottom: 4px;
 }
 
+mat-list-item, mat-list-base, .sideNavItem{
+  padding-top: none !important; 
+}
 
 .card, mat-card{
   display: inline-block;
@@ -116,6 +122,7 @@ body {
 
 .hoverClass:hover {
   cursor: pointer;
+  outline:none !important;
 }
 
 .search input {
@@ -150,7 +157,18 @@ body {
   line-height: 50px;
   margin: 4px;
 }
-
+#projectImage{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    font-size: 30px;
+    background-color: rgb(37, 37, 172);;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    margin: 4px;
+}
 
 #bottomprofileImage {
   width: 60px;

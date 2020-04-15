@@ -1,12 +1,10 @@
 <div class="headerContainer">
   <mat-toolbar>
-<<<<<<< HEAD
-    <button mat-button (click)="navigateToHome()">
+    <!-- <button mat-button (click)="navigateToHome()">
       <label class="profileName">Home</label>
-    </button>
-=======
-    <img class="qsqIcon" src="../../../assets/qsqIcon.png" alt="QSQ Boards" />
->>>>>>> 7eeb824bea5d6c06277151078392e7f01b622053
+    </button> -->
+    <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" (click)="navigateToHome()" alt="QSQ Boards" /> 
+    <span class="qsqboards">Qsqboards</span>
     <button mat-button [matMenuTriggerFor]="menu" class="alignmentMenu">
       <img *ngIf="profile" [src]="profile.image" alt="Profile name" class="avatar"
         onerror="this.src='../../../assets/avatar-default-icon.png'" />

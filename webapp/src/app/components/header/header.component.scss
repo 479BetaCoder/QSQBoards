@@ -8,19 +8,30 @@
 .mat-toolbar-single-row ,
 .headerContainer{
   height: 100%;
-  background-image: linear-gradient(to right, #da4453, #89216b);
+  //background-image: linear-gradient(to right, #da4453, #89216b);
 }
 
+.qsqboards{
+  font-size: 30px;
+  font-weight: 1000;
+  color: rgb(37, 37, 172);
+}
+mat-toolbar{
+  background-color: white;
+}
 .qsqIcon {
-  width: 120px;
+  width: 100px;
+  height: 75px;
 }
 
 .alignmentMenu {
   margin-left: 75%;
 }
 
-.headerContainer {
-  height: 80px;
+mat-toolbar {
+  height: 60px;
+  border-bottom: 0.1px solid;
+  border-color: lightgray;
 }
 
 .profileName {

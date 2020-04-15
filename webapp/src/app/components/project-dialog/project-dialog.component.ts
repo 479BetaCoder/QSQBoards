@@ -40,7 +40,7 @@ export class ProjectDialogComponent implements OnInit {
   projectList: Project[] = [];
   projectsError: Error = null;
   userError: Error = null;
-
+  selectedUsers: string[] = [];
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
     private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data,
     private store: Store<{ projects: ProjectState, user: UserState }>
@@ -133,5 +133,20 @@ export class ProjectDialogComponent implements OnInit {
 
   onSelectClose() {
     this.searchTerm = "";
+  }
+
+  change(event)
+  {
+    if(event.isUserInput) {
+
+      console.log(event.source.value, event.source.selected);
+      if(event.source.selected){
+        this.selectedUsers.push(event.source.value.userName);
+      }
+      if(!event.source.selected){
+        this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
+      }
+    }
+
   }
 }

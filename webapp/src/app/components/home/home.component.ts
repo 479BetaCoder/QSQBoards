@@ -11,6 +11,7 @@ import { ProjectDialogComponent } from '../project-dialog/project-dialog.compone
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../auth/authentication.service";
 import * as constantRoutes from '../../shared/constants';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-home',
@@ -19,8 +20,12 @@ import * as constantRoutes from '../../shared/constants';
 })
 export class HomeComponent implements OnInit {
   searchTerm: string;
+  currentUserName: string;
   project$: Observable<ProjectState>;
+ // deleteError$: Observable<ProjectState>;
+  deleteError: Error = null;
   ProjectSubscription: Subscription;
+  DeleteErrorSubscription : Subscription;
   projectList: Project[] = [];
   projectsError: Error = null;
 
@@ -29,11 +34,13 @@ export class HomeComponent implements OnInit {
     private store: Store<{ projects: ProjectState }>
   ) {
     this.project$ = store.pipe(select('projects'));
+    
   }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
       const user = JSON.parse(sessionStorage.getItem('User'));
+      this.currentUserName = user.userName;
       this.authService.userProfileSubject$.next(user);
       this.ProjectSubscription = this.project$
         .pipe(
@@ -50,9 +57,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  confirmDelete(id: string, name: string) {
+    if(confirm("Are you sure you want to delete this project: " +name)) {
+      this.deleteProject(id);
+    }
+  }
+
   deleteProject(projectId) {
     console.log(projectId);
     this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
+    if(!this.projectsError) {
+      alert('Only');
+    }
   }
 
   openProjectDialog() {
