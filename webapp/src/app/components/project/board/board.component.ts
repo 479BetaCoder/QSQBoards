@@ -16,6 +16,7 @@ import {map} from 'rxjs/operators';
 import Project from "../../../store/models/project";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Route, Router} from "@angular/router";
+import * as constantRoutes from "../../../shared/constants";
 
 @Component({
   selector: 'app-board',
@@ -28,7 +29,7 @@ export class BoardComponent implements OnInit {
   inProgressUserStories: UserStory[];
   doneUserStories: UserStory[];
   projectId: string;
-  selectedProject: Project;
+  selectedProject: any;
   projectDetails$: Observable<ProjectDetailsState>;
   ProjectDetailsSubscription: Subscription;
   todoColumn: Column;
@@ -56,21 +57,28 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     // this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
-    this.ProjectDetailsSubscription = this.projectDetails$
-      .pipe(
-        map(res => {
-          this.selectedProject = res.selectedProjectDetails;
-          this.projectsDetailsError = res.projectsDetailsError;
-        })).subscribe();
-    this.boardSubscription = this.boardState$
-      .pipe(
-        map(response => {
-          this.allUserStories = response.userStories;
-          this.allErrors = response.userStoriesError;
-          this.drawTheBoard();
-        })
-    ).subscribe();
-    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+    if (sessionStorage.getItem('User')) {
+      this.ProjectDetailsSubscription = this.projectDetails$
+        .pipe(
+          map(res => {
+            if (res) {
+              this.selectedProject = res.selectedProjectDetails;
+              this.projectsDetailsError = res.projectsDetailsError;
+            }
+          })).subscribe();
+      this.boardSubscription = this.boardState$
+        .pipe(
+          map(response => {
+            this.allUserStories = response.userStories;
+            this.allErrors = response.userStoriesError;
+            this.drawTheBoard();
+          })
+        ).subscribe();
+      ///this.selectedProject = sessionStorage.getItem('SelectedProject');
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+    } else {
+      this.router.navigateByUrl(constantRoutes.emptyRoute);
+    }
   }
 
   drawTheBoard() {

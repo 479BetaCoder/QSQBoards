@@ -9,6 +9,8 @@ import { select, Store } from "@ngrx/store";
 import ProjectDetailsState from 'app/store/states/project-details.state';
 import * as BoardActions from '../../../store/actions/board.action';
 import Project from 'app/store/models/project';
+import BoardState from "../../../store/states/board.state";
+import UserStory from "../../../store/models/userStory";
 
 
 @Component({
@@ -24,11 +26,18 @@ export class OverviewComponent implements OnInit {
   projectDetails: Project;
   selectedProjectId: string;
   projectsDetailsError: Error = null;
+  boardState$: Observable<BoardState>;
+  boardSubscription: Subscription;
+  allUserStories: UserStory[];
+  allErrors: Error = null;
 
   loggedInUser = JSON.parse(sessionStorage.getItem('User'));
 
-  constructor(private activatedroute: ActivatedRoute, private projectDialog: MatDialog,
-              private store: Store<{ projectDetails: ProjectDetailsState }>) {
+  constructor(private activatedroute: ActivatedRoute,
+              private projectDialog: MatDialog,
+              private store: Store<{ projectDetails: ProjectDetailsState }>,
+              private storeBoard: Store<{ board: BoardState }>) {
+    this.boardState$ = storeBoard.pipe(select('board'));
     this.projectDetails$ = store.pipe(select('projectDetails'));
     this.activatedroute.parent.params.subscribe(params => {
       this.selectedProjectId = params.title;
@@ -41,11 +50,20 @@ export class OverviewComponent implements OnInit {
         map(res => {
           this.projectDetails = res.selectedProjectDetails;
           this.projectsDetailsError = res.projectsDetailsError;
+          sessionStorage.setItem('SelectedProject', JSON.stringify(this.projectDetails));
         })
       )
       .subscribe();
-    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProjectId}))
-    this.store.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction({ payload: this.selectedProjectId }));
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProjectId}));
+
+    this.boardSubscription = this.boardState$
+      .pipe(
+        map(response => {
+          this.allUserStories = response.userStories;
+          this.allErrors = response.userStoriesError;
+        })
+      ).subscribe();
+    this.storeBoard.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction({ payload: this.selectedProjectId }));
   }
 
   getProjectTitleAvatar() {
