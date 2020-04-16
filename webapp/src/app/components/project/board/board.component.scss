@@ -16,6 +16,9 @@
   -webkit-text-fill-color: transparent;
 }
 
+.target-list {
+  min-height: 150px;
+}
 
 .board {
   display: flex;
@@ -55,6 +58,7 @@
         flex-basis: 0; // to force the columns to all be the same size, regardless of content
 
         min-width: 300px;
+        min-height: 150px;
         margin: 50px;
         padding: 25px;
 
@@ -121,9 +125,9 @@
 }
 
 .cdk-drag-animating {
-  transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 450ms cubic-bezier(0, 0.2, 0.4, 1);
 }
 
 .tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
-  transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 0.8);
 }

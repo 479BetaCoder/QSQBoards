@@ -14,15 +14,15 @@
       <button mat-button (click)="createUserStory()">Create</button>
     </div>
 
-    <div class="board-wrapper">
+    <div class="board-wrapper" cdkDropListGroup>
 
-      <div class="board-columns" cdkDropListGroup>
+      <div class="board-columns">
         <div class="board-column" *ngIf="todoColumn">
 
           <div class="column-title">
             {{ todoColumn.name }}
           </div>
-          <div
+          <div class="target-list"
             cdkDropList
             [cdkDropListData]="todoColumn.userStories"
             (cdkDropListDropped)="dropInTodo($event)">
@@ -51,7 +51,7 @@
           <div class="column-title">
             {{ inProgressColumn.name }}
           </div>
-          <div
+          <div class="target-list"
             cdkDropList
             [cdkDropListData]="inProgressColumn.userStories"
             (cdkDropListDropped)="dropInProgress($event)">
@@ -80,7 +80,7 @@
           <div class="column-title">
             {{ doneColumn.name }}
           </div>
-          <div
+          <div class="target-list"
             cdkDropList
             [cdkDropListData]="doneColumn.userStories"
             (cdkDropListDropped)="dropDone($event)">
