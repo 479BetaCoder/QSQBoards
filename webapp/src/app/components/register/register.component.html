@@ -1,7 +1,11 @@
 <div class="registerContainer">
-    <div class="titleContainer">
-        <h1 class="projectTitle">QSQ Boards</h1>
-    </div>
+    <mat-toolbar>
+        <!-- <button mat-button (click)="navigateToHome()">
+          <label class="profileName">Home</label>
+        </button> -->
+        <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" alt="QSQ Boards" />
+        <span class="qsqboards">Qsqboards</span>
+      </mat-toolbar>
     <div class="formcontainer">
         <div class="formbody">
             <form [formGroup]="myForm">
