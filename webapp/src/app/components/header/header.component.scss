@@ -4,28 +4,24 @@
   height: 50px;
   border-radius: 50%;
 }
-.mat-toolbar-row,
-.mat-toolbar-single-row ,
-.headerContainer{
-  height: 100%;
-  //background-image: linear-gradient(to right, #da4453, #89216b);
-}
 
-.qsqboards{
+.qsqboards {
   font-size: 30px;
   font-weight: 1000;
-  color: rgb(37, 37, 172);
+  color: #3f51b5;
+  cursor: pointer;
 }
-mat-toolbar{
+mat-toolbar {
   background-color: white;
 }
 .qsqIcon {
   width: 100px;
   height: 75px;
+  cursor: pointer;
 }
 
 .alignmentMenu {
-  margin-left: 75%;
+  margin-left: 60%;
 }
 
 mat-toolbar {
@@ -37,10 +33,9 @@ mat-toolbar {
 .profileName {
   margin-left: 10px;
   font-family: sans-serif;
-  color: white;
   cursor: pointer;
 }
 
-.homeBtn{
+.homeBtn {
   display: inline-block;
 }

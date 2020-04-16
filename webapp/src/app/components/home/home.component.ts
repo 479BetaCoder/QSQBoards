@@ -28,10 +28,7 @@ export class HomeComponent implements OnInit {
   searchTerm: string;
   currentUserName: string;
   project$: Observable<ProjectState>;
- // deleteError$: Observable<ProjectState>;
-  deleteError: Error = null;
   ProjectSubscription: Subscription;
-  DeleteErrorSubscription : Subscription;
   projectList: Project[] = [];
   projectsError: Error = null;
 
@@ -40,7 +37,7 @@ export class HomeComponent implements OnInit {
     private store: Store<{ projects: ProjectState }>
   ) {
     this.project$ = store.pipe(select('projects'));
-    
+
   }
 
   ngOnInit(): void {
@@ -63,18 +60,21 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getProjectTitle(projectTitle) {
+    if (projectTitle.length > 15) {
+      return projectTitle.substring(0, 15).concat(" ...");
+    }
+    return projectTitle;
+  }
+
   confirmDelete(id: string, name: string) {
-    if(confirm("Are you sure you want to delete this project: " +name)) {
+    if (confirm("Are you sure you want to delete this project: " + name)) {
       this.deleteProject(id);
     }
   }
 
   deleteProject(projectId) {
-    console.log(projectId);
     this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
-    if(!this.projectsError) {
-      alert('Only');
-    }
   }
 
   openProjectDialog() {
