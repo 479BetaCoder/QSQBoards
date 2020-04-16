@@ -1,4 +1,4 @@
-import { User } from '../store/models/User';
+//import { User } from '../store/models/User';
 
 export class BacklogItem {
   id: number;
@@ -7,6 +7,5 @@ export class BacklogItem {
   priority: string;
   status: string;
   storyPoints: string;
-  assignee: User;
-  type: string;
+  //assignee: User;
 }

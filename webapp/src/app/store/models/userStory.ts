@@ -1,11 +1,11 @@
-import { User } from './User';
-
-export class UserStory {
-  id: number;
+export default class UserStory {
+  _id: string;
   title: string;
   description: string;
-  priority: string;
+  projectId: string;
   status: string;
   storyPoints: string;
-  assignee: User;
+  priority: string;
+  tasks: string[];
+  comment: string[];
 }

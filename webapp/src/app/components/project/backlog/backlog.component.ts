@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../../services/project.service';
-import {select, Store} from "@ngrx/store";
-import SelectedProjectState from "../../../store/states/selectedProject.state";
+import { select, Store } from "@ngrx/store";
 import Project from 'app/store/models/project';
-import * as SelectedProjectActions from "../../../store/actions/selectedProject.action";
-import {Observable, Subscription} from "rxjs";
-import {map} from "rxjs/operators";
-import { Task } from '../../../store/models/task';
-import { UserStory } from '../../../store/models/userStory';
+import { Observable, Subscription } from "rxjs";
+import { map } from "rxjs/operators";
+import ProjectDetailsState from '../../../store/states/project-details.state';
+import * as ProjectDetailsActions from "../../../store/actions/project-details.action";
 import {BacklogItem} from '../../../models/backlog.model';
 
 export interface PeriodicElement {
@@ -19,9 +17,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', status: "New"},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', status: "New"},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', status: "New"}
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', status: "New" },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', status: "New" },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', status: "New" }
 ];
 
 @Component({
@@ -31,58 +29,33 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class BacklogComponent implements OnInit {
 
-  tasks: Task[];
-  userStories : UserStory[];
-  backlogItems : BacklogItem[];
-  selectedProject$: Observable<SelectedProjectState>;
-  selectedProject: Project;
-  SelectedProjectSubscription: Subscription;
+  currentProjectTitle: String;
   dataSource: any;
   displayedColumns: string[] = ['title', 'assignee', 'priority', 'status', 'type'];
-  projectsError: Error = null;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
+  projectDetails: Project;
+  projectsDetailsError: Error = null;
 
   constructor(private projectService: ProjectService,
-              private store: Store<{ selectedProject: SelectedProjectState}>) {
-      //this.selectedProject$ = store.pipe(select('selectedProject'));
-      this.backlogItems = [];
-      this.projectService.getPendingTasks().forEach(task => {
-        const item = new BacklogItem();
-        item.assignee = task.assignee;
-        item.id = task.id;
-        item.description = task.description;
-        item.status = task.status;
-        item.storyPoints = task.storyPoints;
-        item.priority = task.priority;
-        item.title = task.title;
-        item.type = "Task";
-        this.backlogItems.push(item);
-      });
-      this.projectService.getPendingUserStories().forEach(task => {
-        const item = new BacklogItem();
-        item.assignee = task.assignee;
-        item.id = task.id;
-        item.description = task.description;
-        item.status = task.status;
-        item.storyPoints = task.storyPoints;
-        item.priority = task.priority;
-        item.title = task.title;
-        item.type = "User Story";
-        this.backlogItems.push(item);
-      });
-      this.dataSource = this.backlogItems;
-   }
+    private store: Store<{ projectDetails: ProjectDetailsState }>) {
+    this.projectDetails$ = store.pipe(select('projectDetails'));
+    //this.tasks = this.projectService.getPendingTasks();
+    //this.dataSource = this.tasks;
+  }
 
   ngOnInit(): void {
-  //   this.SelectedProjectSubscription = this.selectedProject$
-  //     .pipe(
-  //       map(res => {
-  //         this.selectedProject = res.selectedProject;
-  //         this.projectsError = res.projectsError;
-  //       })
-  //     )
-  //     .subscribe();
+    this.ProjectDetailsSubscription = this.projectDetails$
+      .pipe(
+        map(res => {
+          this.projectDetails = res.selectedProjectDetails;
+          this.projectsDetailsError = res.projectsDetailsError;
+        })
+      )
+      .subscribe();
 
-  //   this.store.dispatch(SelectedProjectActions.BeginGetSelectedProjectsAction());
+    // this.store.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction());
+    this.currentProjectTitle = this.projectDetails.title;
   }
 
 }

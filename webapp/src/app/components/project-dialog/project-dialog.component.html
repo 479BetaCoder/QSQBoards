@@ -19,7 +19,8 @@
     <div>
       <mat-form-field>
         <mat-label>Select Members</mat-label>
-        <mat-select [formControl]="members" placeholder="Select Members" multiple>
+        <mat-select [compareWith]="compareFn" [formControlName]="'members'" (closed)="onSelectClose()"
+          placeholder="Select Members" multiple>
           <div class="search">
             <span class="fa fa-search searchIcn"></span>
             <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm"
@@ -29,15 +30,15 @@
             <mat-chip-list>
               <mat-chip class="memberChip" *ngFor="let user of members.value" [removable]="true"
                 (removed)="onMemberRemoved(user)">
-                <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+                <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
                   onerror="this.src='../../../assets/blank-profile-picture.png'">
                 {{ user.userName }}
                 <mat-icon class="icnRemove" matChipRemove>cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>
           </mat-select-trigger>
-          <mat-option *ngFor="let user of allUsers | userFilter:searchTerm" [value]="user">
-            <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+          <mat-option *ngFor="let user of activeUsers  | userFilter:searchTerm" [value]="user" (onSelectionChange)="change($event)">
+            <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
               onerror="this.src='../../../assets/blank-profile-picture.png'">
             {{user.userName}}
           </mat-option>

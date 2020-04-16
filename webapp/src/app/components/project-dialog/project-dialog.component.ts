@@ -1,12 +1,24 @@
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { User } from '../../store/models/user';
+import User from '../../store/models/user';
 import { ProjectService } from '../../services/project.service';
-import * as ProjectActions from '../../store/actions/project.action';
 import Project from '../../store/models/project';
+import { select, Store } from '@ngrx/store';
+
+// import { take } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+
+
+// States
+import UserState from 'app/store/states/user.state';
 import ProjectState from '../../store/states/project.state';
-import { Store } from '@ngrx/store';
+import ProjectDetailsState from '../../store/states/project-details.state';
+
+// Actions
+import * as ProjectActions from '../../store/actions/project.action';
 
 
 @Component({
@@ -17,22 +29,43 @@ import { Store } from '@ngrx/store';
 export class ProjectDialogComponent implements OnInit {
   emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   projectForm: FormGroup;
-  allUsers: User[];
   members = new FormControl([]);
   searchTerm: string;
   dialogTitle: string;
   update: boolean;
   projectId: string;
 
+  activeUsers$: Observable<UserState>;
+  activeUsers: User[];
+  ActiveUsersSubscription: Subscription;
+  userError: Error = null;
+  dialogData: any;
+
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ProjectDialogComponent>,
-    private _projectService: ProjectService, @Inject(MAT_DIALOG_DATA) data,
-    private store: Store<{ projects: ProjectState }>
+    @Inject(MAT_DIALOG_DATA) data,
+    private store: Store<{ projects: ProjectState, user: UserState, projectDetails: ProjectDetailsState }>
   ) {
-    if (data == null) {
+    this.activeUsers$ = store.pipe(select('user'));
+    this.dialogData = data;
+  }
+
+  // compareFn(c1: User, c2: User) {
+  //   return c1 && c2 ? c1.userName === c2.userName : c1 === c2;
+  // }
+  ngOnInit(): void {
+    this.ActiveUsersSubscription = this.activeUsers$
+      .pipe(
+        map(res => {
+          this.activeUsers = res.activeUsers;
+          this.userError = res.userError;
+        })
+      )
+      .subscribe();
+
+    // Test
+
+    if (this.dialogData == null) {
       this.dialogTitle = "New Project";
-      this._projectService.getAllUsers().subscribe(items => {
-        this.allUsers = items;
-      })
       this.projectForm = new FormGroup({
         title: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
@@ -40,22 +73,31 @@ export class ProjectDialogComponent implements OnInit {
         status: new FormControl("NEW", null)
       });
     } else {
+
       this.dialogTitle = "Update Project";
       this.update = true;
-      this.projectId = data["id"];
-      this._projectService.getAllUsers().subscribe(items => {
-        this.allUsers = items;
-      })
+      this.projectId = this.dialogData["id"];
       this.projectForm = new FormGroup({
-        title: new FormControl(data["title"], Validators.required),
-        description: new FormControl(data["description"], Validators.required),
-        members: new FormControl(data["members"], null),
-        status: new FormControl(data["status"], null)
+        title: new FormControl(this.dialogData["title"], Validators.required),
+        description: new FormControl(this.dialogData["description"], Validators.required),
+        members: this.members,
+        status: new FormControl(this.dialogData["status"], null)
       });
+      let selectedMembers = [];
+      this.dialogData["members"].forEach(member => {
+        selectedMembers.push({
+          userName: member,
+          image: (this.activeUsers.find(activeUser => activeUser.userName === member)).image
+        })
+      })
+      this.projectForm.controls['members'].setValue(selectedMembers, { onlySelf: true });
     }
+
   }
 
-  ngOnInit(): void {
+  compareFn(x: User, y: User): boolean {
+    console.log(JSON.stringify(y));
+    return x && y ? x.userName === y.userName : x === y;
   }
 
   isValid(controlName) {
@@ -83,26 +125,31 @@ export class ProjectDialogComponent implements OnInit {
     return memberUserNames;
   }
 
-  createProject(project) {
-    const todo: Project = project;
-    this.store.dispatch(ProjectActions.BeginCreateProject({ payload: todo }));
+  createProject(newProject) {
+    const project: Project = newProject;
+    // assign owner from session. 
+    const loggedInUser = JSON.parse(sessionStorage.getItem('User'));
+    project.owner = loggedInUser.userName;
+    this.store.dispatch(ProjectActions.BeginCreateProject({ payload: project }));
+    this.dialogRef.close();
+  }
+
+  updateProject(updatedProject) {
+    const project: Project = updatedProject;
+    // assign owner from session. 
+    const loggedInUser = JSON.parse(sessionStorage.getItem('User'));
+    project.owner = loggedInUser.userName;
+    project._id = this.projectId;
+    this.store.dispatch(ProjectActions.BeginUpdateProject({ payload: project }));
     this.dialogRef.close();
   }
 
   save() {
     if (this.projectForm.valid) {
-
       const validMembers = this.modifyMembersValue(this.projectForm.value.members);
       this.projectForm.value.members = validMembers;
-
       if (this.update) {
-        this._projectService.updateProject(this.projectForm.value, this.projectId)
-          .subscribe(
-            data => {
-              console.log(data);
-            },
-            error => { }
-          );
+        this.updateProject(this.projectForm.value);
       } else {
         this.createProject(this.projectForm.value)
       }
@@ -112,4 +159,23 @@ export class ProjectDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+
+  onSelectClose() {
+    this.searchTerm = "";
+  }
+
+   change(event)
+  {
+    if(event.isUserInput) {
+
+  //     console.log(event.source.value, event.source.selected);
+  //     if(event.source.selected){
+  //       this.members.push(event.source.value.userName);
+  //     }
+  //     if(!event.source.selected){
+  //       this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
+  //     }
+     }
+    
+   }
 }

@@ -3,9 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { baseURL } from '../shared/baseurl';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import Project from '../store/models/project';
-import { User } from '../store/models/user';
-import { Task } from "../store/models/task";
-import { UserStory } from '../store/models/userStory';
+import User from '../store/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,56 +11,38 @@ import { UserStory } from '../store/models/userStory';
 export class ProjectService {
 
 
-  user1: User = {
-    UserName : "Dileep"
-  };
-  user2: User = {
-    UserName : "Reddy"
-  };
 
-  task1: Task = {
-    id : 1,
-    title : "Dummy Task 1",
-    description : "Dummy Task 1 Description",
+  /*
+    task1: Task = {
+      title : "Dummy Task 1",
+      description : "Dummy Task 1 Description",
+      comments: [
+          {
+            text: "comment1 for task 1",
+            postedBy: this.user1
+          }
+        ],
+      status : "New",
+      priority: 1,
+      storyId: "storyId",
+      assignee: this.user2
+  }
+  task2: Task = {
+    title : "Dummy Task 2",
+    description : "Dummy Task 12Description",
+    comments: [
+        {
+          text: "comment1 for task 2",
+          postedBy: this.user2
+        }
+      ],
     status : "New",
-    priority: "1",
-    //storyId: "storyId",
-    storyPoints: "5",
-    assignee: this.user2
-}
-task2: Task = {
-  id : 2,
-  title : "Dummy Task 2",
-  description : "Dummy Task 12Description",
-  status : "New",
-  priority: "5",
-  //storyId: "storyId",
-  storyPoints: "5",
-  assignee: this.user1
-}
-
-userStory1: UserStory = {
-  id : 1,
-  title : "Dummy User story 1",
-  description : "Dummy Task 1 Description",
-  status : "New",
-  priority: "1",
-  //storyId: "storyId",
-  storyPoints: "5",
-  assignee: this.user2
-}
-userStory2: UserStory = {
-id : 2,
-title : "Dummy User story 2",
-description : "Dummy Task 12Description",
-status : "New",
-priority: "5",
-//storyId: "storyId",
-storyPoints: "5",
-assignee: this.user1
-}
-
-  static projects : Project[];
+    priority: 5,
+    storyId: "storyId",
+    assignee: this.user1
+  }
+  */
+  static projects: Project[];
   projectObservables: any;
 
   constructor(private _http: HttpClient) { }
@@ -107,20 +87,14 @@ assignee: this.user1
     const users = this._http.get<Array<User>>(baseURL + '/users');
     return users;
   }
-
-  getPendingTasks(){
-    const tasks = [this.task1, this.task2];
-    return tasks;
-  }
-
-  getPendingUserStories(){
-    const userStories = [this.userStory1, this.userStory2];
-    return userStories;
-  }
-
-
-   // Error handling
-   errorHandling(error: HttpErrorResponse) {
+  /*
+    getPendingTasks(){
+      const tasks = [this.task1, this.task2];
+      return tasks;
+    }
+    */
+  // Error handling
+  errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error

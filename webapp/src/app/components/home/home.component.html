@@ -5,6 +5,9 @@
       <mat-sidenav class="sideNavContainer" mode="side" opened>
         <mat-nav-list>
           <a mat-list-item class="sideNavItem">
+            <span id="projectImage">
+              P
+            </span>
             <span class="projectText">Projects</span>
           </a>
         </mat-nav-list>
@@ -13,7 +16,7 @@
         <div class="topButtons">
           <button class="mat-raised-button mat-primary projectButton" (click)="openProjectDialog()">
             <mat-icon>add</mat-icon>
-            New ProjectNF
+            New Project
           </button>
           <div class="search">
             <span class="fa fa-search searchIcn"></span>
@@ -28,18 +31,55 @@
 
           </div>
           <div *ngIf="projectList?.length > 0">
-            <mat-card class="card" [routerLink]="['/project-dashboard',project.title]"
-                      *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
-              <mat-card-title class="card-container-left">
-                <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">
-                  {{getProjectTitleAvatar(project)}}
-                </div>
-                <span class=" projectTitle">{{project.title}}</span>
-              </mat-card-title>
-              <mat-card-content>
-                {{project.description}}
-              </mat-card-content>
-            </mat-card>
+            <div class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
+              
+                      <div class="topCardContainer" *ngIf="i<3">
+                        <mat-card class="topCard">
+                          <div class="topTitlecontainer">
+                        <div>
+                          <div class="flex-container hoverClass" [routerLink]="['/project-dashboard',project._id]">
+                            <div id="profileImage" [ngStyle]="{'background': getRandomColor(i)}">{{getProjectTitleAvatar(project)}}</div>
+                            <div class="titleDescriptionContainer"> 
+
+                              <div>
+                                <mat-card-title><span class=" projectTitle">{{project.title}}</span></mat-card-title></div>
+
+                              <div class="topDescriptionContainer">{{project.description}}</div> </div>
+                          </div>
+                        </div>
+                      </div>
+                          <mat-card-footer>
+                            <mat-chip class="memberChip">Owner: {{project.owner}}</mat-chip>
+                            <mat-icon *ngIf="currentUserName==project.owner"  class="editIcon" (click)="openUpdateDialog(project)">edit</mat-icon>
+                            <mat-icon *ngIf="currentUserName==project.owner" class="deleteIcon" (click)="confirmDelete(project._id,project.title)" >delete</mat-icon>
+                          </mat-card-footer>
+                        </mat-card>
+                      </div>
+                     <div class="bottomProjectContainer" *ngIf="i>=3">
+                      <mat-card class="bottomCards">
+                        <span>
+                          <mat-card-content class="card-container-left">
+                            <div class="bottomTitleContainer" >
+                              <div class="flex-container hoverClass" [routerLink]="['/project-dashboard',project._id]">
+                                <div id="bottomprofileImage" [ngStyle]="{'background': getRandomColor(i)}">{{getProjectTitleAvatar(project)}}</div>
+                                <div class="titleDescriptionContainer"> 
+                                  <div class="bottomProjectTitle">{{project.title}}</div>
+                                  <div class="bottomDescriptionContainer">{{project.description}}</div> </div>
+                              </div>
+                              
+                              <div *ngIf="currentUserName==project.owner" class="bottomDeleteIcon">
+                                <mat-icon class="editIcon" (click)="openUpdateDialog(project)">edit</mat-icon>
+                                <mat-icon class="deleteIcon" (click)="confirmDelete(project._id,project.title)">delete</mat-icon>
+                              </div>
+                              <div><mat-chip class="memberChip bottomOwner">Owner: {{project.owner}}</mat-chip></div>
+                            </div>
+                          </mat-card-content>
+                        </span>
+                        
+                      </mat-card>
+                     </div>
+            
+          </div>
           </div>
         </div>
       </mat-sidenav-content>

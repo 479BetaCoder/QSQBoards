@@ -1,11 +1,11 @@
 <div class="root">
-  <div class="navbar has-background-dark">
+  <!--<div class="navbar has-background-dark">
     <div class="navbar-brand">
       <div class="navbar-item">
         <h1 class="app-name has-gradient-text">Sprint Board</h1>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <div class="board">
 
@@ -14,32 +14,91 @@
       <button mat-button (click)="createUserStory()">Create</button>
     </div>
 
-    <div class="board-wrapper">
+    <div class="board-wrapper" cdkDropListGroup>
 
-      <div class="board-columns" cdkDropListGroup>
-        <div class="board-column" *ngFor="let column of board.columns">
+      <div class="board-columns">
+        <div class="board-column" *ngIf="todoColumn">
 
           <div class="column-title">
-            {{ column.name }}
+            {{ todoColumn.name }}
           </div>
-          <div
-             cdkDropList
-             [cdkDropListData]="column.userStories"
-             (cdkDropListDropped)="drop($event)">
-            <mat-grid-list  cols="1" *ngFor="let item of column.userStories; let i = index" cdkDrag>
-              <mat-card  class="task">
-                <mat-card-header>
-                  <h2>{{item.title}}</h2>
-                </mat-card-header>
+          <div class="target-list"
+            cdkDropList
+            [cdkDropListData]="todoColumn.userStories"
+            (cdkDropListDropped)="dropInTodo($event)">
+            <mat-grid-list cols="1" [cdkDragData]="item" *ngFor="let item of todoColumn.userStories; let i = index"
+                           cdkDrag>
+              <mat-card class="task task-todo">
+                <mat-card-subtitle>
+                  <h3>{{item.title}}</h3>
+                </mat-card-subtitle>
                 <mat-card-content>
-                  <mat-label><h3>Status {{item.status}}</h3></mat-label>
-                  <mat-label><h3>Priority {{item.priority}}</h3></mat-label>
-                  <mat-label><h3>Story Point {{item.storyPoints}}</h3></mat-label>
-                  <mat-label><p>Priority {{item.description}}</p></mat-label>
+                  <mat-label><li>Status {{item.status}}</li></mat-label>
+                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
+                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
+                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button (click)="editTheStory(item)" color="primary">Edit</button>
+                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
+                </mat-card-actions>
+              </mat-card>
+            </mat-grid-list>
+          </div>
+        </div>
+        <div class="board-column" *ngIf="inProgressColumn">
+
+          <div class="column-title">
+            {{ inProgressColumn.name }}
+          </div>
+          <div class="target-list"
+            cdkDropList
+            [cdkDropListData]="inProgressColumn.userStories"
+            (cdkDropListDropped)="dropInProgress($event)">
+            <mat-grid-list cols="1" [cdkDragData]="item"
+                           *ngFor="let item of inProgressColumn.userStories; let i = index" cdkDrag>
+              <mat-card class="task task-progress">
+                <mat-card-subtitle>
+                  <h3>{{item.title}}</h3>
+                </mat-card-subtitle>
+                <mat-card-content>
+                  <mat-label><li>Status {{item.status}}</li></mat-label>
+                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
+                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
+                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
                 </mat-card-content>
                 <mat-card-actions>
                   <button mat-button color="primary">Edit</button>
-                  <button mat-button (click)="deleteStory(item, column, i)" color="warn">Delete</button>
+                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
+                </mat-card-actions>
+              </mat-card>
+            </mat-grid-list>
+          </div>
+        </div>
+        <div class="board-column" *ngIf="doneColumn">
+
+          <div class="column-title">
+            {{ doneColumn.name }}
+          </div>
+          <div class="target-list"
+            cdkDropList
+            [cdkDropListData]="doneColumn.userStories"
+            (cdkDropListDropped)="dropDone($event)">
+            <mat-grid-list cols="1" [cdkDragData]="item"
+                           *ngFor="let item of doneColumn.userStories; let i = index" cdkDrag>
+              <mat-card class="task task-done">
+                <mat-card-subtitle>
+                  <h3>{{item.title}}</h3>
+                </mat-card-subtitle>
+                <mat-card-content>
+                  <mat-label><li>Status {{item.status}}</li></mat-label>
+                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
+                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
+                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary">Edit</button>
+                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
                 </mat-card-actions>
               </mat-card>
             </mat-grid-list>

@@ -14,7 +14,7 @@ import * as constantRoutes from '../../shared/constants';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  successMessage = '';
   loginForm: FormGroup;
   constructor(
     private qsqservice: UserService,
@@ -78,7 +78,9 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('User', JSON.stringify(data));
           loginForFirst ? this._router.navigate([constantRoutes.registerRoute]) : this._router.navigate([constantRoutes.homeRoute]);
         },
-        error => { }
+        error => {
+          
+        }
       );
   }
 
@@ -91,7 +93,14 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('User', JSON.stringify(data));
             this._router.navigate([constantRoutes.homeRoute]);
           },
-          error => { }
+          error => {
+            if(error.status == 401)
+            {
+              this.successMessage = "Invalid Credentials!";
+            }
+            else{
+              this.successMessage = "Error occured while login!";
+            } }
         );
     }
   }

@@ -12,7 +12,7 @@ import { baseURL } from '../shared/baseurl';
 export class ProjectEffects {
     constructor(private http: HttpClient, private action$: Actions) { }
 
-    private getOrCreateProjectsURL: string = baseURL + '/projects';
+    private getOrCreateProjectsURL: string = baseURL.concat('/projects');
 
     GetProjects$: Observable<Action> = createEffect(() =>
         this.action$.pipe(
@@ -39,8 +39,49 @@ export class ProjectEffects {
                         headers: { 'Content-Type': 'application/json' }
                     })
                     .pipe(
+                        map((data: Project) => {
+                            console.log(JSON.stringify(data));
+                            return ProjectActions.SuccessCreateProject({ payload: data });
+                        }),
+                        catchError((error: Error) => {
+                            return of(ProjectActions.ErrorProjectAction(error));
+                        })
+                    )
+            )
+        )
+    );
+
+    DeleteProject$: Observable<Action> = createEffect(() =>
+        this.action$.pipe(
+            ofType(ProjectActions.BeginDeleteProject),
+            mergeMap(action =>
+                this.http
+                    .delete(this.getOrCreateProjectsURL.concat('/').concat(action.payload), {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .pipe(
                         map((_data) => {
-                            return ProjectActions.SuccessCreateProject({ payload: action.payload });
+                            return ProjectActions.SuccessDeleteProject({ payload: action.payload });
+                        }),
+                        catchError((error: Error) => {
+                            return of(ProjectActions.ErrorProjectAction(error));
+                        })
+                    )
+            )
+        )
+    );
+
+    UpdateProject$: Observable<Action> = createEffect(() =>
+        this.action$.pipe(
+            ofType(ProjectActions.BeginUpdateProject),
+            mergeMap(action =>
+                this.http
+                    .put(this.getOrCreateProjectsURL.concat('/').concat(action.payload._id), JSON.stringify(action.payload), {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .pipe(
+                        map((_data) => {
+                            return ProjectActions.SuccessUpdateProjectAction({ payload: action.payload });
                         }),
                         catchError((error: Error) => {
                             return of(ProjectActions.ErrorProjectAction(error));

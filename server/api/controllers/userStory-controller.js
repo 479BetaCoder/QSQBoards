@@ -24,7 +24,7 @@ exports.create = function (request, response) {
   try {
     const newUserStory = Object.assign({}, request.body);
     const resolve = () => {
-      response.status(201).json();
+      response.status(201).json(newUserStory);
     };
     // check if project exists
     userStoryService
@@ -90,6 +90,33 @@ exports.delete = function (request, response) {
     .delete(request.params.storyId)
     .then(resolve)
     .catch(renderErrorResponse(response));
+};
+
+/**
+ * Returns Updated UserStory response.
+ *
+ * @param request
+ * @param response
+ */
+exports.updateUserStory = (request, response) => {
+  try {
+    const updatedUserStory = Object.assign({}, request.body);
+    const resolve = (updatedUserStory) => {
+      if (updatedUserStory) {
+        response.status(200).json();
+      } else {
+        response.status(400).json({
+          message: "Update failed"
+        })
+      }
+    };
+    userStoryService
+      .updateUserStory(updatedUserStory, request.params.storyId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
+  }
 };
 
 /**

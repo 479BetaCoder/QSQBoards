@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as ProjectActions from '../../store/actions/project.action';
-import Project from '../../store/models/project';
-import ProjectState from '../../store/states/project.state';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { ProjectDialogComponent } from '../project-dialog/project-dialog.component';
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../auth/authentication.service";
 import * as constantRoutes from '../../shared/constants';
+import { Actions, ofType } from '@ngrx/effects';
+
+//Actions
+import * as UserActions from '../../store/actions/user.action';
+import * as ProjectActions from '../../store/actions/project.action';
+
+//State
+import ProjectState from '../../store/states/project.state';
+
+//Models
+import Project from '../../store/models/project';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +26,7 @@ import * as constantRoutes from '../../shared/constants';
 })
 export class HomeComponent implements OnInit {
   searchTerm: string;
+  currentUserName: string;
   project$: Observable<ProjectState>;
   ProjectSubscription: Subscription;
   projectList: Project[] = [];
@@ -28,11 +37,13 @@ export class HomeComponent implements OnInit {
     private store: Store<{ projects: ProjectState }>
   ) {
     this.project$ = store.pipe(select('projects'));
+    
   }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
       const user = JSON.parse(sessionStorage.getItem('User'));
+      this.currentUserName = user.userName;
       this.authService.userProfileSubject$.next(user);
       this.ProjectSubscription = this.project$
         .pipe(
@@ -42,11 +53,21 @@ export class HomeComponent implements OnInit {
           })
         )
         .subscribe();
-
       this.store.dispatch(ProjectActions.BeginGetProjectsAction());
+      this.store.dispatch(UserActions.BeginGetActiveUsers());
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
+  }
+
+  confirmDelete(id: string, name: string) {
+    if(confirm("Are you sure you want to delete this project: " +name)) {
+      this.deleteProject(id);
+    }
+  }
+
+  deleteProject(projectId) {
+    this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
   }
 
   openProjectDialog() {
@@ -54,6 +75,23 @@ export class HomeComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+
+    this.projectDialog.open(ProjectDialogComponent, dialogConfig);
+  }
+
+  openUpdateDialog(project: Project) {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: project._id,
+      title: project.title,
+      description: project.description,
+      members: [...project.members],
+      status: project.status
+    };
 
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
   }

@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     this.myForm = new FormGroup({
       emailId: new FormControl(null, Validators.email),
       userName: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.minLength(8)),
       cnfpass: new FormControl(null, this.passValidator),
     });
 
@@ -56,9 +56,18 @@ export class RegisterComponent implements OnInit {
       this._qsqservice.submitRegister(this.myForm.value)
       .subscribe(
         data => {
+          this.successMessage = '';
           this._router.navigate(['']);
         },
-        error => this.successMessage = 'Error occurred'
+        error => {
+          if(error.status == 422)
+          {
+            this.successMessage = "User with same Username/Email already registered";
+          }
+          else{
+            this.successMessage = "Error occured while registering User";
+          }
+        }
       );
     }
 
