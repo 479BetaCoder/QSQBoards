@@ -1,11 +1,10 @@
-//import { User } from '../store/models/User';
-
 export class BacklogItem {
-  id: number;
   title: string;
   description: string;
-  priority: string;
+  projectId: string;
   status: string;
   storyPoints: string;
-  //assignee: User;
+  priority: string;
+  assignee: string;
+  type: string;
 }
