@@ -7,6 +7,7 @@ import * as ProjectDetailsActions from "../../../store/actions/project-details.a
 import { Observable, Subscription } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import ProjectDetailsState from 'app/store/states/project-details.state';
+import * as BoardActions from '../../../store/actions/board.action';
 import Project from 'app/store/models/project';
 
 
@@ -27,7 +28,7 @@ export class OverviewComponent implements OnInit {
   loggedInUser = JSON.parse(sessionStorage.getItem('User'));
 
   constructor(private activatedroute: ActivatedRoute, private projectDialog: MatDialog,
-    private store: Store<{ projectDetails: ProjectDetailsState }>) {
+              private store: Store<{ projectDetails: ProjectDetailsState }>) {
     this.projectDetails$ = store.pipe(select('projectDetails'));
     this.activatedroute.parent.params.subscribe(params => {
       this.selectedProjectId = params.title;
@@ -43,6 +44,7 @@ export class OverviewComponent implements OnInit {
         })
       )
       .subscribe();
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProjectId}))
     this.store.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction({ payload: this.selectedProjectId }));
   }
 

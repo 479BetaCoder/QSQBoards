@@ -10,8 +10,11 @@ import {ProjectService} from '../../../services/project.service';
 import UserStory from '../../../store/models/userStory';
 import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
-import {select, Store} from "@ngrx/store";
-import {map} from "rxjs/operators";
+import * as ProjectDetailsActions from '../../../store/actions/project-details.action';
+import {select, Store} from '@ngrx/store';
+import {map} from 'rxjs/operators';
+import Project from "../../../store/models/project";
+import ProjectDetailsState from "../../../store/states/project-details.state";
 
 @Component({
   selector: 'app-board',
@@ -24,6 +27,9 @@ export class BoardComponent implements OnInit {
   inProgressUserStories: UserStory[];
   doneUserStories: UserStory[];
   projectId: string;
+  selectedProject: Project;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
   todoColumn: Column;
   inProgressColumn: Column;
   doneColumn: Column;
@@ -31,15 +37,28 @@ export class BoardComponent implements OnInit {
   boardSubscription: Subscription;
   allUserStories: UserStory[];
   allErrors: Error = null;
-  constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
-              private projectService: ProjectService, private store: Store<{board: BoardState }>) {
+  projectsDetailsError: Error = null;
+  // tslint:disable-next-line:max-line-length
+  constructor(
+    private dialog: MatDialog,
+    private userStoryService: UserStoryService,
+    private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
+    private projectService: ProjectService,
+    private store: Store<{board: BoardState }>) {
     this.boardState$ = store.pipe(select('board'));
+    this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));
   }
 
   board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
-    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    // this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    this.ProjectDetailsSubscription = this.projectDetails$
+      .pipe(
+        map(res => {
+          this.selectedProject = res.selectedProjectDetails;
+          this.projectsDetailsError = res.projectsDetailsError;
+        })).subscribe();
     this.boardSubscription = this.boardState$
       .pipe(
         map(response => {
@@ -48,7 +67,7 @@ export class BoardComponent implements OnInit {
           this.drawTheBoard();
         })
     ).subscribe();
-    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
   }
 
   drawTheBoard() {
@@ -77,10 +96,7 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'ToDo';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'Todo');
     }
   }
 
@@ -92,10 +108,7 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'In Progress';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'In Progress');
       console.log(event.item);
     }
   }
@@ -103,13 +116,17 @@ export class BoardComponent implements OnInit {
   dropDone(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'Done';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'Done');
     } else {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
+  }
+
+  updateTheStatus(userStory: UserStory, status: string) {
+    const updateStory = Object.assign({}, userStory);
+    updateStory.status = status;
+    this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
   }
 
   deleteStory(item, column, index) {

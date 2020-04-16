@@ -84,10 +84,21 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+.task-todo {
+ background-color: #ff9504;
+}
+
+.task-progress {
+  background-color: #006ed2;
+}
+
+.task-done {
+  background-color: #00ffa1;
+}
+
 
 .task {
   padding: 15px 12px;
-  background: white;
   border-bottom: solid 1px #ddd;
   border-radius: 4px;
 
@@ -110,9 +121,9 @@
 }
 
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 350ms cubic-bezier(0, 0, 0.2, 1);
 }
