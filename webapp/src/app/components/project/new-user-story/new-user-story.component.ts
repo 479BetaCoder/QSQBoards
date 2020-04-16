@@ -5,9 +5,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ProjectService} from '../../../services/project.service';
 import {UserStoryService} from '../../../services/user-story.service';
 import UserStory from '../../../store/models/userStory';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as BoardActions from '../../../store/actions/board.action';
 import BoardState from '../../../store/states/board.state';
+import {map} from "rxjs/operators";
+import {Observable, Subscription} from "rxjs";
+import ProjectDetailsState from "../../../store/states/project-details.state";
 
 @Component({
   selector: 'app-new-user-story',
@@ -22,6 +25,10 @@ export class NewUserStoryComponent implements OnInit {
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
     {value: 'high', viewValue: 'High'}];
+  selectedProject: any;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
+  projectsDetailsError: Error = null;
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -30,21 +37,30 @@ export class NewUserStoryComponent implements OnInit {
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
     @Inject(MAT_DIALOG_DATA) data,
-    private store: Store<{ projects: BoardState }>
+    private store: Store<{ projects: BoardState }>,
+    private storeProjectDetails: Store<{ projectDetails: ProjectDetailsState }>,
   ) {
-    this.mainForm();
+    this.projectDetails$ = storeProjectDetails.pipe(select('projectDetails'));
   }
 
   ngOnInit() {
-    this.projectService.userProject$.subscribe(pr =>  this.userProject = pr);
+    this.ProjectDetailsSubscription = this.projectDetails$
+      .pipe(
+        map(res => {
+          if (res) {
+            this.selectedProject = res.selectedProjectDetails;
+            this.projectsDetailsError = res.projectsDetailsError;
+          }
+        })).subscribe();
+    this.mainForm();
   }
 
   mainForm() {
     this.createStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: [{value : 'Todo', disabled: true}, [Validators.required, Validators.pattern]],
-      storyPoints: ['', [Validators.required]],
+      status: [{value : 'Todo', disabled: true}, [Validators.required]],
+      storyPoints: ['', [Validators.required, Validators.pattern]],
       priority: ['', [Validators.required]],
     });
   }
@@ -57,7 +73,8 @@ export class NewUserStoryComponent implements OnInit {
       return false;
     } else {
       const newUserStory: UserStory = this.createStoryForm.value;
-      this.store.dispatch(BoardActions.BeginCreateUserStory({ projectId:  this.userProject._id, payload: newUserStory }));
+      newUserStory.status = 'todo';
+      this.store.dispatch(BoardActions.BeginCreateUserStory({ projectId:  this.selectedProject._id, payload: newUserStory }));
       this.dialogRef.close();
       /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
         () => {
