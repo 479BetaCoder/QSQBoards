@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { Router } from "@angular/router";
 import * as constantRoutes from '../../shared/constants';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,6 +16,10 @@ export class HeaderComponent implements OnInit {
       this.profile = JSON.parse(sessionStorage.getItem('User'));
       //this.authService.userProfile$.subscribe(prof => this.profile = prof);
     }
+  }
+
+  navigateToHome():void{
+    this.router.navigateByUrl(constantRoutes.homeRoute);
   }
   logoutProfile(): void {
     this.authService.userProfile$.subscribe().unsubscribe();

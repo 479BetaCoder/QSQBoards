@@ -2,7 +2,7 @@
     align-self: center;
 }
 .loginContainer {
-    background-image: linear-gradient(to right, #da4453, #89216b);
+    //background-image: linear-gradient(to right, #da4453, #89216b);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,9 +42,16 @@ div > span {
 }
 
 .socialButtons {
-    margin: 0px 30px 0px 40px;
+    margin: 0px 0px 0px 0px;
     padding-left: 8px !important;
     cursor: pointer;
+}
+
+.loginBtnContainer{
+    text-align: center;
+}
+.oAuthContainer{
+    text-align: center;
 }
 
 .background-fb {
@@ -52,7 +59,7 @@ div > span {
     border-radius: 0;
     border: 1px solid #4267b2;
     background-color: white !important;
-    margin-left: 52px !important;
+    margin-left: 10px;
 }
 
 .fbicon {
@@ -81,7 +88,6 @@ form {
     margin: 5px;
     width: 160px;
     padding: 4px;
-    margin-left: 60px;
 }
 .alreadyMember:hover {
     cursor: pointer;
@@ -91,7 +97,6 @@ form {
     font-style: italic;
     text-decoration: underline;
     margin-bottom: 15px;
-    margin-left: 30px;
 }
 
 .separator {

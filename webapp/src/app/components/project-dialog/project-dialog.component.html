@@ -37,7 +37,7 @@
               </mat-chip>
             </mat-chip-list>
           </mat-select-trigger>
-          <mat-option *ngFor="let user of activeUsers | userFilter:searchTerm" [value]="user">
+          <mat-option *ngFor="let user of activeUsers  | userFilter:searchTerm" [value]="user" (onSelectionChange)="change($event)">
             <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
               onerror="this.src='../../../assets/blank-profile-picture.png'">
             {{user.userName}}
