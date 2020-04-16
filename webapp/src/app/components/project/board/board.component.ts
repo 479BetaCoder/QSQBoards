@@ -10,8 +10,13 @@ import {ProjectService} from '../../../services/project.service';
 import UserStory from '../../../store/models/userStory';
 import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
-import {select, Store} from "@ngrx/store";
-import {map} from "rxjs/operators";
+import * as ProjectDetailsActions from '../../../store/actions/project-details.action';
+import {select, Store} from '@ngrx/store';
+import {map} from 'rxjs/operators';
+import Project from "../../../store/models/project";
+import ProjectDetailsState from "../../../store/states/project-details.state";
+import {ActivatedRoute, Route, Router} from "@angular/router";
+import * as constantRoutes from "../../../shared/constants";
 
 @Component({
   selector: 'app-board',
@@ -24,6 +29,9 @@ export class BoardComponent implements OnInit {
   inProgressUserStories: UserStory[];
   doneUserStories: UserStory[];
   projectId: string;
+  selectedProject: any;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
   todoColumn: Column;
   inProgressColumn: Column;
   doneColumn: Column;
@@ -31,24 +39,46 @@ export class BoardComponent implements OnInit {
   boardSubscription: Subscription;
   allUserStories: UserStory[];
   allErrors: Error = null;
-  constructor(private dialog: MatDialog, private userStoryService: UserStoryService,
-              private projectService: ProjectService, private store: Store<{board: BoardState }>) {
+  projectsDetailsError: Error = null;
+  // tslint:disable-next-line:max-line-length
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userStoryService: UserStoryService,
+    private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
+    private projectService: ProjectService,
+    private store: Store<{board: BoardState }>) {
     this.boardState$ = store.pipe(select('board'));
+    this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));
   }
 
   board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
-    this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
-    this.boardSubscription = this.boardState$
-      .pipe(
-        map(response => {
-          this.allUserStories = response.userStories;
-          this.allErrors = response.userStoriesError;
-          this.drawTheBoard();
-        })
-    ).subscribe();
-    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+    // this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    if (sessionStorage.getItem('User')) {
+      this.ProjectDetailsSubscription = this.projectDetails$
+        .pipe(
+          map(res => {
+            if (res) {
+              this.selectedProject = res.selectedProjectDetails;
+              this.projectsDetailsError = res.projectsDetailsError;
+            }
+          })).subscribe();
+      this.boardSubscription = this.boardState$
+        .pipe(
+          map(response => {
+            this.allUserStories = response.userStories;
+            this.allErrors = response.userStoriesError;
+            this.drawTheBoard();
+          })
+        ).subscribe();
+      ///this.selectedProject = sessionStorage.getItem('SelectedProject');
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+    } else {
+      this.router.navigateByUrl(constantRoutes.emptyRoute);
+    }
   }
 
   drawTheBoard() {
@@ -77,10 +107,7 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'ToDo';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'Todo');
     }
   }
 
@@ -92,10 +119,7 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'In Progress';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'In Progress');
       console.log(event.item);
     }
   }
@@ -103,23 +127,28 @@ export class BoardComponent implements OnInit {
   dropDone(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-      const updateStory = Object.assign({}, event.item.data);
-      updateStory.status = 'Done';
-      this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectId}));
+      this.updateTheStatus(event.item.data, 'Done');
     } else {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
   }
 
-  deleteStory(item, column, index) {
+  updateTheStatus(userStory: UserStory, status: string) {
+    const updateStory = Object.assign({}, userStory);
+    updateStory.status = status;
+    this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : updateStory._id, payload: updateStory}));
+    this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+  }
+
+  deleteStory(item) {
     this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
     // column.tasks.splice(index, 1);
   }
 
- /* createUserStory() {
-    this.board.columns[0].userStories.push('Item');
-  }*/
+  editTheStory(userStory: UserStory) {
+    const id = userStory._id;
+    this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
+  }
 
   createUserStory() {
     this.dialog.open(NewUserStoryComponent, {width: '500px'});
