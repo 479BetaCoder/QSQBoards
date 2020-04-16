@@ -19,11 +19,11 @@
 }
 
 .projectText {
-  color: white;
+  color: black;
 }
 
-.sideNavItem {
-  background-color: black;
+mat-nav-list{
+  margin: 4px;
 }
 
 .mat-list-option:hover,
@@ -32,7 +32,7 @@
 .mat-nav-list .mat-list-item:focus,
 .mat-action-list .mat-list-item:hover,
 .mat-action-list .mat-list-item:focus {
-  background: black !important;
+  background: lightgray !important;
 }
 
 .sideNavContainer {
@@ -53,7 +53,9 @@
 .deleteIcon {
   color: red;
 }
-
+.editIcon{
+  color:darkblue; 
+}
 mat-icon {
   vertical-align: middle;
 }
@@ -72,22 +74,39 @@ mat-icon {
   width: 150px;
 }
 .cardContainer {
-  display: inline-block;
+  display: inline;
 }
 
 button {
   float: center;
 }
 
-mat-card {
+.bottomCards{
+  width: 1024px;
+  margin-left: 50px;
+  margin-bottom: 4px;
+}
+
+mat-list-item, mat-list-base, .sideNavItem{
+  padding-top: none !important; 
+}
+
+.card, mat-card{
+  display: inline-block;
+}
+.topCard {
   text-align: center;
   width: 275px;
   border: 10px;
-  margin-left: 100px;
+  margin-left: 50px;
+    padding: 20px;
+    height: 140px;
+    text-align: left;
   margin-bottom: 50px;
-  float: left;
 }
-
+.topCardContainer{
+  display: inline;
+}
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 body {
   margin: 30px;
@@ -102,6 +121,7 @@ body {
 
 .hoverClass:hover {
   cursor: pointer;
+  outline:none !important;
 }
 
 .search input {
@@ -124,36 +144,72 @@ body {
   top: 10px;
   left: 10px;
 }
-.card-container-left {
-  display: inline;
-  margin-left: -10px;
-}
-mat-card {
-  min-width: 400px;
-  padding: 20px;
-  width: auto;
-  height: 180px;
-}
+
 #profileImage {
   display: inline-block;
   width: 60px;
   height: 50px;
   border-radius: 10%;
-  font-size: 35px;
+  font-size: 30px;
   color: #fff;
   text-align: center;
   line-height: 50px;
-  margin: 20px 0;
+  margin: 4px;
+}
+#projectImage{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    font-size: 30px;
+    background-color: rgb(37, 37, 172);;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    margin: 4px;
 }
 
-.projectTitle {
-  margin-left: 20px;
+#bottomprofileImage {
+  width: 60px;
+  height: 50px;
+  border-radius: 10%;
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  margin: 4px;
 }
 
-mat-card-content {
-  min-height: 50px;
+mat-card-title{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 300px; 
+}
+.topProjectDescription {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 50px;
+  width: 275px;
 }
 
+ .inlineDisplay{
+  display: inline;
+}
+
+.bottomProjectTitle{
+  font-size: 24px;
+  font-weight: 100;
+}
+.flex-container {
+  display: flex;
+  height: 30px;
+  width: 800px;
+}
+
+.titleDescriptionContainer{
+  margin-left: 10px;
+}
 .topButtons {
   padding: 20px;
 }
@@ -167,4 +223,55 @@ mat-icon:hover {
 }
 .owner {
   margin-right: 30px;
+}
+
+.bottomProjectTitle{
+  font-size: 24px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 600px;
+}
+
+.bottomDescriptionContainer{
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 600px;
+}
+
+.bottomDeleteIcon{
+  text-align: right;
+  float: right;
+
+}
+
+.bottomOwner{
+  text-align: right;
+  float: right;
+
+}
+.topTitlecontainer{
+  min-height: 110px;
+}
+
+.topDescriptionContainer{
+  // height: 75px;
+  // font-size: 12px;
+  // text-overflow: ellipsis;
+  // overflow: hidden;
+  // width: 200px;
+
+  overflow: hidden;
+   text-overflow: ellipsis;
+   width: 200px;
+   display: -webkit-box;
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+.memberChip {
+  background: #3f51b5;
+  color: white;
+  margin-right: 20px;
 }

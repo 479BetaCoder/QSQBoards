@@ -163,4 +163,19 @@ export class ProjectDialogComponent implements OnInit {
   onSelectClose() {
     this.searchTerm = "";
   }
+
+   change(event)
+  {
+    if(event.isUserInput) {
+
+  //     console.log(event.source.value, event.source.selected);
+  //     if(event.source.selected){
+  //       this.members.push(event.source.value.userName);
+  //     }
+  //     if(!event.source.selected){
+  //       this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
+  //     }
+     }
+    
+   }
 }
