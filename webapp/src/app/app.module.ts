@@ -45,6 +45,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { UserFilterPipe } from './shared/user-filter.pipe';
 import { ProjectFilterPipe } from './shared/project-filter.pipe';
 import { StoreModule } from '@ngrx/store';
+import { HighchartsChartModule } from 'highcharts-angular';
 // @ts-ignore
 import { EffectsModule } from '@ngrx/effects';
 import { NewUserStoryComponent } from './components/project/new-user-story/new-user-story.component';
@@ -123,6 +124,7 @@ const rootReducer = {
     MatLineModule,
     MatSelectModule,
     MatTableModule,
+    HighchartsChartModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects])
   ],

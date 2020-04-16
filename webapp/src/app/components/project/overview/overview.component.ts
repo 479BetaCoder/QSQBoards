@@ -8,6 +8,7 @@ import { Observable, Subscription } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import ProjectDetailsState from 'app/store/states/project-details.state';
 import Project from 'app/store/models/project';
+import * as Highcharts from 'highcharts';
 
 
 @Component({
@@ -56,4 +57,81 @@ export class OverviewComponent implements OnInit {
       }
     }
   }
+
+  highcharts = Highcharts;
+   chartOptions = {   
+      chart : {
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title : {
+         text: 'Project Stats'   
+      },
+      tooltip : {
+         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions : {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+      
+            dataLabels: {
+               enabled: false           
+            },
+      
+            showInLegend: true
+         }
+      },
+      series : [{
+         type: 'pie',
+         name: 'User Stories',
+         data: [
+            ['Open',   45.0],
+            ['In Progress',       26.8],
+            {
+               name: 'finished',
+               y: 12.8,
+               sliced: true,
+               selected: true
+            }
+         ]
+      }]
+   };
+
+
+   burnDownHighcharts = Highcharts;
+   burnDownChartOptions = {   
+      chart: {
+         type: "spline"
+      },
+      title: {
+         text: "Burndown Chart"
+      },
+      subtitle: {
+         text: "Source: Qsqboards"
+      },
+      xAxis:{
+         categories:["1st", "5th", "10th", "15th", "20th", "25th","30th"]
+      },
+      yAxis: {          
+         title:{
+            text:"Story Points"
+         } 
+      },
+      plotOptions: {
+         series: {
+            dataLabels: {
+               enabled: true
+            }
+         }
+      },
+      series: [{
+         name: 'Ideal Burndown',
+         data: [30.0, 25.0, 20.0, 15.0, 10.0, 5.0, 0.0,-1.0]
+      },
+      {
+         name: 'Actual Burndown',
+         data: [30.0,30.0,28.0,25.0,20.0,15.0,0.0,-1.0]
+      }]
+   };
 }
