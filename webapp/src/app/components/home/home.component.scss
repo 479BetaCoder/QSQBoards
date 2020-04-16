@@ -13,16 +13,22 @@
 .search-form {
   width: 90%;
 }
-
+.noProjectsLabel {
+  padding: 40px;
+}
+.mat-sidenav-content {
+  overflow-x: hidden;
+}
 .searchIcn {
   color: #da4453;
 }
 
 .projectText {
   color: black;
+  cursor: default;
 }
 
-mat-nav-list{
+mat-nav-list {
   margin: 4px;
 }
 
@@ -37,10 +43,19 @@ mat-nav-list{
 
 .sideNavContainer {
   width: 200px !important;
+  padding: 10px;
 }
 
 .navContainer {
-  top: 80px !important;
+  top: 60px !important;
+  overflow-x: hidden;
+  //position: relative !important;
+}
+
+@media (max-width: 599px) {
+  .navContainer {
+    top: 56px !important;
+  }
 }
 
 .projectButton {
@@ -52,9 +67,13 @@ mat-nav-list{
 
 .deleteIcon {
   color: red;
+  float: right;
+  margin-right: 8px;
 }
-.editIcon{
-  color:darkblue; 
+.editIcon {
+  color: #3f51b5;
+  float: right;
+  margin-right: 8px;
 }
 mat-icon {
   vertical-align: middle;
@@ -81,17 +100,25 @@ button {
   float: center;
 }
 
-.bottomCards{
+.bottomCards {
   width: 1024px;
   margin-left: 50px;
   margin-bottom: 4px;
 }
 
-mat-list-item, mat-list-base, .sideNavItem{
-  padding-top: none !important; 
+mat-list-item,
+mat-list-base,
+.sideNavItem {
+  padding-top: none !important;
+  cursor: default !important;
+  & :hover,
+  :focus {
+    background-color: transparent !important;
+  }
 }
 
-.card, mat-card{
+.card,
+mat-card {
   display: inline-block;
 }
 .topCard {
@@ -99,12 +126,12 @@ mat-list-item, mat-list-base, .sideNavItem{
   width: 275px;
   border: 10px;
   margin-left: 50px;
-    padding: 20px;
-    height: 140px;
-    text-align: left;
+  padding: 20px;
+  height: 140px;
+  text-align: left;
   margin-bottom: 50px;
 }
-.topCardContainer{
+.topCardContainer {
   display: inline;
 }
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
@@ -121,7 +148,7 @@ body {
 
 .hoverClass:hover {
   cursor: pointer;
-  outline:none !important;
+  outline: none !important;
 }
 
 .search input {
@@ -156,17 +183,22 @@ body {
   line-height: 50px;
   margin: 4px;
 }
-#projectImage{
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border-radius: 10%;
-    font-size: 30px;
-    background-color: rgb(37, 37, 172);;
-    color: white;
-    text-align: center;
-    line-height: 50px;
-    margin: 4px;
+#projectImage {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  font-size: 30px;
+  background-color: #3f51b5;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  margin: 4px;
+  & :hover,
+  :focus {
+    background-color: transparent !important;
+  }
+  cursor: default;
 }
 
 #bottomprofileImage {
@@ -180,11 +212,11 @@ body {
   margin: 4px;
 }
 
-mat-card-title{
+mat-card-title {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 300px; 
+  width: 300px;
 }
 .topProjectDescription {
   text-overflow: ellipsis;
@@ -193,11 +225,11 @@ mat-card-title{
   width: 275px;
 }
 
- .inlineDisplay{
+.inlineDisplay {
   display: inline;
 }
 
-.bottomProjectTitle{
+.bottomProjectTitle {
   font-size: 24px;
   font-weight: 100;
 }
@@ -207,15 +239,15 @@ mat-card-title{
   width: 800px;
 }
 
-.titleDescriptionContainer{
+.titleDescriptionContainer {
   margin-left: 10px;
+  & .mat-title {
+    margin-bottom: 2px !important;
+    font-weight: 500 !important;
+  }
 }
 .topButtons {
   padding: 20px;
-}
-mat-card-footer {
-  margin-right: 10px;
-  float: right;
 }
 
 mat-icon:hover {
@@ -225,7 +257,7 @@ mat-icon:hover {
   margin-right: 30px;
 }
 
-.bottomProjectTitle{
+.bottomProjectTitle {
   font-size: 24px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -233,7 +265,7 @@ mat-icon:hover {
   width: 600px;
 }
 
-.bottomDescriptionContainer{
+.bottomDescriptionContainer {
   font-size: 12px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -241,22 +273,20 @@ mat-icon:hover {
   width: 600px;
 }
 
-.bottomDeleteIcon{
+.bottomDeleteIcon {
   text-align: right;
   float: right;
-
 }
 
-.bottomOwner{
+.bottomOwner {
   text-align: right;
   float: right;
-
 }
-.topTitlecontainer{
+.topTitlecontainer {
   min-height: 110px;
 }
 
-.topDescriptionContainer{
+.topDescriptionContainer {
   // height: 75px;
   // font-size: 12px;
   // text-overflow: ellipsis;
@@ -264,14 +294,15 @@ mat-icon:hover {
   // width: 200px;
 
   overflow: hidden;
-   text-overflow: ellipsis;
-   width: 200px;
-   display: -webkit-box;
-   -webkit-line-clamp: 3; /* number of lines to show */
-   -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  width: 200px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
 }
 .memberChip {
   background: #3f51b5;
   color: white;
-  margin-right: 20px;
+  margin-left: 15px;
+  margin-bottom: 10px;
 }
