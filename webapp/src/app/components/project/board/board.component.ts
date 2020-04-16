@@ -15,6 +15,7 @@ import {select, Store} from '@ngrx/store';
 import {map} from 'rxjs/operators';
 import Project from "../../../store/models/project";
 import ProjectDetailsState from "../../../store/states/project-details.state";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-board',
@@ -41,6 +42,8 @@ export class BoardComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   constructor(
     private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private userStoryService: UserStoryService,
     private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
     private projectService: ProjectService,
@@ -129,14 +132,15 @@ export class BoardComponent implements OnInit {
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
   }
 
-  deleteStory(item, column, index) {
+  deleteStory(item) {
     this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
     // column.tasks.splice(index, 1);
   }
 
- /* createUserStory() {
-    this.board.columns[0].userStories.push('Item');
-  }*/
+  editTheStory(userStory: UserStory) {
+    const id = userStory._id;
+    this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
+  }
 
   createUserStory() {
     this.dialog.open(NewUserStoryComponent, {width: '500px'});

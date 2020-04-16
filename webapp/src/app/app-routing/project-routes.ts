@@ -3,13 +3,15 @@ import {OverviewComponent} from '../components/project/overview/overview.compone
 import { BoardComponent } from '../components/project/board/board.component';
 import {ProjectDashboardComponent} from '../components/project/project-dashboard/project-dashboard.component';
 import { BacklogComponent } from 'app/components/project/backlog/backlog.component';
+import {UserStoryDetailsComponent} from '../components/project/user-story-details/user-story-details.component';
 
 export const navRoutes: Routes = [
     { path : 'project-dashboard/:title', component: ProjectDashboardComponent,
     children: [
-      { path : 'overview', component: OverviewComponent},
-      { path : 'board', component: BoardComponent},
+      { path : 'overview', component: OverviewComponent },
+      { path : 'board', component: BoardComponent },
       { path : 'backlog', component: BacklogComponent},
-      {path: '', redirectTo: 'overview', pathMatch: 'prefix'},
+      { path : 'user-story-details/:id', component: UserStoryDetailsComponent},
+      { path : '', redirectTo: 'overview', pathMatch: 'prefix'},
     ]}
 ];
