@@ -21,11 +21,11 @@
         <mat-label>Select Members</mat-label>
         <mat-select [compareWith]="compareFn" [formControlName]="'members'" (closed)="onSelectClose()"
           placeholder="Select Members" multiple>
-          <div class="search">
+          <!-- <div class="search">
             <span class="fa fa-search searchIcn"></span>
             <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm"
               [ngModelOptions]="{standalone: true}" />
-          </div>
+          </div> -->
           <mat-select-trigger>
             <mat-chip-list>
               <mat-chip class="memberChip" *ngFor="let user of members.value" [removable]="true"
@@ -37,7 +37,7 @@
               </mat-chip>
             </mat-chip-list>
           </mat-select-trigger>
-          <mat-option *ngFor="let user of activeUsers | userFilter:searchTerm" [value]="user">
+          <mat-option *ngFor="let user of activeUsers" [value]="user">
             <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
               onerror="this.src='../../../assets/blank-profile-picture.png'">
             {{user.userName}}

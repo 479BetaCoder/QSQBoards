@@ -49,9 +49,6 @@ export class ProjectDialogComponent implements OnInit {
     this.dialogData = data;
   }
 
-  // compareFn(c1: User, c2: User) {
-  //   return c1 && c2 ? c1.userName === c2.userName : c1 === c2;
-  // }
   ngOnInit(): void {
     this.ActiveUsersSubscription = this.activeUsers$
       .pipe(
@@ -96,7 +93,6 @@ export class ProjectDialogComponent implements OnInit {
   }
 
   compareFn(x: User, y: User): boolean {
-    console.log(JSON.stringify(y));
     return x && y ? x.userName === y.userName : x === y;
   }
 
