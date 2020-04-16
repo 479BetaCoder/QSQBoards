@@ -4,27 +4,20 @@
   height: 50px;
   border-radius: 50%;
 }
-.mat-toolbar-row,
-.mat-toolbar-single-row ,
-.headerContainer{
 
-  //background-image: linear-gradient(to right, #da4453, #89216b);
-}
-
-.qsqboards{
+.qsqboards {
   font-size: 30px;
   font-weight: 1000;
-  color: rgb(37, 37, 172);
+  color: #3f51b5;
+  cursor: pointer;
 }
-.qsqboards:hover{
-  cursor: default;
-}
-mat-toolbar{
+mat-toolbar {
   background-color: white;
 }
 .qsqIcon {
   width: 100px;
   height: 75px;
+  cursor: pointer;
 }
 
 .alignmentMenu {
@@ -43,6 +36,6 @@ mat-toolbar {
   cursor: pointer;
 }
 
-.homeBtn{
+.homeBtn {
   display: inline-block;
 }

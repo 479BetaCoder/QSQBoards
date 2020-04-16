@@ -49,9 +49,6 @@ export class ProjectDialogComponent implements OnInit {
     this.dialogData = data;
   }
 
-  // compareFn(c1: User, c2: User) {
-  //   return c1 && c2 ? c1.userName === c2.userName : c1 === c2;
-  // }
   ngOnInit(): void {
     this.ActiveUsersSubscription = this.activeUsers$
       .pipe(
@@ -96,7 +93,6 @@ export class ProjectDialogComponent implements OnInit {
   }
 
   compareFn(x: User, y: User): boolean {
-    console.log(JSON.stringify(y));
     return x && y ? x.userName === y.userName : x === y;
   }
 
@@ -163,19 +159,4 @@ export class ProjectDialogComponent implements OnInit {
   onSelectClose() {
     this.searchTerm = "";
   }
-
-   change(event)
-  {
-    if(event.isUserInput) {
-
-  //     console.log(event.source.value, event.source.selected);
-  //     if(event.source.selected){
-  //       this.members.push(event.source.value.userName);
-  //     }
-  //     if(!event.source.selected){
-  //       this.selectedUsers = this.selectedUsers.filter((item) => item !== event.source.value.userName);
-  //     }
-     }
-    
-   }
 }
