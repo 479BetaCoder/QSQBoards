@@ -28,10 +28,7 @@ export class HomeComponent implements OnInit {
   searchTerm: string;
   currentUserName: string;
   project$: Observable<ProjectState>;
- // deleteError$: Observable<ProjectState>;
-  deleteError: Error = null;
   ProjectSubscription: Subscription;
-  DeleteErrorSubscription : Subscription;
   projectList: Project[] = [];
   projectsError: Error = null;
 
@@ -70,11 +67,7 @@ export class HomeComponent implements OnInit {
   }
 
   deleteProject(projectId) {
-    console.log(projectId);
     this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
-    if(!this.projectsError) {
-      alert('Only');
-    }
   }
 
   openProjectDialog() {

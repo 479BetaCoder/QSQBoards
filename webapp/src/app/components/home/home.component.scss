@@ -25,9 +25,6 @@
 mat-nav-list{
   margin: 4px;
 }
-.sideNavItem {
-  //background-color: skyblue;
-}
 
 .mat-list-option:hover,
 .mat-list-option:focus,
@@ -56,7 +53,9 @@ mat-nav-list{
 .deleteIcon {
   color: red;
 }
-
+.editIcon{
+  color:darkblue; 
+}
 mat-icon {
   vertical-align: middle;
 }
@@ -101,7 +100,7 @@ mat-list-item, mat-list-base, .sideNavItem{
   border: 10px;
   margin-left: 50px;
     padding: 20px;
-    height: 180px;
+    height: 140px;
     text-align: left;
   margin-bottom: 50px;
 }
@@ -246,4 +245,33 @@ mat-icon:hover {
   text-align: right;
   float: right;
 
+}
+
+.bottomOwner{
+  text-align: right;
+  float: right;
+
+}
+.topTitlecontainer{
+  min-height: 110px;
+}
+
+.topDescriptionContainer{
+  // height: 75px;
+  // font-size: 12px;
+  // text-overflow: ellipsis;
+  // overflow: hidden;
+  // width: 200px;
+
+  overflow: hidden;
+   text-overflow: ellipsis;
+   width: 200px;
+   display: -webkit-box;
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+.memberChip {
+  background: #3f51b5;
+  color: white;
+  margin-right: 20px;
 }
