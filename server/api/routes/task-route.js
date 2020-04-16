@@ -7,7 +7,7 @@ module.exports = function (app) {
   const taskController = require("../controllers/task-controller"),
     checkAuth = require("../services/auth-service");
   // Task Routes for createing
-  app.route("/v1/tasks/:storyId").post(checkAuth, taskController.create);
+  app.route("/v1/tasks").post(checkAuth, taskController.create);
 
   // Task Routes for deleting a Task
   app.route("/v1/tasks/:taskId")
