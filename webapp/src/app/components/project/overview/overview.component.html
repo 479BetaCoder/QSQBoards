@@ -7,7 +7,7 @@
   </mat-toolbar>
   <div class="aboutContainer" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="50px">
     <mat-card fxFlex="0 1 calc(60% - 10px)" class="overview-card">
-      <mat-card-content class="content-title">
+      <mat-card-content class="about-content-title">
         About this project
       </mat-card-content>
       <mat-card-content>
@@ -44,4 +44,36 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-card  class="project-stats-card">
+    <mat-card-content class="about-content-title">
+      Project Stats
+    </mat-card-content>
+    <mat-card-content class="project-stats-content" fxLayoutGap="40px">
+      <mat-card fxFlex="0 1 calc(50% - 10px)" class="stats-breakdown-card" >
+        <mat-card-content class="proj-stats-overview" fxFlex="0 1 calc(50% - 10px)">
+          {{allUserStories.length}} Stories
+        </mat-card-content>
+        <mat-divider [vertical]="true"></mat-divider>
+        <mat-card-content class="proj-stats-overview" fxFlex="0 1 calc(50% - 10px)">
+          20 Tasks
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex="0 1 calc(25% - 10px)" class="proj-stats-overview">
+        <mat-card-content fxFlex="0 1 calc(50% - 10px)">
+          20 Done
+        </mat-card-content>
+        <mat-card-content>
+          <img src="../../../assets/white-check-icon-17.jpg" height="30" width="30"/> 
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex="0 1 calc(25% - 10px)" class="proj-stats-overview">
+        <mat-card-content fxFlex="0 1 calc(50% - 10px)">
+          20 Created
+        </mat-card-content>
+        <mat-card-content>
+          <img src="../../../assets/pending-clock.png" height="38" width="38"/> 
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
 </div>
