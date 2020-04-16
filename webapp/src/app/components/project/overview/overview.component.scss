@@ -5,9 +5,21 @@
   width: 100%;
   margin-right: 0%;
 }
+// .aboutContainer {
+//   margin-top: 1%;
+//   margin-left: 2%;
+// }
+
 .aboutContainer {
-  margin-top: 1%;
-  margin-left: 2%;
+  top: 60px !important;
+  overflow-x: hidden;
+  //position: relative !important;
+}
+
+@media (max-width: 599px) {
+  .aboutContainer {
+    top: 56px !important;
+  }
 }
 
 .right-card {
