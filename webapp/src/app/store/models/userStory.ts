@@ -1,6 +1,6 @@
 import { User } from './User';
 
-export class Task {
+export class UserStory {
   id: number;
   title: string;
   description: string;
@@ -9,4 +9,3 @@ export class Task {
   storyPoints: string;
   assignee: User;
 }
-

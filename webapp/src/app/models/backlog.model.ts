@@ -1,6 +1,6 @@
-import { User } from './User';
+import { User } from '../store/models/User';
 
-export class Task {
+export class BacklogItem {
   id: number;
   title: string;
   description: string;
@@ -8,5 +8,5 @@ export class Task {
   status: string;
   storyPoints: string;
   assignee: User;
+  type: string;
 }
-
