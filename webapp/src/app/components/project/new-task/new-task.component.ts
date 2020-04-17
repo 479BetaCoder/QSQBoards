@@ -94,14 +94,16 @@ export class NewTaskComponent implements OnInit {
       newTask.status = 'New';
       newTask.storyId = this.storyId;
       this.userStoryService.createTask(newTask).subscribe(
-        re => console.log(re)
+        re => {
+          console.log(re);
+          this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+        }
       );
       /*this.store.dispatch(BoardActions.BeginCreateUserStory({
         projectId: this.selectedProject._id,
         payload: this.editUserStory
       }));*/
       // this.boardState$.
-      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
       this.dialogRef.close();
       /*this.userStoryService.createStory(this.createTaskForm.value, this.userProject._id).subscribe(
         () => {

@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {ProjectService} from "../../../services/project.service";
 import {UserStoryService} from "../../../services/user-story.service";
 import {select, Store} from "@ngrx/store";
@@ -54,6 +54,7 @@ export class UserStoryDetailsComponent implements OnInit {
     if (sessionStorage.getItem('User')) {
       this.mainForm();
       this.storyId = this.activatedRoute.snapshot.paramMap.get('id');
+      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
       this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
       this.userStoryService.getAllUserStories(this.selectedProject._id).subscribe((response) => {
         this.allUserStories = response;
@@ -64,7 +65,6 @@ export class UserStoryDetailsComponent implements OnInit {
         this.selectedProject = pro;
         this.teamMates = pro.
       });*/
-      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
@@ -98,10 +98,16 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   createTask() {
+    const dialogConfig = new MatDialogConfig();
     this.dialog.open(NewTaskComponent, {width: '500px'});
+    this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
   }
 
   onSubmit() {
     console.log('');
+  }
+
+  deleteTask(){
+
   }
 }

@@ -30,7 +30,7 @@
 
       <mat-form-field class="half-width">
         <mat-select placeholder="Assignee" formControlName="assignee">
-          <mat-option *ngFor="let assignee of teamMates" [value]="assignee.userName">{{assignee.userName}}</mat-option>
+          <mat-option *ngFor="let assignee of teamMates" [value]="assignee">{{assignee.userName}}</mat-option>
         </mat-select>
         <mat-error
           *ngIf="!createTaskForm.controls['assignee'].valid && createTaskForm.controls['assignee'].touched">
