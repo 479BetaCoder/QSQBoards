@@ -40,13 +40,6 @@ exports.isProjectValid = function (projectId) {
  * @param {string} projectId {Id of the project object}
  */
 exports.getStories = function (projectId) {
-  // const promise = UserStory.find(
-  //   { projectId: projectId },
-  //   { createdAt: 0, updatedAt: 0, projectId: 0 }
-  // )
-  //   .populate("tasks", { updatedAt: 0, createdAt: 0 }, [], {})
-  //   .exec();
-
   const promise = new Promise(async function (resolve, reject) {
     await UserStory.aggregate([
       {
@@ -87,9 +80,12 @@ exports.getStories = function (projectId) {
           "status": { $first: "$status" },
           "storyPoints": { $first: "$storyPoints" },
           "priority": { $first: "$priority" },
+          "createdAt": {$first: "$createdAt"},
           "tasks": { "$push": "$taskObjects" }
         }
-      }
+      },
+      // sorting stage
+      { "$sort": { "createdAt": 1 } }
     ]).then(result => {
       return resolve(result);
     }).catch(error => {

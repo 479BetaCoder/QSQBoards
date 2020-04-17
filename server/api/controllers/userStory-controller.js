@@ -23,15 +23,15 @@ const logger = log4js.getLogger("qsqBoard");
 exports.create = function (request, response) {
   try {
     const newUserStory = Object.assign({}, request.body);
-    const resolve = () => {
-      response.status(201).json(newUserStory);
+    const resolve = (createdUserStory) => {
+      response.status(201).json(createdUserStory);
     };
     // check if project exists
     userStoryService
-      .isProjectValid(request.params.projectId)
+      .isProjectValid(request.body.projectId)
       .then((project) => {
         if (project.length > 0) {
-          newUserStory.projectId = request.params.projectId;
+          newUserStory.projectId = request.body.projectId;
           userStoryService
             .save(newUserStory)
             .then(resolve)

@@ -6,13 +6,20 @@
       </div>
     </div>
   </div>-->
-
+  <div class="topButtons">
+    <button class="mat-raised-button mat-primary userStoryButton" (click)="createUserStory()">
+      <div class="btnAddUserStoryContainer">
+      <mat-icon>add</mat-icon>
+      <label>Add User Story</label> 
+    </div>
+    </button>
+  </div>
   <div class="board">
 
-    <div class="board-bar">
-      <p class="board-name">{{ board.name }}</p>
-      <button mat-button (click)="createUserStory()">Create</button>
-    </div>
+  
+      <!-- <p class="board-name">{{ board.name }}</p> -->
+      
+    
 
     <div class="board-wrapper" cdkDropListGroup>
 
@@ -29,19 +36,24 @@
             <mat-grid-list cols="1" [cdkDragData]="item" *ngFor="let item of todoColumn.userStories; let i = index"
                            cdkDrag>
               <mat-card class="task task-todo">
-                <mat-card-subtitle>
-                  <h3>{{item.title}}</h3>
-                </mat-card-subtitle>
-                <mat-card-content>
-                  <mat-label><li>Status {{item.status}}</li></mat-label>
-                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
-                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
-                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button (click)="editTheStory(item)" color="primary">Edit</button>
-                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
-                </mat-card-actions>
+                <div class="usTitleContainer">
+                  <mat-card-title><span class="userStoryTitle">{{item.title}}</span>
+                  </mat-card-title>
+                  <div class="storyPointContainer">
+                  <mat-label>{{item.storyPoints}}</mat-label>
+                  </div>
+                </div>
+                <div>
+                  <div class="topDescriptionContainer">{{item.description}}</div>
+                </div>
+                <mat-card-footer class="footerTodo">
+                  <mat-chip class="statusTodoChip">
+                    {{item.status}}
+                  </mat-chip>
+                  <i class="fa fa-exclamation-circle" ngClass="{{item.priority}}"></i><span ngClass="{{item.priority}}">{{item.priority}}</span>
+                  <mat-icon class="deleteIcon" (click)="deleteStory(item)">delete</mat-icon>
+                  <mat-icon class="editIcon" (click)="editTheStory(item)" color="primary">edit</mat-icon>
+                </mat-card-footer>
               </mat-card>
             </mat-grid-list>
           </div>
@@ -58,19 +70,24 @@
             <mat-grid-list cols="1" [cdkDragData]="item"
                            *ngFor="let item of inProgressColumn.userStories; let i = index" cdkDrag>
               <mat-card class="task task-progress">
-                <mat-card-subtitle>
-                  <h3>{{item.title}}</h3>
-                </mat-card-subtitle>
-                <mat-card-content>
-                  <mat-label><li>Status {{item.status}}</li></mat-label>
-                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
-                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
-                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button color="primary">Edit</button>
-                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
-                </mat-card-actions>
+                <div class="usTitleContainer">
+                  <mat-card-title><span class="userStoryTitle">{{item.title}}</span>
+                  </mat-card-title>
+                  <div class="storyPointContainer">
+                  <mat-label>{{item.storyPoints}}</mat-label>
+                  </div>
+                </div>
+                <div>
+                  <div class="topDescriptionContainer">{{item.description}}</div>
+                </div>
+                <mat-card-footer class="footerTodo">
+                  <mat-chip class="statusTodoChip">
+                    {{item.status}}
+                  </mat-chip>
+                  <i class="fa fa-exclamation-circle" ngClass="{{item.priority}}"></i><span ngClass="{{item.priority}}">{{item.priority}}</span>
+                  <mat-icon class="deleteIcon" (click)="deleteStory(item)">delete</mat-icon>
+                  <mat-icon class="editIcon" (click)="editTheStory(item)" color="primary">edit</mat-icon>
+                </mat-card-footer>
               </mat-card>
             </mat-grid-list>
           </div>
@@ -87,19 +104,24 @@
             <mat-grid-list cols="1" [cdkDragData]="item"
                            *ngFor="let item of doneColumn.userStories; let i = index" cdkDrag>
               <mat-card class="task task-done">
-                <mat-card-subtitle>
-                  <h3>{{item.title}}</h3>
-                </mat-card-subtitle>
-                <mat-card-content>
-                  <mat-label><li>Status {{item.status}}</li></mat-label>
-                  <mat-label><li>Priority {{item.priority}}</li></mat-label>
-                  <mat-label><li>Story Point {{item.storyPoints}}</li></mat-label>
-                  <mat-label><p><i>Description: </i>{{item.description}}</p></mat-label>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button color="primary">Edit</button>
-                  <button mat-button (click)="deleteStory(item)" color="warn">Delete</button>
-                </mat-card-actions>
+                <div class="usTitleContainer">
+                  <mat-card-title><span class="userStoryTitle">{{item.title}}</span>
+                  </mat-card-title>
+                  <div class="storyPointContainer">
+                  <mat-label>{{item.storyPoints}}</mat-label>
+                  </div>
+                </div>
+                <div>
+                  <div class="topDescriptionContainer">{{item.description}}</div>
+                </div>
+                <mat-card-footer class="footerTodo">
+                  <mat-chip class="statusTodoChip">
+                    {{item.status}}
+                  </mat-chip>
+                  <i class="fa fa-exclamation-circle" ngClass="{{item.priority}}"></i><span ngClass="{{item.priority}}">{{item.priority}}</span>
+                  <mat-icon class="deleteIcon" (click)="deleteStory(item)">delete</mat-icon>
+                  <mat-icon class="editIcon" (click)="editTheStory(item)" color="primary">edit</mat-icon>
+                </mat-card-footer>
               </mat-card>
             </mat-grid-list>
           </div>

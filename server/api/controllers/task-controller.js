@@ -26,7 +26,7 @@ exports.create = function (request, response) {
     const resolve = (task) => {
       // add the created task id to userStory tasks array
       taskService
-        .updateUserStory(task._id, request.params.storyId, true)
+        .updateUserStory(task._id, request.body.storyId, true)
         .then((userStory) => {
           if (userStory) {
             response.status(201).json(task);
@@ -39,7 +39,7 @@ exports.create = function (request, response) {
     };
     // check if userStory exists
     taskService
-      .isUserStoryValid(request.params.storyId)
+      .isUserStoryValid(request.body.storyId)
       .then((userStory) => {
         if (userStory.length > 0) {
           taskService
