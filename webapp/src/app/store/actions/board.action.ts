@@ -48,4 +48,14 @@ export const SuccessDeleteStory = createAction(
   props<{ storyId: string }>()
 );
 
+export const BeginGetUserStory = createAction(
+  '[UserStory] - Begin Delete UserStory',
+  props<{ storyId: string, payload: UserStory}>()
+);
+
+export const SuccessGetStory = createAction(
+  '[UserStory] - Success Delete UserStory',
+  props<{ payload: UserStory }>()
+);
+
 export const ErrorUserStoryAction = createAction('[UserStory] - Error', props<Error>());
