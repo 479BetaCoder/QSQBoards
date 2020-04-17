@@ -16,6 +16,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-backlog',
@@ -49,6 +50,9 @@ export class BacklogComponent implements OnInit {
     private store: Store<{board: BoardState }>) {
     this.boardState$ = store.pipe(select('board'));
     this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));
+    if(this.backlogItems != undefined){
+      this.dataSource = new MatTableDataSource(this.backlogItems);
+    }
     //this.projectDetails$ = store.pipe(select('projectDetails'));
     //this.tasks = this.projectService.getPendingTasks();
     //this.dataSource = this.tasks;
@@ -123,6 +127,10 @@ export class BacklogComponent implements OnInit {
         this.backlogItems.push(item);
     });
     this.dataSource = new MatTableDataSource(this.backlogItems);
+  }
+
+  getDate(){
+    return formatDate(new Date(), 'yyyy/MM/dd', 'en');
   }
 
 }

@@ -8,8 +8,11 @@
       <span class="fa fa-search searchIcn"></span>
       <input placeholder="Search by Title"(keyup)="applyFilter($event.target.value)">
     </div>
+    <button class="mat-raised-button mat-primary exportButton" (click)="exporter.exportTable('csv',  {fileName:'backlog'})">
+      Export
+    </button>
   </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<table mat-table matTableExporter [dataSource]="dataSource" class="mat-elevation-z8" matSort #exporter="matTableExporter">
     <!-- Serial Number Column 
     <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef> No. </th>
