@@ -5,16 +5,17 @@ import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {ProjectService} from "../../../services/project.service";
-import {UserStoryService} from "../../../services/user-story.service";
+import {UserStoryService} from '../../../services/user-story.service';
 import {select, Store} from "@ngrx/store";
 import BoardState from "../../../store/states/board.state";
 import {map, take} from "rxjs/operators";
 import * as BoardActions from "../../../store/actions/board.action";
-import UserStory from "../../../store/models/userStory";
-import userStory from "../../../store/models/userStory";
+import UserStory from '../../../store/models/userStory';
+import {Task} from "../../../store/models/task";
 import {NewUserStoryComponent} from "../new-user-story/new-user-story.component";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import Project from "../../../store/models/project";
+
 
 @Component({
   selector: 'app-user-story-details',
@@ -25,7 +26,7 @@ export class UserStoryDetailsComponent implements OnInit {
   updateStoryForm: FormGroup;
   newStatus: 'Todo';
   storyId: string;
-  editStory: userStory;
+  editStory: UserStory;
   priorities = [
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
@@ -99,12 +100,32 @@ export class UserStoryDetailsComponent implements OnInit {
 
   createTask() {
     const dialogConfig = new MatDialogConfig();
-    this.dialog.open(NewTaskComponent, {width: '500px'});
-    this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    this.dialog.open(NewTaskComponent, dialogConfig);
+    // this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
   }
 
   onSubmit() {
     console.log('');
+  }
+
+  updateTask(task: Task) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    dialogConfig.data = {
+      id: task._id,
+      title: task.title,
+      description: task.description,
+      assignee: task.assignee,
+      status: task.status,
+      priority: task.priority
+    };
+
+    this.dialog.open(NewTaskComponent, dialogConfig);
   }
 
   deleteTask(task, index) {

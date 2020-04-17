@@ -19,7 +19,6 @@ import ProjectDetailsState from "../../../store/states/project-details.state";
 })
 export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
-  newStatus: 'Todo';
   userProject: any;
   priorities = [
     {value: 'low', viewValue: 'Low'},

@@ -34,6 +34,13 @@ export class UserStoryService {
     );
   }
 
+  updateTask(updateTask): Observable<any> {
+    const url = `${baseURL}/tasks`;
+    return this.http.put(url, updateTask).pipe(
+      catchError(this.errorHandling)
+    );
+  }
+
   getAllUserStories(projectId): Observable<Array<UserStory>>  {
     // @ts-ignore
     return this.http.get(`${baseURL}/user-stories/${projectId}`);

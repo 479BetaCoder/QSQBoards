@@ -21,6 +21,8 @@ import {Task} from "../../../store/models/task";
 export class NewTaskComponent implements OnInit {
 
   createTaskForm: FormGroup;
+  formData: any;
+  updateForm: boolean;
   teamMates: any[];
   editUserStory: UserStory;
   storyId: string;
@@ -48,9 +50,17 @@ export class NewTaskComponent implements OnInit {
   ) {
     this.projectDetails$ = store.pipe(select('projectDetails'));
     this.boardState$ = store.pipe(select('userStory'));
+    this.formData = data;
   }
 
   ngOnInit() {
+    this.createTaskForm = this.fb.group({
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      status: [{value : 'New', disabled: true}, [Validators.required]],
+      assignee: ['', [Validators.required]],
+      priority: ['', [Validators.required]],
+    });
     this.storyId = sessionStorage.getItem('storyId');
     this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
     this.teamMates = this.selectedProject.members;
@@ -61,7 +71,8 @@ export class NewTaskComponent implements OnInit {
             this.editUserStory = res.userStory;
             this.projectsDetailsError = res.userStoriesError;
           }
-        })).subscribe();
+        })
+      ).subscribe();
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -69,18 +80,27 @@ export class NewTaskComponent implements OnInit {
             this.selectedProject = res.selectedProjectDetails;
             this.projectsDetailsError = res.projectsDetailsError;
           }
-        })).subscribe();
-    this.mainForm();
+        })
+      ).subscribe();
+    if ( this.formData !== null) {
+      this.updateTaskForm();
+    }
   }
 
-  mainForm() {
-    this.createTaskForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      status: [{value: 'New', disabled: true}, [Validators.required]],
-      assignee: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
-    });
+  updateTaskForm() {
+    if (this.formData == null) {
+      this.formData.heading = 'Create A Task';
+    } else {
+      this.updateForm = true;
+      this.formData.heading = 'Update The Task';
+      this.createTaskForm = this.fb.group({
+        title: [this.formData.title, [Validators.required]],
+        description: [this.formData.description, [Validators.required]],
+        status: [this.formData.status, [Validators.required]],
+        assignee: [this.formData.assignee.userName, [Validators.required]],
+        priority: [this.formData.priority, [Validators.required]],
+      });
+    }
   }
 
   /*
@@ -89,7 +109,7 @@ export class NewTaskComponent implements OnInit {
   onSubmit() {
     if (!this.createTaskForm.valid) {
       return false;
-    } else {
+    } else if (!this.updateForm) {
       const newTask: any = this.createTaskForm.value;
       newTask.status = 'New';
       newTask.storyId = this.storyId;
@@ -99,20 +119,15 @@ export class NewTaskComponent implements OnInit {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
         }
       );
-      /*this.store.dispatch(BoardActions.BeginCreateUserStory({
-        projectId: this.selectedProject._id,
-        payload: this.editUserStory
-      }));*/
-      // this.boardState$.
       this.dialogRef.close();
-      /*this.userStoryService.createStory(this.createTaskForm.value, this.userProject._id).subscribe(
-        () => {
-          console.log('Stories successfully created!');
-          // this.ngZone.run(() => this.router.navigateByUrl('/boards'));
-          this.dialogRef.close();
-        }, (error) => {
-          console.log(error);
-        });*/
+    } else if (this.updateForm) {
+      const newTask: Task = this.createTaskForm.value;
+      this.userStoryService.updateTask(newTask).subscribe(
+        re => {
+          console.log(re);
+          this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+        }
+      );
     }
   }
 
