@@ -14,7 +14,7 @@ import * as BoardActions from '../../../store/actions/board.action';
 import * as constantRoutes from "../../../shared/constants";
 import {MatDialog} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from '@angular/common';
 
@@ -42,6 +42,8 @@ export class BacklogComponent implements OnInit {
   backlogUserStories: UserStory[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  sortBy:any;
 
   constructor(private projectService: ProjectService,
     private dialog: MatDialog,
@@ -84,7 +86,6 @@ export class BacklogComponent implements OnInit {
     this.currentProjectTitle = this.projectDetails.title;
 
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = 
     (data: BacklogItem, filtersJson: string) => {
       const matchFilter = [];
@@ -139,10 +140,16 @@ export class BacklogComponent implements OnInit {
         })
     });
     this.dataSource = new MatTableDataSource(this.backlogItems);
+    this.dataSource.sort = this.sort;
   }
 
   getDate(){
     return formatDate(new Date(), 'yyyy/MM/dd', 'en');
   }
 
+  ngAfterViewInit() {
+    //this.dataSource.sort = this.sort;
+    }
+
 }
+

@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
@@ -125,6 +126,7 @@ const rootReducer = {
     MatSelectModule,
     MatTableModule,
     MatTableExporterModule,
+    MatSortModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects])
   ],
