@@ -75,7 +75,7 @@ export class BoardComponent implements OnInit {
           })
         ).subscribe();
       ///this.selectedProject = sessionStorage.getItem('SelectedProject');
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+      //this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
@@ -91,10 +91,10 @@ export class BoardComponent implements OnInit {
       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
       this.doneColumn = new Column('Done', this.doneUserStories);
     });*/
-      this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'todo');
+      this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'new');
       this.inProgressUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'in progress');
       this.doneUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'done');
-      this.todoColumn = new Column('Todo', this.todoUserStories);
+      this.todoColumn = new Column('New', this.todoUserStories);
       this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
       this.doneColumn = new Column('Done', this.doneUserStories);
   }
@@ -107,7 +107,7 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.updateTheStatus(event.item.data, 'Todo');
+      this.updateTheStatus(event.item.data, 'New');
     }
   }
 

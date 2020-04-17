@@ -45,6 +45,7 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.storeBoard.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction({ payload: this.selectedProjectId }));
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -54,8 +55,8 @@ export class OverviewComponent implements OnInit {
         })
       )
       .subscribe();
+    
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProjectId}));
-
     this.boardSubscription = this.boardState$
       .pipe(
         map(response => {
@@ -63,7 +64,7 @@ export class OverviewComponent implements OnInit {
           this.allErrors = response.userStoriesError;
         })
       ).subscribe();
-    this.storeBoard.dispatch(ProjectDetailsActions.BeginGetProjectDetailsAction({ payload: this.selectedProjectId }));
+    
   }
 
   getProjectTitleAvatar() {
