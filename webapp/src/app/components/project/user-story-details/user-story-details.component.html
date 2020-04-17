@@ -1,158 +1,99 @@
-<div
-     fxLayout="column"
-     fxLayoutGap="10px">
 
-  <div fxFlex>
-    <div>
-      <header>
-        <div>
-          <h1>User Story Details</h1>
+
+
+<form [formGroup]="updateStoryForm" (ngSubmit)="onSubmit()">
+
+  <mat-card-header>
+    <mat-card-title><h2>Create A User Story</h2></mat-card-title>
+  </mat-card-header>
+  <mat-dialog-content>
+
+    <mat-card-content>
+      <mat-form-field class="half-width">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title">
+        <mat-error *ngIf="!updateStoryForm.controls['title'].valid && updateStoryForm.controls['title'].touched">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-select placeholder="Priority" formControlName="priority">
+          <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="!updateStoryForm.controls['priority'].valid && updateStoryForm.controls['priority'].touched">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Status" formControlName="status">
+        <mat-error *ngIf="!updateStoryForm.controls['status'].valid && updateStoryForm.controls['status'].touched">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Story Points" formControlName="storyPoints" pattern="[0-9]*">
+        <mat-error
+          *ngIf="!updateStoryForm.controls['storyPoints'].valid && updateStoryForm.controls['storyPoints'].touched">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Description" rows="12" formControlName="description"></textarea>
+        <mat-error
+          *ngIf="!updateStoryForm.controls['description'].valid && updateStoryForm.controls['description'].touched">
+        </mat-error>
+      </mat-form-field><br>
+
+      <mat-dialog-actions class="form-group">
+        <button mat-button color="primary" type="submit" [disabled]="updateStoryForm.invalid"
+                class="mat-background-primary text-floral-white">Submit
+        </button>
+        <button mat-button color="accent" type="submit"
+                class="mat-background-primary text-floral-white">Cancel
+        </button>
+        <div class="container">
+          <!-- No data message -->
+          <p *ngIf="editStory" class="no-data text-center">There is no task added yet!</p>
+
+          <table class="todo-table" *ngIf="editStory.tasks.length > 0">
+            <thead class="table-success">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Status</th>
+              <th scope="col">Story Points</th>
+              <th scope="col">Assignee</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of editStory.tasks; let i = index">
+              <td>{{task.title}}</td>
+              <td>{{task.description}}</td>
+              <td>{{task.status}}</td>
+              <td>{{task.assignee.userName}}</td>
+              <td>{{task.priority | date : 'dd-MMM-yyy hh:mm a'}}</td>
+              <td class="text-center edit-block">
+          <span [routerLink]="">
+            <button mat-button color="primary" type="button">Edit</button>
+          <!--</span>
+                <span (click)="removeTodo(todo, i)">-->
+            <button mat-button color="warn" type="button" >Delete</button>
+          </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-      </header>
-    </div>
-  </div>
 
-  <!--<div fxFlex>
-    <mat-card>
-      <mat-card-title>
-        User Story Details
-      </mat-card-title>
-      <mat-card-content>
-        <mat-form-field class="half-width">
-          <mat-label>Title</mat-label>
-          <input matInput placeholder="Title" formControlName="title">
-          <mat-error *ngIf="!updateStoryForm.controls['title'].valid && updateStoryForm.controls['title'].touched">
-          </mat-error>
-        </mat-form-field>
+      </mat-dialog-actions>
+    </mat-card-content>
+  </mat-dialog-content>
 
-        <mat-form-field class="half-width">
-          <mat-select placeholder="Priority" formControlName="priority">
-            <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="!updateStoryForm.controls['priority'].valid && updateStoryForm.controls['priority'].touched">
-          </mat-error>
-        </mat-form-field>
 
-        <mat-form-field class="half-width">
-          <input matInput placeholder="Status" formControlName="status">
-          <mat-error *ngIf="!updateStoryForm.controls['status'].valid && updateStoryForm.controls['status'].touched">
-          </mat-error>
-        </mat-form-field>
+</form>
 
-        <mat-form-field class="half-width">
-          <input matInput placeholder="Story Points" formControlName="storyPoints" pattern="[0-9]*">
-          <mat-error
-            *ngIf="!updateStoryForm.controls['storyPoints'].valid && updateStoryForm.controls['storyPoints'].touched">
-          </mat-error>
-        </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <mat-label>Description</mat-label>
-          <textarea matInput placeholder="Description" rows="12" formControlName="description"></textarea>
-          <mat-error
-            *ngIf="!updateStoryForm.controls['description'].valid && updateStoryForm.controls['description'].touched">
-          </mat-error>
-        </mat-form-field>
-        <mat-label>Task List</mat-label>
-
-        <mat-dialog-actions class="form-group">
-          <button mat-button color="primary" type="submit" [disabled]="updateStoryForm.invalid"
-                  class="mat-background-primary text-floral-white">Submit
-          </button>
-          <button mat-button color="accent" type="submit"
-                  class="mat-background-primary text-floral-white">Cancel
-          </button>
-        </mat-dialog-actions>
-      </mat-card-content>
-    </mat-card>
-  </div>-->
-  <div>
-    <form [formGroup]="taskTable">
-      <table class="table">
-        <thead class="text-nowrap">
-        <th>Title <span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th>Description<span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th>Status<span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th>Story Points<span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th>Priority<span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th>Assignee<span class="ui-column-resizer" appDirectiveColumn> </span></th>
-        <th></th>
-        </thead>
-        <tbody>
-        <ng-container cols="1" formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
-          <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-            <td>
-              <mat-form-field>
-                <input matInput type="text" formControlName="title">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <input matInput type="text" formControlName="description">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <input  matInput type="text" formControlName="status">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <input matInput type="text" formControlName="storyPoints">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <mat-select formControlName="priority">
-                  <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <input matInput type="text" formControlName="assignee">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
-              <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
-            </td>
-          </tr>
-          <tr *ngIf="!group.get('isEditable').value" >
-            <td>
-              {{group.get('title').value}}
-            </td>
-            <td>
-              {{group.get('description').value}}
-            </td>
-            <td>
-              {{group.get('status').value}}
-            </td>
-            <td>
-              {{group.get('storyPoints').value}}
-            </td>
-            <td>
-              {{group.get('priority').value}}
-            </td>
-            <td>
-              {{group.get('assignee').value}}
-            </td>
-            <td>
-              <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
-            </td>
-          </tr>
-        </ng-container>
-        </tbody>
-      </table>
-      <div class="action-container">
-        <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
-        <button mat-raised-button [disabled]="taskTable.invalid" type="submit" (click)="submitForm()">Submit</button>
-      </div>
-    </form>
-    <div class="output">
-      <p>Form Data:  {{taskTable.value | json}}</p>
-      <p>Is Valid: {{taskTable.valid}}</p>
-    </div>
-  </div>
 
