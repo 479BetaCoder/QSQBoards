@@ -1,5 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, Subscription} from "rxjs";
+import ProjectDetailsState from "../../../store/states/project-details.state";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {ProjectService} from "../../../services/project.service";
+import {UserStoryService} from "../../../services/user-story.service";
+import {select, Store} from "@ngrx/store";
+import BoardState from "../../../store/states/board.state";
+import {map, take} from "rxjs/operators";
+import * as BoardActions from "../../../store/actions/board.action";
+import UserStory from "../../../store/models/userStory";
+import userStory from "../../../store/models/userStory";
 
 @Component({
   selector: 'app-user-story-details',
@@ -8,82 +20,71 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class UserStoryDetailsComponent implements OnInit {
   updateStoryForm: FormGroup;
+  newStatus: 'Todo';
+  editStory: userStory;
   priorities = [
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
     {value: 'high', viewValue: 'High'}];
-  taskTable: FormGroup;
-  control: FormArray;
-  mode: boolean;
-  touchedRows: any;
-  constructor(public fb: FormBuilder) { }
+  selectedProject: any;
+  boardState$: Observable<BoardState>;
+  boardSubscription: Subscription;
+  allUserStories: UserStory[];
+  allErrors: Error = null;
+  projectsDetailsError: Error = null;
 
-  ngOnInit(): void {
-    this.updateForm();
-    this.initiateForm();
-    this.touchedRows = [];
-    this.taskTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
-    this.addRow();
+  constructor(
+    public fb: FormBuilder,
+    private router: Router,
+    private ngZone: NgZone,
+    private activatedRoute: ActivatedRoute,
+    private projectService: ProjectService,
+    private userStoryService: UserStoryService,
+    private store: Store<{ board: BoardState, projectDetails: ProjectDetailsState }>,
+  ) {
+    this.boardState$ = store.pipe(select('board'));
   }
 
-  updateForm() {
+  ngOnInit() {
+    this.mainForm();
+    const storyId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+    this.userStoryService.getAllUserStories(this.selectedProject._id).subscribe((response) => {
+      this.allUserStories = response;
+      this.editStory = response.filter(story => story._id === storyId)[0];
+      this.setForm();
+    });
+    if (sessionStorage.getItem('User')) {
+      /*this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+      this.boardSubscription = this.boardState$
+        .pipe(
+          map(response => {
+            this.allUserStories = response.userStories;
+            this.allErrors = response.userStoriesError;
+            this.editStory = response.userStories.filter(story => story._id === this.selectedProject._id)[0];
+            this.setForm();
+          })
+        ).subscribe();*/
+    }
+  }
+
+  setForm() {
+    this.updateStoryForm.setValue({
+      title: this.editStory.title,
+      description: this.editStory.description,
+      status: this.editStory.status,
+      storyPoints: this.editStory.storyPoints,
+      priority: this.editStory.priority,
+    });
+  }
+
+  mainForm() {
     this.updateStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: ['', [Validators.required, Validators.pattern]],
-      storyPoints: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      storyPoints: ['', [Validators.required, Validators.pattern]],
       priority: ['', [Validators.required]],
     });
-  }
-
-  initiateForm(): FormGroup {
-    return this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      status: ['', [Validators.required, Validators.pattern]],
-      storyPoints: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
-      assignee: ['', [Validators.required]],
-      isEditable: [true]
-    });
-  }
-
-  addRow() {
-    const control =  this.taskTable.get('tableRows') as FormArray;
-    control.push(this.initiateForm());
-  }
-
-  deleteRow(index: number) {
-    const control =  this.taskTable.get('tableRows') as FormArray;
-    control.removeAt(index);
-  }
-
-  editRow(group: FormGroup) {
-    group.get('isEditable').setValue(true);
-  }
-
-  doneRow(group: FormGroup) {
-    group.get('isEditable').setValue(false);
-  }
-
-  saveUserDetails() {
-    console.log(this.taskTable.value);
-  }
-
-  get getFormControls() {
-    const control = this.taskTable.get('tableRows') as FormArray;
-    return control;
-  }
-
-  submitForm() {
-    const control = this.taskTable.get('tableRows') as FormArray;
-    this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    console.log(this.touchedRows);
-  }
-
-  toggleTheme() {
-    this.mode = !this.mode;
   }
 }
