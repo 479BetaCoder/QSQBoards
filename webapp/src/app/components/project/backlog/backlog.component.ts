@@ -17,6 +17,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from '@angular/common';
+import { Status } from '../../../shared/status';
 
 @Component({
   selector: 'app-backlog',
@@ -103,7 +104,7 @@ export class BacklogComponent implements OnInit {
 
   setBacklogItems(){
     this.backlogItems = [];
-    this.backlogUserStories =  this.allUserStories.filter(item => item.status.toLowerCase() === 'todo' || item.status.toLowerCase() === 'in progress');
+    this.backlogUserStories =  this.allUserStories.filter(item => item.status != Status.Done);
     this.backlogUserStories.forEach(story =>{
         const item = new BacklogItem();
         item._id = story._id;
@@ -116,7 +117,7 @@ export class BacklogComponent implements OnInit {
         item.type = "User Story";
         this.backlogItems.push(item);
         story.tasks.forEach(task =>{
-          if(task.status != "Done"){
+          if(task.status != Status.Done){
             const taskItem = new BacklogItem();
             taskItem._id = task._id;
             taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
