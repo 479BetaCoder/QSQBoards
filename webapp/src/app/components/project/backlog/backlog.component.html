@@ -3,7 +3,13 @@
      {{currentProjectTitle}}
     </h1>
    </mat-toolbar>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+   <div class="backlog-search">
+    <div class="search">
+      <span class="fa fa-search searchIcn"></span>
+      <input placeholder="Search by Title"(keyup)="applyFilter($event.target.value)">
+    </div>
+  </div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <!-- Serial Number Column 
     <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef> No. </th>

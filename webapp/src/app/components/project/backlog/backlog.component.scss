@@ -36,3 +36,41 @@ table {
   hyphens: auto;
 }
 
+.search {
+  float: left;
+  position: relative;
+  color: #aaa;
+  font-size: 16px;
+  width: 180px;
+}
+
+.hoverClass:hover {
+  cursor: pointer;
+  outline: none !important;
+}
+
+.search input {
+  margin-top: 5px;
+  height: 34px;
+  width: 100%;
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}
+
+.search input {
+  text-indent: 32px;
+}
+.search .fa-search {
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 5px;
+  top: 10px;
+  left: 10px;
+}
+.backlog-search{
+  padding: 20px;
+  height: 30px;
+  align-items: center;
+}
