@@ -23,6 +23,7 @@ export class NewTaskComponent implements OnInit {
   createTaskForm: FormGroup;
   formData: any;
   updateForm: boolean;
+  heading: string;
   teamMates: any[];
   editUserStory: UserStory;
   storyId: string;
@@ -58,7 +59,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.formData.heading = 'Create A Task';
+    this.heading = 'Create A Task';
     this.createTaskForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -93,19 +94,16 @@ export class NewTaskComponent implements OnInit {
   }
 
   updateTaskForm() {
-    if (this.formData == null) {
-      // this.formData.heading = 'Update The Task';
-    } else {
-      this.updateForm = true;
-      this.formData.heading = 'Update The Task';
-      this.createTaskForm = this.fb.group({
-        title: [this.formData.title, [Validators.required]],
-        description: [this.formData.description, [Validators.required]],
-        status: [this.formData.status, [Validators.required]],
-        assignee: [{value: this.formData.assignee.userName}, [Validators.required]],
-        priority: [this.formData.priority, [Validators.required]],
-      });
-    }
+    this.heading = 'Update The Task';
+    this.updateForm = true;
+    this.createTaskForm = this.fb.group({
+      title: [this.formData.title, [Validators.required]],
+      description: [this.formData.description, [Validators.required]],
+      status: [this.formData.status, [Validators.required]],
+      assignee: [{value: this.formData.assignee.userName}, [Validators.required]],
+      priority: [this.formData.priority, [Validators.required]],
+    });
+
   }
 
   /*

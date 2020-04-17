@@ -12,7 +12,7 @@ import {map, take} from "rxjs/operators";
 import * as BoardActions from "../../../store/actions/board.action";
 import UserStory from '../../../store/models/userStory';
 import {Task} from "../../../store/models/task";
-import {NewUserStoryComponent} from "../new-user-story/new-user-story.component";
+import {Location} from '@angular/common';
 import {NewTaskComponent} from "../new-task/new-task.component";
 import Project from "../../../store/models/project";
 import User from "../../../store/models/user";
@@ -32,6 +32,10 @@ export class UserStoryDetailsComponent implements OnInit {
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
     {value: 'high', viewValue: 'High'}];
+  status = [
+    {value: 'New', viewValue: 'New'},
+    {value: 'In Progress', viewValue: 'In Progress'},
+    {value: 'one', viewValue: 'Done'}];
   selectedProject: Project;
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
@@ -44,6 +48,7 @@ export class UserStoryDetailsComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private dialog: MatDialog,
+    private location: Location,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
@@ -111,7 +116,7 @@ export class UserStoryDetailsComponent implements OnInit {
   onSubmit() {
     const updatedStory: UserStory = this.updateStoryForm.value;
     this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : this.storyId, payload: updatedStory}));
-
+    this.location.back();
   }
 
   updateTask(task: Task) {

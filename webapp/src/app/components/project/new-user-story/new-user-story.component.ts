@@ -43,6 +43,7 @@ export class NewUserStoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
