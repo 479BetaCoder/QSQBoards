@@ -77,9 +77,12 @@ export class NewTaskComponent implements OnInit {
     if (!this.createTaskForm.valid) {
       return false;
     } else {
-      const newTask: Task = this.createTaskForm.value;
+      const newTask: any = this.createTaskForm.value;
       newTask.status = 'New';
-      this.userStoryService.createTask(newTask, this.storyId);
+      newTask.storyId = '5e98b20195da9a0b74566a8e';
+      this.userStoryService.createTask(newTask).subscribe(
+        re => console.log(re)
+      );
       /*this.store.dispatch(BoardActions.BeginCreateUserStory({
         projectId: this.selectedProject._id,
         payload: newUserStory
