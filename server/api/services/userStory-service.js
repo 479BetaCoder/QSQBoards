@@ -112,6 +112,16 @@ exports.updateUserStory = function (updatedUserStory, storyId) {
 };
 
 /**
+ * Get and returns the userStory object.
+ *
+ *  @param {String} storyId
+ */
+exports.getUserStory = async function (storyId) {
+  const promise = UserStory.findById({ _id: storyId }).exec();
+  return promise;
+};
+
+/**
  * Deletes the userStory object matching the id.
  *
  * @param {string} storyId {Id of the Story object}
