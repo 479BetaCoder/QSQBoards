@@ -10,10 +10,31 @@
   font-weight: bold;
 }
 
+.userStoryButton {
+  margin: 5px;
+  margin-right: 50px;
+  margin-left: 15px;
+  cursor: pointer;
+  & label {
+    cursor: pointer;
+  }
+}
+
+.btnAddUserStoryContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .has-gradient-text {
   background: -webkit-linear-gradient(#13f7f4, #2af598);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.topButtons {
+  padding: 20px;
 }
 
 .target-list {
@@ -24,12 +45,9 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-
-  // Override Automatic Minimum Size
-  // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
   min-width: 0;
   min-height: 0;
-
+  margin-left: 20px;
   .board-bar {
     background: rgba(gray, 0.5);
     padding: 8px 15px;
@@ -50,7 +68,7 @@
     .board-columns {
       display: flex;
       flex-grow: 1;
-
+      margin-left: 5px;
       .board-column {
         display: flex;
         flex-direction: column;
@@ -59,8 +77,7 @@
 
         min-width: 300px;
         min-height: 150px;
-        margin: 50px;
-        padding: 25px;
+        padding: 30px;
 
         /*border-radius: 4px;*/
 
@@ -72,7 +89,7 @@
 
         .column-title {
           font-size: 20px;
-          font-weight: 800;
+          font-weight: 400;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
           margin-bottom: 20px;
@@ -83,21 +100,238 @@
   }
 }
 
-
 .tasks-container {
   flex-grow: 1;
   overflow-y: auto;
 }
+
 .task-todo {
- background-color: #ff9504;
+ border-left: 3px solid #ff9504;
+  & .userStoryTitle {
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 18;
+  }
+  & .footerTodo {
+    padding: 10px;
+    padding-left: 20px;
+  }
+
+  & .statusTodoChip {
+    background: #ff9504;
+    color: white;
+    margin-right: 20px;
+  }
+
+  & .deleteIcon {
+    color: red;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  & .editIcon {
+    color: #3f51b5;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  &   .topDescriptionContainer {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 80px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    font-family: serif;
+    font-weight: 200;
+    color: grey;
+    padding-top: 5px;
+  }
+  & .High{
+    color: red;
+    margin-left: 5px;
+  }
+
+  & .Medium{
+    color: rgb(216, 146, 15);
+    margin-left: 5px;
+  }
+
+  & .Low {
+    color: green;
+    margin-left: 5px;
+  }
+
+  & .storyPointContainer {
+    height: 30px !important;
+    width: 30px !important;
+    border: 1px solid transparent !important;
+    border-radius: 15px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 2px 1px #ff9504;
+  }
+
+  & .usTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .task-progress {
-  background-color: #006ed2;
+  border-left: 3px solid #3f51b5;
+  & .userStoryTitle {
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 18;
+  }
+  & .footerTodo {
+    padding: 10px;
+    padding-left: 20px;
+  }
+
+  & .statusTodoChip {
+    background: #3f51b5;
+    color: white;
+    margin-right: 20px;
+  }
+
+  & .deleteIcon {
+    color: red;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  & .editIcon {
+    color: #3f51b5;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  & .topDescriptionContainer {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 80px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    font-family: serif;
+    font-weight: 200;
+    color: grey;
+    padding-top: 5px;
+  }
+  & .High{
+    color: red;
+    margin-left: 5px;
+  }
+
+  & .Medium{
+    color: #ff9504;
+    margin-left: 5px;
+  }
+
+  & .Low {
+    color: green;
+    margin-left: 5px;
+  }
+
+  & .storyPointContainer {
+    height: 30px !important;
+    width: 30px !important;
+    border: 1px solid transparent !important;
+    border-radius: 15px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 2px 1px #3f51b5;
+  }
+
+  & .usTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .task-done {
-  background-color: #00ffa1;
+  border-left: 3px solid mediumseagreen;
+  & .userStoryTitle {
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 18;
+  }
+  & .footerTodo {
+    padding: 10px;
+    padding-left: 20px;
+  }
+
+  & .statusTodoChip {
+    background: mediumseagreen;
+    color: white;
+    margin-right: 20px;
+  }
+
+  & .deleteIcon {
+    color: red;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  & .editIcon {
+    color: #3f51b5;
+    float: right;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  & .topDescriptionContainer {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 80px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    font-family: serif;
+    font-weight: 200;
+    color: grey;
+    padding-top: 5px;
+  }
+  & .High{
+    color: red;
+    margin-left: 5px;
+  }
+
+  & .Medium{
+    color: #ff9504;
+    margin-left: 5px;
+  }
+
+  & .Low {
+    color: green;
+    margin-left: 5px;
+  }
+
+  & .storyPointContainer {
+    height: 30px !important;
+    width: 30px !important;
+    border: 1px solid transparent !important;
+    border-radius: 15px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 2px 1px mediumseagreen;
+  }
+
+  & .usTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+mat-card {
+  height: 160px !important;
 }
 
 

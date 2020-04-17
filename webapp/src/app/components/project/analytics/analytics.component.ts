@@ -31,6 +31,12 @@ export class AnalyticsComponent implements OnInit {
   lowCount : number = 0;
   mediumCount: number =0;
   highCount : number =0;
+  openTaskCount : number = 0;
+  inProgressTaskCount: number =0;
+  finishedTaskCount : number =0;
+  lowTaskCount : number = 0;
+  mediumTaskCount: number =0;
+  highTaskCount : number =0;
 
   constructor(private router: Router,private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
    private store: Store<{board: BoardState }>) {
@@ -84,6 +90,26 @@ export class AnalyticsComponent implements OnInit {
             if(story.priority == "high"){
                this.highCount++;
             }
+            story.tasks.forEach(task => {
+               if(task.status == "todo"){
+                  this.openTaskCount++;
+               }
+               if(task.status == "In Progress"){
+                  this.inProgressTaskCount++;
+               }
+               if(task.status == "Done"){
+                  this.finishedTaskCount++;
+               }
+               if(task.priority == "low"){
+                  this.lowTaskCount++;
+               }
+               if(task.priority == "medium"){
+                  this.mediumTaskCount++;
+               }
+               if(task.priority == "high"){
+                  this.highTaskCount++;
+               }
+            })
          }
       )
 
@@ -93,7 +119,7 @@ export class AnalyticsComponent implements OnInit {
             plotShadow: false
          },
          title : {
-            text: 'Project Stats'   
+            text: 'Project User Stories Stats'   
          },
          tooltip : {
                pointFormat: '{series.name}:{point.y}'
@@ -128,6 +154,103 @@ export class AnalyticsComponent implements OnInit {
 
 
       this.burnDownChartOptions = {
+         chart: {
+            type: 'bar'
+         },
+         title: {
+            text: 'Priority vs Number of User Stories'
+         },
+         legend : {
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 250,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+           
+            backgroundColor: ('#FFFFFF'), shadow: true
+            },
+            xAxis:{
+               categories: ['Tasks'], title: {
+               text: null
+            } 
+         },
+         yAxis : {
+            min: 0, title: {
+               text: 'Number of User Stories', align: 'high'
+            },
+            labels: {
+               overflow: 'justify'
+            }
+         },
+         plotOptions : {
+            bar: {
+               dataLabels: {
+                  enabled: true
+               }
+            }
+         },
+         credits:{
+            enabled: false
+         },
+         series: [
+            {
+               name: 'High',
+               data: [this.highCount]
+            }, 
+            {
+               name: 'Medium',
+               data: [this.mediumCount]
+            }, 
+            {
+               name: 'Low',
+               data: [this.lowCount]      
+            }
+         ]
+      };
+
+      this.taskPieChartOptions = {
+         chart : {
+            plotBorderWidth: null,
+            plotShadow: false
+         },
+         title : {
+            text: 'Project Tasks stats'   
+         },
+         tooltip : {
+               pointFormat: '{series.name}:{point.y}'
+         },
+         plotOptions : {
+            pie: {
+               allowPointSelect: true,
+               cursor: 'pointer',
+         
+               dataLabels: {
+                  enabled: false           
+               },
+         
+               showInLegend: true
+            }
+         },
+         series : [{
+            type: 'pie',
+            name: 'All Tasks',
+            data: [
+               ['ToDo',   this.openTaskCount],
+               ['In Progress', this.inProgressTaskCount],
+               {
+                  name: 'Done',
+                  y: this.finishedTaskCount,
+                  sliced: true,
+                  selected: true
+               }
+            ]
+         }]
+      };
+
+
+      this.taskBarGraphOptions = {
          chart: {
             type: 'bar'
          },
@@ -170,16 +293,16 @@ export class AnalyticsComponent implements OnInit {
          },
          series: [
             {
-               name: 'Hign',
+               name: 'High',
                data: [this.highCount]
             }, 
             {
                name: 'Medium',
-               data: [this.mediumCount]
+               data: [this.mediumCount || 0]
             }, 
             {
                name: 'Low',
-               data: [this.lowCount]      
+               data: [this.lowCount || 0]      
             }
          ]
       };
@@ -191,5 +314,14 @@ export class AnalyticsComponent implements OnInit {
 
    burnDownHighcharts = Highcharts;
    burnDownChartOptions = {
+   };
+
+
+   taskPieChart = Highcharts;
+   taskPieChartOptions = {};
+
+
+   taskBarGraph = Highcharts;
+   taskBarGraphOptions = {
    };
 }

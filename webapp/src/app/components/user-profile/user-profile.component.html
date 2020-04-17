@@ -12,6 +12,10 @@
         <mat-card-content>
           <img mat-card-image *ngIf="socialImage" src={{socialImage}} alt="Profile Picture" class="img-width"
             onerror="this.src='../../../assets/blank-profile-picture.png'"><br>
+
+            <input type="file" name="file" id="file" (change)="onFileChanged($event)" />
+
+            
           <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="half-width">
               <mat-label>UserName</mat-label>
