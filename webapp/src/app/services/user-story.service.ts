@@ -20,6 +20,13 @@ export class UserStoryService {
     );
   }
 
+  createTask(newTask, storyId) {
+    const url = `${baseURL}/tasks/${storyId}`;
+    return this.http.post(url, newTask).pipe(
+      catchError(this.errorHandling)
+    );
+  }
+
   getAllUserStories(projectId): Observable<Array<UserStory>>  {
     // @ts-ignore
     return this.http.get(`${baseURL}/user-stories/${projectId}`);

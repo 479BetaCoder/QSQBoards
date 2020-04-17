@@ -2,7 +2,7 @@ import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ProjectService} from "../../../services/project.service";
 import {UserStoryService} from "../../../services/user-story.service";
@@ -11,6 +11,7 @@ import BoardState from "../../../store/states/board.state";
 import {map} from "rxjs/operators";
 import UserStory from "../../../store/models/userStory";
 import * as BoardActions from "../../../store/actions/board.action";
+import {Task} from "../../../store/models/task";
 
 @Component({
   selector: 'app-new-task',
@@ -19,9 +20,9 @@ import * as BoardActions from "../../../store/actions/board.action";
 })
 export class NewTaskComponent implements OnInit {
 
-  createStoryForm: FormGroup;
+  createTaskForm: FormGroup;
   newStatus: 'New';
-  userProject: any;
+  storyId: any;
   priorities = [
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
@@ -36,6 +37,7 @@ export class NewTaskComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     private dialogRef: MatDialogRef<NewTaskComponent>,
+    private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
     @Inject(MAT_DIALOG_DATA) data,
@@ -46,6 +48,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => this.storyId = params.id);
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -58,11 +61,11 @@ export class NewTaskComponent implements OnInit {
   }
 
   mainForm() {
-    this.createStoryForm = this.fb.group({
+    this.createTaskForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       status: [{value: 'New', disabled: true}, [Validators.required]],
-      storyPoints: ['', [Validators.required, Validators.pattern]],
+      assignee: ['', [Validators.required]],
       priority: ['', [Validators.required]],
     });
   }
@@ -71,17 +74,18 @@ export class NewTaskComponent implements OnInit {
   * Create service is called and new UserStory is created
   * */
   onSubmit() {
-    if (!this.createStoryForm.valid) {
+    if (!this.createTaskForm.valid) {
       return false;
     } else {
-      const newUserStory: UserStory = this.createStoryForm.value;
-      newUserStory.status = 'New';
-      this.store.dispatch(BoardActions.BeginCreateUserStory({
+      const newTask: Task = this.createTaskForm.value;
+      newTask.status = 'New';
+      this.userStoryService.createTask(newTask, this.storyId);
+      /*this.store.dispatch(BoardActions.BeginCreateUserStory({
         projectId: this.selectedProject._id,
         payload: newUserStory
-      }));
+      }));*/
       this.dialogRef.close();
-      /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
+      /*this.userStoryService.createStory(this.createTaskForm.value, this.userProject._id).subscribe(
         () => {
           console.log('Stories successfully created!');
           // this.ngZone.run(() => this.router.navigateByUrl('/boards'));

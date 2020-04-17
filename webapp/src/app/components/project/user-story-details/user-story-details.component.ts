@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ProjectService} from "../../../services/project.service";
 import {UserStoryService} from "../../../services/user-story.service";
 import {select, Store} from "@ngrx/store";
@@ -12,6 +12,8 @@ import {map, take} from "rxjs/operators";
 import * as BoardActions from "../../../store/actions/board.action";
 import UserStory from "../../../store/models/userStory";
 import userStory from "../../../store/models/userStory";
+import {NewUserStoryComponent} from "../new-user-story/new-user-story.component";
+import {NewTaskComponent} from "../new-task/new-task.component";
 
 @Component({
   selector: 'app-user-story-details',
@@ -37,6 +39,7 @@ export class UserStoryDetailsComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
+    private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
@@ -89,6 +92,10 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   createTask() {
+    this.dialog.open(NewTaskComponent, {width: '500px'});
+  }
 
+  onSubmit() {
+    console.log('');
   }
 }

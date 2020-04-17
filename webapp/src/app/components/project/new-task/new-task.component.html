@@ -1,7 +1,7 @@
-<form [formGroup]="createStoryForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
 
   <mat-card-header>
-    <mat-card-title><h2>Create A User Story</h2></mat-card-title>
+    <mat-card-title><h2>Create A Task</h2></mat-card-title>
   </mat-card-header>
   <mat-dialog-content>
 
@@ -9,7 +9,7 @@
       <mat-form-field class="half-width">
         <mat-label>Title</mat-label>
         <input matInput placeholder="Title" formControlName="title">
-        <mat-error *ngIf="!createStoryForm.controls['title'].valid && createStoryForm.controls['title'].touched">
+        <mat-error *ngIf="!createTaskForm.controls['title'].valid && createTaskForm.controls['title'].touched">
         </mat-error>
       </mat-form-field>
 
@@ -18,20 +18,20 @@
           <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
         </mat-select>
         <mat-error
-          *ngIf="!createStoryForm.controls['priority'].valid && createStoryForm.controls['priority'].touched">
+          *ngIf="!createTaskForm.controls['priority'].valid && createTaskForm.controls['priority'].touched">
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="half-width">
         <input matInput placeholder="Status" formControlName="status">
-        <mat-error *ngIf="!createStoryForm.controls['status'].valid && createStoryForm.controls['status'].touched">
+        <mat-error *ngIf="!createTaskForm.controls['status'].valid && createTaskForm.controls['status'].touched">
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="half-width">
-        <input matInput placeholder="Story Points" formControlName="storyPoints" pattern="[0-9]*">
+        <input matInput placeholder="Assignee" formControlName="assignee">
         <mat-error
-          *ngIf="!createStoryForm.controls['storyPoints'].valid && createStoryForm.controls['storyPoints'].touched">
+          *ngIf="!createTaskForm.controls['assignee'].valid && createTaskForm.controls['assignee'].touched">
         </mat-error>
       </mat-form-field>
 
@@ -39,13 +39,13 @@
         <mat-label>Description</mat-label>
         <textarea matInput placeholder="Description" rows="12" formControlName="description"></textarea>
         <mat-error
-          *ngIf="!createStoryForm.controls['description'].valid && createStoryForm.controls['description'].touched">
+          *ngIf="!createTaskForm.controls['description'].valid && createTaskForm.controls['description'].touched">
         </mat-error>
       </mat-form-field>
 
 
       <mat-dialog-actions class="form-group">
-        <button mat-button color="primary" type="submit" [disabled]="createStoryForm.invalid"
+        <button mat-button color="primary" type="submit" [disabled]="createTaskForm.invalid"
                 class="mat-background-primary text-floral-white">Submit
         </button>
         <button mat-button color="accent" type="submit" (click)="cancel()"

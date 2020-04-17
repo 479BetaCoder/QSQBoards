@@ -55,11 +55,10 @@
         </button>
         <div class="container">
           <!-- No data message -->
+          <button mat-button (click)="createTask()" color="primary">Create</button>
           <p *ngIf="editStory" class="no-data text-center">There is no task added yet!</p>
 
-          <button mat-button (click)="createTask()" color="primary">Create</button>
-
-          <table class="todo-table" *ngIf="editStory.tasks.length > 0">
+          <table class="todo-table" *ngIf="editStory">
             <thead class="table-success">
             <tr>
               <th scope="col">Title</th>
