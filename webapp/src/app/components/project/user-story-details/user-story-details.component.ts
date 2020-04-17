@@ -14,6 +14,7 @@ import UserStory from "../../../store/models/userStory";
 import userStory from "../../../store/models/userStory";
 import {NewUserStoryComponent} from "../new-user-story/new-user-story.component";
 import {NewTaskComponent} from "../new-task/new-task.component";
+import Project from "../../../store/models/project";
 
 @Component({
   selector: 'app-user-story-details',
@@ -29,7 +30,7 @@ export class UserStoryDetailsComponent implements OnInit {
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
     {value: 'high', viewValue: 'High'}];
-  selectedProject: any;
+  selectedProject: Project;
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
   allUserStories: UserStory[];
@@ -59,18 +60,20 @@ export class UserStoryDetailsComponent implements OnInit {
         this.editStory = response.filter(story => story._id === this.storyId)[0];
         this.setForm();
       });
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
-      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId, payload: this.editStory}))
+      /*this.store.pipe(select('projectDetails'), take(1)).subscribe((pro) => {
+        this.selectedProject = pro;
+        this.teamMates = pro.
+      });*/
+      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
-            this.allUserStories = response.userStories;
             this.allErrors = response.userStoriesError;
             this.editStory = response.userStory;
-            this.editStory = response.userStories.filter(story => story._id === this.selectedProject._id)[0];
             this.setForm();
           })
         ).subscribe();
+      sessionStorage.setItem('storyId', this.storyId);
     }
   }
 

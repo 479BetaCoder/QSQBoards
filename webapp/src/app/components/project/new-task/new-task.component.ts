@@ -21,8 +21,9 @@ import {Task} from "../../../store/models/task";
 export class NewTaskComponent implements OnInit {
 
   createTaskForm: FormGroup;
-  newStatus: 'New';
-  storyId: any;
+  teamMates: any[];
+  editUserStory: UserStory;
+  storyId: string;
   priorities = [
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
@@ -31,6 +32,7 @@ export class NewTaskComponent implements OnInit {
   projectDetails$: Observable<ProjectDetailsState>;
   boardState$: Observable<BoardState>;
   ProjectDetailsSubscription: Subscription;
+  BoardSubscription: Subscription;
   projectsDetailsError: Error = null;
 
   constructor(
@@ -49,7 +51,17 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storyId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.storyId = sessionStorage.getItem('storyId');
+    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+    this.teamMates = this.selectedProject.members;
+    this.BoardSubscription = this.boardState$
+      .pipe(
+        map(res => {
+          if (res) {
+            this.editUserStory = res.userStory;
+            this.projectsDetailsError = res.userStoriesError;
+          }
+        })).subscribe();
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -86,9 +98,10 @@ export class NewTaskComponent implements OnInit {
       );
       /*this.store.dispatch(BoardActions.BeginCreateUserStory({
         projectId: this.selectedProject._id,
-        payload: newUserStory
+        payload: this.editUserStory
       }));*/
       // this.boardState$.
+      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
       this.dialogRef.close();
       /*this.userStoryService.createStory(this.createTaskForm.value, this.userProject._id).subscribe(
         () => {

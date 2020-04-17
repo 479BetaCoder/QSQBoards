@@ -30,9 +30,6 @@ const reducer = createReducer(
     currentStories.splice(indexDel, 1);
     return { ...state, userStories: [...currentStories], userStoriesError: null };
   }),
-  on(BoardActions.BeginGetUserStory, (state: BoardState, { payload }) => {
-    return { ...state, userStory: payload};
-  }),
   on(BoardActions.SuccessGetStory, (state: BoardState, { payload }) => {
     return { ...state, userStory: payload};
   }),

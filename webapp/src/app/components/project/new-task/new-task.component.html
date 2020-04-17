@@ -29,7 +29,9 @@
       </mat-form-field>
 
       <mat-form-field class="half-width">
-        <input matInput placeholder="Assignee" formControlName="assignee">
+        <mat-select placeholder="Assignee" formControlName="assignee">
+          <mat-option *ngFor="let assignee of teamMates" [value]="assignee.userName">{{assignee.userName}}</mat-option>
+        </mat-select>
         <mat-error
           *ngIf="!createTaskForm.controls['assignee'].valid && createTaskForm.controls['assignee'].touched">
         </mat-error>

@@ -50,7 +50,7 @@ export const SuccessDeleteStory = createAction(
 
 export const BeginGetUserStory = createAction(
   '[UserStory] - Begin Get UserStory',
-  props<{ storyId: string, payload: UserStory}>()
+  props<{ storyId: string}>()
 );
 
 export const SuccessGetStory = createAction(
