@@ -86,7 +86,7 @@ export class BacklogComponent implements OnInit {
         item.storyPoints = story.storyPoints;
         item.priority = story.priority;
         item.title = story.title;
-        item.type = "Task";
+        item.type = "User Story";
         this.backlogItems.push(item);
     });
     this.dataSource = this.backlogItems;
