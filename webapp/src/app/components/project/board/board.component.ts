@@ -75,7 +75,7 @@ export class BoardComponent implements OnInit {
           })
         ).subscribe();
       ///this.selectedProject = sessionStorage.getItem('SelectedProject');
-      //this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
