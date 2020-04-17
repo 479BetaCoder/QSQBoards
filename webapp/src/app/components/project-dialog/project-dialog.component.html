@@ -16,7 +16,7 @@
       </mat-form-field>
       <span class="mandatoryField" *ngIf="isValid('description')">Description cannot be blank</span>
     </div>
-    <mat-form-field>
+    <mat-form-field *ngIf="update">
       
     <mat-select placeholder="Status" formControlName="status" >
       <mat-option *ngFor="let status of statusKeys()"  [value]="status">
