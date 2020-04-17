@@ -5,10 +5,10 @@
   width: 100%;
   margin-right: 0%;
 }
-// .aboutContainer {
-//   margin-top: 1%;
-//   margin-left: 2%;
-// }
+
+.overview-card {
+  margin-top: 10px;
+}
 
 .aboutContainer {
   top: 60px !important;
@@ -73,6 +73,7 @@ mat-card-content {
 .memberChip {
   background: #84858f;
   color: white;
+  width: auto !important;
   & .avatar {
     border-radius: 20px;
     height: 30px;
