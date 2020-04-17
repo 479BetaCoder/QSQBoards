@@ -3,6 +3,7 @@ table {
   }
   .mat-header-cell{
     font-size: large;
+    font-weight: bolder;
   }
 
   td{
@@ -29,8 +30,12 @@ table {
 }
 
 .storyRow{
-background: #626fb4;
+background: #7f89bb;
 height: 5px;
+}
+
+.mat-cell{
+  font-size: large;
 }
 
 .title {

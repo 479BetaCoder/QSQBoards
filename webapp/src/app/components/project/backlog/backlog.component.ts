@@ -46,6 +46,7 @@ export class BacklogComponent implements OnInit {
   sortBy:any;
 
   constructor(private projectService: ProjectService,
+    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
     private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
@@ -104,7 +105,8 @@ export class BacklogComponent implements OnInit {
     this.backlogItems = [];
     this.backlogUserStories =  this.allUserStories.filter(item => item.status.toLowerCase() === 'todo' || item.status.toLowerCase() === 'in progress');
     this.backlogUserStories.forEach(story =>{
-      const item = new BacklogItem();
+        const item = new BacklogItem();
+        item._id = story._id;
         item.assignee = "";
         item.description = story.description;
         item.status = story.status;
@@ -116,6 +118,7 @@ export class BacklogComponent implements OnInit {
         story.tasks.forEach(task =>{
           if(task.status != "Done"){
             const taskItem = new BacklogItem();
+            taskItem._id = task._id;
             taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
             taskItem.description = task.description;
             taskItem.status = task.status;
@@ -145,6 +148,13 @@ export class BacklogComponent implements OnInit {
 
   getDate(){
     return formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  }
+
+  editBacklogItem(backlogItem: BacklogItem) {
+    const id = backlogItem._id;
+    if(backlogItem.type == "User Story"){
+      this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
+    }
   }
 }
 

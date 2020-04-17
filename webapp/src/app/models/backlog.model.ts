@@ -1,4 +1,5 @@
 export class BacklogItem {
+  _id: string;
   title: string;
   description: string;
   projectId: string;
