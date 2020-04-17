@@ -49,12 +49,12 @@ export const SuccessDeleteStory = createAction(
 );
 
 export const BeginGetUserStory = createAction(
-  '[UserStory] - Begin Delete UserStory',
+  '[UserStory] - Begin Get UserStory',
   props<{ storyId: string, payload: UserStory}>()
 );
 
 export const SuccessGetStory = createAction(
-  '[UserStory] - Success Delete UserStory',
+  '[UserStory] - Success Get UserStory',
   props<{ payload: UserStory }>()
 );
 

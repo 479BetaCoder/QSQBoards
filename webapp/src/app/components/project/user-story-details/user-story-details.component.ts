@@ -23,6 +23,7 @@ import {NewTaskComponent} from "../new-task/new-task.component";
 export class UserStoryDetailsComponent implements OnInit {
   updateStoryForm: FormGroup;
   newStatus: 'Todo';
+  storyId: string;
   editStory: userStory;
   priorities = [
     {value: 'low', viewValue: 'Low'},
@@ -51,19 +52,21 @@ export class UserStoryDetailsComponent implements OnInit {
   ngOnInit() {
     if (sessionStorage.getItem('User')) {
       this.mainForm();
-      const storyId = this.activatedRoute.snapshot.paramMap.get('id');
+      this.storyId = this.activatedRoute.snapshot.paramMap.get('id');
       this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
       this.userStoryService.getAllUserStories(this.selectedProject._id).subscribe((response) => {
         this.allUserStories = response;
-        this.editStory = response.filter(story => story._id === storyId)[0];
+        this.editStory = response.filter(story => story._id === this.storyId)[0];
         this.setForm();
       });
       this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+      this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId, payload: this.editStory}))
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
             this.allUserStories = response.userStories;
             this.allErrors = response.userStoriesError;
+            this.editStory = response.userStory;
             this.editStory = response.userStories.filter(story => story._id === this.selectedProject._id)[0];
             this.setForm();
           })

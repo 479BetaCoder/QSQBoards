@@ -29,6 +29,7 @@ export class NewTaskComponent implements OnInit {
     {value: 'high', viewValue: 'High'}];
   selectedProject: any;
   projectDetails$: Observable<ProjectDetailsState>;
+  boardState$: Observable<BoardState>;
   ProjectDetailsSubscription: Subscription;
   projectsDetailsError: Error = null;
 
@@ -41,14 +42,14 @@ export class NewTaskComponent implements OnInit {
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
     @Inject(MAT_DIALOG_DATA) data,
-    private store: Store<{ projects: BoardState }>,
-    private storeProjectDetails: Store<{ projectDetails: ProjectDetailsState }>,
+    private store: Store<{ projectDetails: ProjectDetailsState, userStory: BoardState }>,
   ) {
-    this.projectDetails$ = storeProjectDetails.pipe(select('projectDetails'));
+    this.projectDetails$ = store.pipe(select('projectDetails'));
+    this.boardState$ = store.pipe(select('userStory'));
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => this.storyId = params.id);
+    this.storyId = this.activatedRoute.snapshot.paramMap.get('id');
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -79,7 +80,7 @@ export class NewTaskComponent implements OnInit {
     } else {
       const newTask: any = this.createTaskForm.value;
       newTask.status = 'New';
-      newTask.storyId = '5e98b20195da9a0b74566a8e';
+      newTask.storyId = this.storyId;
       this.userStoryService.createTask(newTask).subscribe(
         re => console.log(re)
       );
@@ -87,6 +88,7 @@ export class NewTaskComponent implements OnInit {
         projectId: this.selectedProject._id,
         payload: newUserStory
       }));*/
+      // this.boardState$.
       this.dialogRef.close();
       /*this.userStoryService.createStory(this.createTaskForm.value, this.userProject._id).subscribe(
         () => {
