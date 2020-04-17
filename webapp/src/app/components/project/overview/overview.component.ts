@@ -55,7 +55,7 @@ export class OverviewComponent implements OnInit {
         })
       )
       .subscribe();
-    
+
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProjectId}));
     this.boardSubscription = this.boardState$
       .pipe(
@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit {
           this.allErrors = response.userStoriesError;
         })
       ).subscribe();
-    
+
   }
 
   getProjectTitleAvatar() {

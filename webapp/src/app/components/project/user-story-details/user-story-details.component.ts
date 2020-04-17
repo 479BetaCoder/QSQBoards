@@ -15,6 +15,7 @@ import {Task} from "../../../store/models/task";
 import {NewUserStoryComponent} from "../new-user-story/new-user-story.component";
 import {NewTaskComponent} from "../new-task/new-task.component";
 import Project from "../../../store/models/project";
+import User from "../../../store/models/user";
 
 
 @Component({
@@ -108,7 +109,9 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('');
+    const updatedStory: UserStory = this.updateStoryForm.value;
+    this.store.dispatch(BoardActions.BeginUpdateUserStory({storyId : this.storyId, payload: updatedStory}));
+
   }
 
   updateTask(task: Task) {

@@ -30,6 +30,10 @@ export class NewTaskComponent implements OnInit {
     {value: 'low', viewValue: 'Low'},
     {value: 'medium', viewValue: 'Medium'},
     {value: 'high', viewValue: 'High'}];
+  status = [
+    {value: 'New', viewValue: 'New'},
+    {value: 'In Progress', viewValue: 'In Progress'},
+    {value: 'one', viewValue: 'Done'}];
   selectedProject: any;
   projectDetails$: Observable<ProjectDetailsState>;
   boardState$: Observable<BoardState>;
@@ -54,6 +58,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.formData.heading = 'Create A Task';
     this.createTaskForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -89,7 +94,7 @@ export class NewTaskComponent implements OnInit {
 
   updateTaskForm() {
     if (this.formData == null) {
-      this.formData.heading = 'Create A Task';
+      // this.formData.heading = 'Update The Task';
     } else {
       this.updateForm = true;
       this.formData.heading = 'Update The Task';
@@ -97,7 +102,7 @@ export class NewTaskComponent implements OnInit {
         title: [this.formData.title, [Validators.required]],
         description: [this.formData.description, [Validators.required]],
         status: [this.formData.status, [Validators.required]],
-        assignee: [this.formData.assignee.userName, [Validators.required]],
+        assignee: [{value: this.formData.assignee.userName}, [Validators.required]],
         priority: [this.formData.priority, [Validators.required]],
       });
     }
@@ -121,13 +126,14 @@ export class NewTaskComponent implements OnInit {
       );
       this.dialogRef.close();
     } else if (this.updateForm) {
-      const newTask: Task = this.createTaskForm.value;
-      this.userStoryService.updateTask(newTask).subscribe(
+      const updatedTask: Task = this.createTaskForm.value;
+      this.userStoryService.updateTask(updatedTask, this.formData.id).subscribe(
         re => {
           console.log(re);
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
         }
       );
+      this.dialogRef.close();
     }
   }
 

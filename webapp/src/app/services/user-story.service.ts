@@ -34,8 +34,8 @@ export class UserStoryService {
     );
   }
 
-  updateTask(updateTask): Observable<any> {
-    const url = `${baseURL}/tasks`;
+  updateTask(updateTask, taskId): Observable<any> {
+    const url = `${baseURL}/tasks/${taskId}`;
     return this.http.put(url, updateTask).pipe(
       catchError(this.errorHandling)
     );

@@ -1,7 +1,7 @@
 <form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
 
   <mat-card-header>
-    <mat-card-title><h2>Create A Task</h2></mat-card-title>
+    <mat-card-title><h2>Create A Story</h2></mat-card-title>
   </mat-card-header>
   <mat-dialog-content>
 
@@ -23,7 +23,9 @@
       </mat-form-field>
 
       <mat-form-field class="half-width">
-        <input matInput placeholder="Status" formControlName="status">
+        <mat-select placeholder="Status" formControlName="status">
+          <mat-option *ngFor="let s of status" [value]="s.value">{{s.viewValue}}</mat-option>
+        </mat-select>
         <mat-error *ngIf="!createTaskForm.controls['status'].valid && createTaskForm.controls['status'].touched">
         </mat-error>
       </mat-form-field>
