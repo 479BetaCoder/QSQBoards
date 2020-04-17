@@ -1,4 +1,4 @@
-import User from '../models/User';
+import User from '../models/user';
 
 export default class UserState {
     activeUsers: Array<User>;
@@ -8,7 +8,7 @@ export default class UserState {
     isUserRegistered: boolean;
 }
 
-export const initializeState = (): UserState => {
+export const initializeState = (): UserState => { 
     return {
         activeUsers: Array<User>(),
         loggedInUser: null,

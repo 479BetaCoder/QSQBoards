@@ -34,5 +34,5 @@ app.use(function (req, res, next) {
 let initApp = require("./api/app");
 initApp(app);
 
-app.listen(port);
+app.listen(port, "0.0.0.0");
 console.log("QBoard RESTful API server started on: " + port);

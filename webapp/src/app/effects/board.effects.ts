@@ -37,8 +37,8 @@ export class BoardEffects {
       mergeMap(action =>
         this.http.post(this.baseUrlBoard + '/' + action.projectId, JSON.stringify(action.payload))
           .pipe(
-            map(() => {
-              return BoardActions.SuccessCreateUserStory({ payload: action.payload });
+            map((data: UserStory) => {
+              return BoardActions.SuccessCreateUserStory({ payload: data });
             }),
             catchError((error: Error) => {
               return of(ProjectActions.ErrorProjectAction(error));
