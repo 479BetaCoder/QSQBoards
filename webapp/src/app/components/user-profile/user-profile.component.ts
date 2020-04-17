@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,18 +12,12 @@ import { HttpClient} from '@angular/common/http';
 export class UserProfileComponent implements OnInit {
   socialImage: any;
   updateForm: FormGroup;
-  public files: any[];
-  imageToUpload: File = null;
-  imageUrl: string;
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
     private qsqService: UserService,
     public authService: AuthenticationService,
-    private router: Router,
-    private http:HttpClient) {
-      this.files = [];
-     }
+    private router: Router) { }
 
   ngOnInit() {
     if (!sessionStorage.getItem('User')) {
@@ -91,16 +84,5 @@ export class UserProfileComponent implements OnInit {
 
     return null;
   }
-
-  onFileChanged(event: any) {
-    this.files = event.target.files;
-    const formData = new FormData();
-  for (const file of this.files) {
-      formData.append(name, file, file.name);
-  }
-  this.http.post('http://localhost:3000/', formData).subscribe(
-  data => console.log('success'),
-  error => console.log(error)
-  )}
 
 }
