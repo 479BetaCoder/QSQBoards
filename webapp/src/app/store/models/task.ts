@@ -1,11 +1,13 @@
-/*
+import User from './user';
+
 export class Task {
-  id: number;
+  _id: number;
   title: string;
   description: string;
   priority: string;
   status: string;
-  storyPoints: string;
+  assignee: User
+  comment: string[];
 }
-*/
+
 

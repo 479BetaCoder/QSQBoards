@@ -125,6 +125,18 @@ export class BacklogComponent implements OnInit {
         item.title = story.title;
         item.type = "User Story";
         this.backlogItems.push(item);
+        story.tasks.forEach(task =>{
+          if(task.status != "Done"){
+            const taskItem = new BacklogItem();
+            taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
+            taskItem.description = task.description;
+            taskItem.status = task.status;
+            taskItem.priority = task.priority;
+            taskItem.title = task.title;
+            taskItem.type = "Task";
+            this.backlogItems.push(taskItem);
+          }
+        })
     });
     this.dataSource = new MatTableDataSource(this.backlogItems);
   }
