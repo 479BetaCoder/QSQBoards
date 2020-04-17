@@ -46,15 +46,15 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mainForm();
-    const storyId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
-    this.userStoryService.getAllUserStories(this.selectedProject._id).subscribe((response) => {
-      this.allUserStories = response;
-      this.editStory = response.filter(story => story._id === storyId)[0];
-      this.setForm();
-    });
     if (sessionStorage.getItem('User')) {
+      this.mainForm();
+      const storyId = this.activatedRoute.snapshot.paramMap.get('id');
+      this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+      this.userStoryService.getAllUserStories(this.selectedProject._id).subscribe((response) => {
+        this.allUserStories = response;
+        this.editStory = response.filter(story => story._id === storyId)[0];
+        this.setForm();
+      });
       /*this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
       this.boardSubscription = this.boardState$
         .pipe(
@@ -86,5 +86,9 @@ export class UserStoryDetailsComponent implements OnInit {
       storyPoints: ['', [Validators.required, Validators.pattern]],
       priority: ['', [Validators.required]],
     });
+  }
+
+  createTask() {
+
   }
 }
