@@ -27,6 +27,13 @@ export class UserStoryService {
     );
   }
 
+  deleteTask(taskId): Observable<any> {
+    const url = `${baseURL}/tasks/${taskId}`;
+    return this.http.delete(url).pipe(
+      catchError(this.errorHandling)
+    );
+  }
+
   getAllUserStories(projectId): Observable<Array<UserStory>>  {
     // @ts-ignore
     return this.http.get(`${baseURL}/user-stories/${projectId}`);

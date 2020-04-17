@@ -107,7 +107,12 @@ export class UserStoryDetailsComponent implements OnInit {
     console.log('');
   }
 
-  deleteTask(){
-
+  deleteTask(task, index) {
+    if (window.confirm('Are you sure?')) {
+      this.userStoryService.deleteTask(task._id).subscribe(() => {
+          this.editStory.tasks.splice(index, 1);
+        }
+      );
+    }
   }
 }
