@@ -33,7 +33,7 @@ let userStorySchema = new Schema(
      */
     status: {
       type: String,
-      default: "Todo",
+      default: "New",
     },
 
     /**

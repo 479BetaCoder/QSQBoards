@@ -1,3 +1,38 @@
 table {
     width: 100%;
   }
+
+  td{
+    align-items: center;
+  }
+
+  .taskChip{
+    background: #3f51b5;
+    color: white;
+    border-radius: 15px;
+    height: 5px;
+}
+
+.storyChip{
+  background: #84858f;
+  color: white;
+  border-radius: 15px;
+  height: 25px;
+}
+
+.title {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 28% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+

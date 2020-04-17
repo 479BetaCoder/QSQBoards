@@ -6,7 +6,7 @@ import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import ProjectDetailsState from '../../../store/states/project-details.state';
 import * as ProjectDetailsActions from "../../../store/actions/project-details.action";
-//import { Task } from '../../../models/task';
+import {BacklogItem} from '../../../models/backlog.model';
 
 export interface PeriodicElement {
   name: string;
@@ -31,7 +31,7 @@ export class BacklogComponent implements OnInit {
 
   currentProjectTitle: String;
   dataSource: any;
-  displayedColumns: string[] = ['number', 'title', 'assignee', 'priority', 'status'];
+  displayedColumns: string[] = ['title', 'assignee', 'priority', 'status', 'type'];
   projectDetails$: Observable<ProjectDetailsState>;
   ProjectDetailsSubscription: Subscription;
   projectDetails: Project;

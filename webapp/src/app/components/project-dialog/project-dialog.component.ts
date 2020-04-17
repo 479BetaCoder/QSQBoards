@@ -9,6 +9,7 @@ import { select, Store } from '@ngrx/store';
 // import { take } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Status } from '../../shared/status';
 
 
 
@@ -34,6 +35,11 @@ export class ProjectDialogComponent implements OnInit {
   dialogTitle: string;
   update: boolean;
   projectId: string;
+
+  statusKeys() : Array<string> {
+    var keys = Object.keys(Status);
+    return keys.slice(keys.length / 2);
+}
 
   activeUsers$: Observable<UserState>;
   activeUsers: User[];
