@@ -68,6 +68,7 @@ import {BoardEffects} from './effects/board.effects';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DirectiveColumnDirective} from './directives/directive-column.directive';
 import { NewTaskComponent } from './components/project/new-task/new-task.component';
+import {UserStoryService} from "./services/user-story.service";
 
 const rootReducer = {
   projects: ProjectReducer,
@@ -139,6 +140,7 @@ const rootReducer = {
       provide: AuthServiceConfig,
       useFactory: socialConfigs
     },
+    UserStoryService,
     {provide: 'BaseURL', useValue: baseURL},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}
   ],

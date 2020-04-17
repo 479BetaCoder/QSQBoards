@@ -58,7 +58,7 @@ export class UserStoryDetailsComponent implements OnInit {
         this.editStory = response.filter(story => story._id === storyId)[0];
         this.setForm();
       });
-      /*this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
@@ -67,7 +67,7 @@ export class UserStoryDetailsComponent implements OnInit {
             this.editStory = response.userStories.filter(story => story._id === this.selectedProject._id)[0];
             this.setForm();
           })
-        ).subscribe();*/
+        ).subscribe();
     }
   }
 

@@ -20,8 +20,8 @@ export class UserStoryService {
     );
   }
 
-  createTask(newTask, storyId) {
-    const url = `${baseURL}/tasks/${storyId}`;
+  createTask(newTask): Observable<any>  {
+    const url = `${baseURL}/tasks`;
     return this.http.post(url, newTask).pipe(
       catchError(this.errorHandling)
     );
