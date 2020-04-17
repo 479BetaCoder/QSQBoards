@@ -66,6 +66,7 @@ import { ProjectDetailsReducer } from './store/reducers/project-details.reducer'
 import { ProjectDetailsEffects } from './effects/project-details.effects';
 import { BoardReducer } from './store/reducers/board.reducer';
 import { BoardEffects } from './effects/board.effects';
+import { AnalyticsComponent } from './components/project/analytics/analytics.component';
 
 const rootReducer = {
   projects: ProjectReducer,
@@ -91,7 +92,8 @@ const rootReducer = {
     ProjectDashboardComponent,
     NewUserStoryComponent,
     BacklogComponent,
-    UserStoryDetailsComponent
+    UserStoryDetailsComponent,
+    AnalyticsComponent
   ],
   imports: [
     BrowserModule,
