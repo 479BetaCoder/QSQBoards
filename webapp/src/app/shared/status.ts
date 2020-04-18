@@ -1,5 +1,5 @@
 export enum Status {
-    New,
-    Pending,
-    Done
+    New = "New",
+    In_Progress = "In Progress",
+    Done = "Done"
 }

@@ -11,6 +11,7 @@ import * as BoardActions from '../../../store/actions/board.action';
 import Project from 'app/store/models/project';
 import BoardState from "../../../store/states/board.state";
 import UserStory from "../../../store/models/userStory";
+import { Status } from '../../../shared/status';
 
 
 @Component({
@@ -29,6 +30,9 @@ export class OverviewComponent implements OnInit {
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
   allUserStories: UserStory[];
+  pendingTaskCount: number = 0;
+  doneTaskCount: number = 0;
+  totalTaskCount: number = 0;
   allErrors: Error = null;
 
   loggedInUser = JSON.parse(sessionStorage.getItem('User'));
@@ -62,9 +66,21 @@ export class OverviewComponent implements OnInit {
         map(response => {
           this.allUserStories = response.userStories;
           this.allErrors = response.userStoriesError;
+          this.setTaskStatusCount();
         })
       ).subscribe();
 
+  }
+
+  setTaskStatusCount(){
+    this.totalTaskCount = 0;
+    this.pendingTaskCount = 0;
+    this.doneTaskCount = 0;
+    this.allUserStories.forEach(story => {
+      this.totalTaskCount += story.tasks.length;
+      this.pendingTaskCount += story.tasks.filter(task => task.status != Status.Done).length;
+      this.doneTaskCount += story.tasks.filter(task => task.status == Status.Done).length;
+    });
   }
 
   getProjectTitleAvatar() {

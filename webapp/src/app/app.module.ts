@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './services/user.service';
@@ -45,6 +46,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {UserFilterPipe} from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
 import {StoreModule} from '@ngrx/store';
+import { MatTableExporterModule } from 'mat-table-exporter';
 // @ts-ignore
 import {EffectsModule} from '@ngrx/effects';
 import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
@@ -127,6 +129,8 @@ const rootReducer = {
     MatLineModule,
     MatSelectModule,
     MatTableModule,
+    MatTableExporterModule,
+    MatSortModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects]),
     MatDatepickerModule
