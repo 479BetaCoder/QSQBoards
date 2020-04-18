@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './services/user.service';
@@ -45,6 +46,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import {UserFilterPipe} from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
 import {StoreModule} from '@ngrx/store';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { HighchartsChartModule } from 'highcharts-angular';
 // @ts-ignore
 import {EffectsModule} from '@ngrx/effects';
 import {NewUserStoryComponent} from './components/project/new-user-story/new-user-story.component';
@@ -55,6 +58,7 @@ import {ProjectDashboardComponent} from './components/project/project-dashboard/
 import {UserStoryDetailsComponent} from './components/project/user-story-details/user-story-details.component';
 import {MatTableModule} from '@angular/material/table';
 import {BacklogComponent} from './components/project/backlog/backlog.component';
+import {AnalyticsComponent} from './components/project/analytics/analytics.component';
 
 // Reducers and effects
 import {ProjectReducer} from './store/reducers/project.reducer';
@@ -94,7 +98,8 @@ const rootReducer = {
     NewUserStoryComponent,
     BacklogComponent,
     UserStoryDetailsComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    AnalyticsComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +132,9 @@ const rootReducer = {
     MatLineModule,
     MatSelectModule,
     MatTableModule,
+    HighchartsChartModule,
+    MatTableExporterModule,
+    MatSortModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects]),
     MatDatepickerModule

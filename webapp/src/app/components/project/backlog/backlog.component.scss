@@ -1,6 +1,10 @@
 table {
     width: 100%;
   }
+  .mat-header-cell{
+    font-size: large;
+    font-weight: bolder;
+  }
 
   td{
     align-items: center;
@@ -9,15 +13,22 @@ table {
   .taskChip{
     background: #3f51b5;
     color: white;
-    border-radius: 15px;
+    border-radius: 8px;
     height: 5px;
 }
 
 .storyChip{
   background: #84858f;
   color: white;
-  border-radius: 15px;
-  height: 25px;
+  border-radius: 8px;
+  height: 5px;
+}
+
+.mat-cell{
+  font-size: large;
+}
+.highlight{
+  background: #42A948; /* green */
 }
 
 .title {
@@ -36,3 +47,48 @@ table {
   hyphens: auto;
 }
 
+.search {
+  float: left;
+  position: relative;
+  color: #aaa;
+  font-size: 16px;
+  width: 180px;
+}
+
+.hoverClass:hover {
+  cursor: pointer;
+  outline: none !important;
+}
+
+.search input {
+  margin-top: 5px;
+  height: 34px;
+  width: 100%;
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}
+
+.search input {
+  text-indent: 32px;
+}
+.search .fa-search {
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 5px;
+  top: 10px;
+  left: 10px;
+}
+.backlog-search{
+  padding: 20px;
+  height: 50px;
+  align-items: center;
+}
+
+.exportButton {
+  float: right;
+  margin: 5px;
+  position: relative;
+  margin-right: 50px;
+}
