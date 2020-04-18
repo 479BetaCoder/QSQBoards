@@ -33,6 +33,16 @@ export class UserService {
       catchError(this.errorHandling)
     );
   }
+
+  public uploadImage(formData: FormData){
+    const httpOptions = {
+      headers: new HttpHeaders({        
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this._http.post(baseURL + '/users/uploadProfileImage', formData,httpOptions);
+  }
   // Error handling
   errorHandling(error: HttpErrorResponse) {
     let errorMessage = '';

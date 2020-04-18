@@ -9,11 +9,12 @@ export class TokenInterceptorService implements HttpInterceptor {
     console.log('INTERCEPTOR');
     // We retrieve the token, if any
     const user = JSON.parse(sessionStorage.getItem('User'));
-    let newHeaders = req.headers.set('Content-Type', 'application/json');
+    //let newHeaders = req.headers.set('Content-Type', 'application/json');
+    let newHeaders;
     if (user) {
       // If we have a token, we append it to our new headers
       const token = user.token;
-      newHeaders = newHeaders.append('Authorization', 'Bearer ' + token);
+     newHeaders =  req.headers.set('Authorization', 'Bearer ' + token);
     }
     // Finally we have to clone our request with our new headers
     // This is required because HttpRequests are immutable

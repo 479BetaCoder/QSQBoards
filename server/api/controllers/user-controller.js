@@ -1,6 +1,8 @@
 "use strict";
 //import user service.
 const userService = require("../services/user-service");
+const multer = require('multer');
+const fs = require('fs');
 const { check, validationResult } = require("express-validator"),
   utilConstants = require("../utils/Constants"),
   bcrypt = require("bcrypt"),
@@ -161,6 +163,37 @@ exports.getUsers = (_request, response) => {
   userService.getUserNames().then(resolve).catch(renderErrorResponse(response));
 };
 
+
+const storage = multer.diskStorage({
+  destination: function(req, file, callback){
+      callback(null, '././profile_imgs');
+  },
+  filename: function(req, file, callback){
+      callback(null, file.originalname);
+  }
+})
+
+exports.upload = multer({storage: storage}).single('profile_img');
+
+exports.uploadRes = function(req, res){
+    res.json({});
+}
+
+exports.image = function(req, res){
+  fs.readFile("././profile_imgs/"+req.params.filename, function(err, data){
+      if(err) {
+          res.writeHead(404);
+          res.end(JSON.stringify(err));
+          return;
+      }
+
+      else {
+          res.writeHead(200);
+          //res.setHeader('Content-Type', 'text/html');
+          res.end(data);
+      }
+  })
+}
 /**
  * Throws error if error object is present.
  *
