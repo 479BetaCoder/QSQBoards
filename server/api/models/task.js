@@ -43,7 +43,7 @@ let taskSchema = new Schema(
      * Priority for the tasks
      */
     priority: {
-      type: Number,
+      type: String,
       default: 0,
     },
     /**

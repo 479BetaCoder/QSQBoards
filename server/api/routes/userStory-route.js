@@ -18,4 +18,8 @@ module.exports = function (app) {
     .route("/v1/user-stories/:storyId")
     .delete(checkAuth, userStoryController.delete)
     .put(checkAuth, userStoryController.updateUserStory);
+
+  app
+    .route("/v1/user-story/:storyId")
+    .get(checkAuth, userStoryController.getUserStory);
 };

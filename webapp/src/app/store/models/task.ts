@@ -1,13 +1,14 @@
-import User from './user';
-
 export class Task {
-  _id: string;
+  _id: number;
   title: string;
   description: string;
   priority: string;
   status: string;
-  assignee: User
-  comment: string[];
+  assignee: {
+    userName: string,
+    image: string
+  };
+  comments: string[];
 }
 
 
