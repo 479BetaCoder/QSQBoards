@@ -31,8 +31,10 @@
 
           </div>
           <div *ngIf="projectList?.length > 0">
+            <div class="noProjectsLabel" *ngIf="(projectList | projectFilter:searchTerm).length === 0">
+              No search results found!
+            </div>
             <div class="card" *ngFor="let project of projectList | projectFilter:searchTerm; let i=index">
-
               <div class="topCardContainer" *ngIf="i<3">
                 <mat-card class="topCard">
                   <div class="topTitlecontainer">
