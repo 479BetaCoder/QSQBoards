@@ -128,6 +128,22 @@ exports.updateTask = (request, response) => {
   }
 };
 
+exports.getUserTasks = (request, response) => {
+  const userName = request.params.userName;
+  try{
+    const resolve = (tasks) => {
+      response.status(200);
+      response.json(tasks);
+    };
+    taskService
+      .getUserTasks(userName)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  }catch(err){
+    renderErrorResponse(err)
+  }
+}
+
 /**
  * Throws error if error object is present.
  *

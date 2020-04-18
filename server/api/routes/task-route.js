@@ -13,4 +13,7 @@ module.exports = function (app) {
   app.route("/v1/tasks/:taskId")
     .delete(checkAuth, taskController.delete)
     .put(checkAuth, taskController.updateTask);
+
+  app.route("/v1/tasks/user/:userName")
+    .get(checkAuth, taskController.getUserTasks);
 };
