@@ -113,7 +113,60 @@ exports.updateUserStory = function (updatedUserStory, storyId) {
  *  @param {String} storyId
  */
 exports.getUserStory = async function (storyId) {
-  const promise = UserStory.findById({ _id: storyId }).exec();
+  console.log(storyId);
+  // const promise = new Promise(async function (resolve, reject) {
+  //   await UserStory.aggregate([
+  //     {
+  //       $match: {
+  //         _id: storyId
+  //       }
+  //     },
+  //     // Unwind the source
+  //     {
+  //       $unwind: {
+  //         path: "$tasks",
+  //         preserveNullAndEmptyArrays: true
+  //       }
+
+  //     },
+  //     // // Do the lookup matching
+  //     {
+  //       $lookup: {
+  //         "from": Task.collection.name,
+  //         "localField": "tasks",
+  //         "foreignField": "_id",
+  //         "as": "taskObjects"
+  //       }
+  //     },
+  //     // Unwind the result arrays ( likely one or none )
+  //     {
+  //       $unwind: {
+  //         path: "$taskObjects",
+  //         preserveNullAndEmptyArrays: true
+  //       }
+  //     },
+  //     // Group back to arrays
+  //     {
+  //       "$group": {
+  //         "_id": "$_id",
+  //         "title": { $first: "$title" },
+  //         "description": { $first: "$description" },
+  //         "status": { $first: "$status" },
+  //         "storyPoints": { $first: "$storyPoints" },
+  //         "priority": { $first: "$priority" },
+  //         "createdAt": {$first: "$createdAt"},
+  //         "tasks": { "$push": "$taskObjects" }
+  //       }
+  //     },
+  //     // sorting stage
+  //     { "$sort": { "createdAt": 1 } }
+  //   ]).then(result => {
+  //     return resolve(result);
+  //   }).catch(error => {
+  //     return reject(error);
+  //   })
+  // })
+  const promise = UserStory.findOne({ _id: storyId }).populate("tasks").exec();
   return promise;
 };
 

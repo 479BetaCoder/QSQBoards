@@ -44,7 +44,7 @@ let taskSchema = new Schema(
      */
     priority: {
       type: String,
-      default: 0,
+      default: "Low",
     },
     /**
      * Assignee for the tasks
