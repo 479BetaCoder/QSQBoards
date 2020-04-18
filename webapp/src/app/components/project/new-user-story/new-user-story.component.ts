@@ -19,7 +19,6 @@ import ProjectDetailsState from "../../../store/states/project-details.state";
 })
 export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
-  newStatus: 'Todo';
   userProject: any;
   priorities = [
     {value: 'low', viewValue: 'Low'},
@@ -44,6 +43,7 @@ export class NewUserStoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -59,7 +59,7 @@ export class NewUserStoryComponent implements OnInit {
     this.createStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: [{value : 'Todo', disabled: true}, [Validators.required]],
+      status: [{value : 'New', disabled: true}, [Validators.required]],
       storyPoints: ['', [Validators.required, Validators.pattern]],
       priority: ['', [Validators.required]],
     });
@@ -73,7 +73,7 @@ export class NewUserStoryComponent implements OnInit {
       return false;
     } else {
       const newUserStory: UserStory = this.createStoryForm.value;
-      newUserStory.status = 'todo';
+      newUserStory.status = 'New';
       this.store.dispatch(BoardActions.BeginCreateUserStory({ projectId:  this.selectedProject._id, payload: newUserStory }));
       this.dialogRef.close();
       /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(

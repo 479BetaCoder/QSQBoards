@@ -3,7 +3,7 @@
 const userStoryService = require("../services/userStory-service"),
   utilConstants = require("../utils/Constants"),
   log4js = require("log4js");
-log4js.configure({
+log4js. configure({
   appenders: {
     everything: { type: "file", filename: "logs/qsqBoard.log" },
   },
@@ -90,6 +90,18 @@ exports.delete = function (request, response) {
     .delete(request.params.storyId)
     .then(resolve)
     .catch(renderErrorResponse(response));
+};
+
+
+exports.getUserStory = function (request, response) {
+  const resolve = (userStory) => {
+    response.status(200);
+    response.json(userStory);
+  };
+  userStoryService
+      .getUserStory(request.params.storyId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
 };
 
 /**

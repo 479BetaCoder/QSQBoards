@@ -12,7 +12,7 @@ import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
 import * as ProjectDetailsActions from '../../../store/actions/project-details.action';
 import {select, Store} from '@ngrx/store';
-import {map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import Project from "../../../store/models/project";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Route, Router} from "@angular/router";
@@ -46,26 +46,17 @@ export class BoardComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userStoryService: UserStoryService,
-    private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
     private projectService: ProjectService,
-    private store: Store<{board: BoardState }>) {
+    private store: Store<{board: BoardState , projectDetails: ProjectDetailsState}>) {
     this.boardState$ = store.pipe(select('board'));
-    this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));
+    this.projectDetails$ = store.pipe(select('projectDetails'));
   }
 
   board: Board = new Board('Sprint Board', []);
 
   ngOnInit() {
-    // this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
+    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
     if (sessionStorage.getItem('User')) {
-      this.ProjectDetailsSubscription = this.projectDetails$
-        .pipe(
-          map(res => {
-            if (res) {
-              this.selectedProject = res.selectedProjectDetails;
-              this.projectsDetailsError = res.projectsDetailsError;
-            }
-          })).subscribe();
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
@@ -74,7 +65,6 @@ export class BoardComponent implements OnInit {
             this.drawTheBoard();
           })
         ).subscribe();
-      ///this.selectedProject = sessionStorage.getItem('SelectedProject');
       this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
@@ -82,15 +72,6 @@ export class BoardComponent implements OnInit {
   }
 
   drawTheBoard() {
-    /*this.projectService.userProject$.subscribe(pr => this.projectId = pr._id);
-    this.userStoryService.getAllUserStories(this.projectId).subscribe((data) => {
-      this.todoUserStories = data.filter(item => item.priority === 'medium');
-      this.inProgressUserStories = data.filter(item => item.priority === 'low');
-      this.doneUserStories = data.filter(item => item.priority === 'high');
-      this.todoColumn = new Column('Todo', this.todoUserStories);
-      this.inProgressColumn = new Column('In Progress', this.inProgressUserStories);
-      this.doneColumn = new Column('Done', this.doneUserStories);
-    });*/
       this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'new');
       this.inProgressUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'in progress');
       this.doneUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'done');

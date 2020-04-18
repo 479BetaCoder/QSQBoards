@@ -14,8 +14,25 @@ export class BoardEffects {
   constructor(private http: HttpClient, private action$: Actions) {
   }
   private baseUrlBoard: string = baseURL + '/user-stories';
+  private baseUrlStory: string = baseURL + '/user-story';
 
-  getAllUserStories$: Observable<Action> = createEffect(() =>
+  GetUserStory$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(BoardActions.BeginGetUserStory),
+      mergeMap(action =>
+        this.http.get(this.baseUrlStory + '/' + action.storyId).pipe(
+          map((data: UserStory) => {
+            return BoardActions.SuccessGetStory({ payload: data});
+          }),
+          catchError((error: Error) => {
+            return of(BoardActions.ErrorUserStoryAction(error));
+          })
+        )
+      )
+    )
+  );
+
+  GetAllUserStories$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(BoardActions.BeginGetUserStoriesAction),
       mergeMap(action =>
