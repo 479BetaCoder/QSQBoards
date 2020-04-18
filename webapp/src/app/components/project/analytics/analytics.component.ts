@@ -132,7 +132,12 @@ export class AnalyticsComponent implements OnInit {
                dataLabels: {
                   enabled: false           
                },
-         
+               colors: [
+                  '#ff9504',
+                  '#3f51b5',
+                  'mediumseagreen',
+                  
+          ],
                showInLegend: true
             }
          },
@@ -172,7 +177,7 @@ export class AnalyticsComponent implements OnInit {
             backgroundColor: ('#FFFFFF'), shadow: true
             },
             xAxis:{
-               categories: ['Tasks'], title: {
+               categories: ['Prority'], title: {
                text: null
             } 
          },
@@ -194,6 +199,12 @@ export class AnalyticsComponent implements OnInit {
          credits:{
             enabled: false
          },
+         colors: [
+            '#ff9504',
+            '#3f51b5',
+            'mediumseagreen',
+            
+    ],
          series: [
             {
                name: 'High',
@@ -229,7 +240,12 @@ export class AnalyticsComponent implements OnInit {
                dataLabels: {
                   enabled: false           
                },
-         
+               colors: [
+                  '#ff9504',
+                  '#3f51b5',
+                  'mediumseagreen',
+                  
+          ],
                showInLegend: true
             }
          },
@@ -269,13 +285,13 @@ export class AnalyticsComponent implements OnInit {
             backgroundColor: ('#FFFFFF'), shadow: true
             },
             xAxis:{
-               categories: ['Tasks'], title: {
+               categories: ['Prority'], title: {
                text: null
             } 
          },
          yAxis : {
             min: 0, title: {
-               text: 'Number of tasks', align: 'high'
+               text: 'Number of Tasks', align: 'high'
             },
             labels: {
                overflow: 'justify'
@@ -291,6 +307,11 @@ export class AnalyticsComponent implements OnInit {
          credits:{
             enabled: false
          },
+         colors: [
+            '#ff9504',
+            '#3f51b5',
+            'mediumseagreen',
+    ],
          series: [
             {
                name: 'High',
