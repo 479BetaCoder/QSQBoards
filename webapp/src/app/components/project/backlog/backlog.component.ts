@@ -44,6 +44,8 @@ export class BacklogComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  selectedRowIndex: number = -1;
+
   sortBy:any;
 
   constructor(private projectService: ProjectService,
@@ -107,7 +109,7 @@ export class BacklogComponent implements OnInit {
     this.backlogUserStories =  this.allUserStories.filter(item => item.status != Status.Done);
     this.backlogUserStories.forEach(story =>{
         const item = new BacklogItem();
-        item._id = story._id;
+        item.id = story._id;
         item.assignee = "";
         item.description = story.description;
         item.status = story.status;
@@ -119,7 +121,7 @@ export class BacklogComponent implements OnInit {
         story.tasks.forEach(task =>{
           if(task.status != Status.Done){
             const taskItem = new BacklogItem();
-            taskItem._id = task._id;
+            taskItem.id = story._id;
             taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
             taskItem.description = task.description;
             taskItem.status = task.status;
@@ -152,10 +154,11 @@ export class BacklogComponent implements OnInit {
   }
 
   editBacklogItem(backlogItem: BacklogItem) {
-    const id = backlogItem._id;
-    if(backlogItem.type == "User Story"){
-      this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
-    }
+    const id = backlogItem.id ;
+    this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
   }
+  highlight(row){
+    this.selectedRowIndex = row.id;
+}
 }
 
