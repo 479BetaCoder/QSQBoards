@@ -37,7 +37,7 @@ export class AnalyticsComponent implements OnInit {
   lowTaskCount : number = 0;
   mediumTaskCount: number =0;
   highTaskCount : number =0;
-
+  optionValue : string = "userstories";
   constructor(private router: Router,private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
    private store: Store<{board: BoardState }>) {
       this.boardState$ = store.pipe(select('board'));
@@ -72,7 +72,7 @@ export class AnalyticsComponent implements OnInit {
   constructGraphData(){
       this.allUserStories.forEach(
          story => {
-            if(story.status == "todo"){
+            if(story.status == "New"){
                this.openCount++;
             }
             if(story.status == "In Progress"){
@@ -91,7 +91,7 @@ export class AnalyticsComponent implements OnInit {
                this.highCount++;
             }
             story.tasks.forEach(task => {
-               if(task.status == "todo"){
+               if(task.status == "New"){
                   this.openTaskCount++;
                }
                if(task.status == "In Progress"){
@@ -140,7 +140,7 @@ export class AnalyticsComponent implements OnInit {
             type: 'pie',
             name: 'User Stories',
             data: [
-               ['ToDo',   this.openCount],
+               ['New',   this.openCount],
                ['In Progress', this.inProgressCount],
                {
                   name: 'Done',
@@ -237,7 +237,7 @@ export class AnalyticsComponent implements OnInit {
             type: 'pie',
             name: 'All Tasks',
             data: [
-               ['ToDo',   this.openTaskCount],
+               ['New',   this.openTaskCount],
                ['In Progress', this.inProgressTaskCount],
                {
                   name: 'Done',
@@ -294,15 +294,15 @@ export class AnalyticsComponent implements OnInit {
          series: [
             {
                name: 'High',
-               data: [this.highCount]
+               data: [this.highTaskCount]
             }, 
             {
                name: 'Medium',
-               data: [this.mediumCount || 0]
+               data: [this.mediumTaskCount]
             }, 
             {
                name: 'Low',
-               data: [this.lowCount || 0]      
+               data: [this.lowTaskCount]      
             }
          ]
       };

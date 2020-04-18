@@ -1,29 +1,38 @@
 
-    <div class="chart1"><highcharts-chart
-      [Highcharts] = "highcharts" 
-      [options] = "chartOptions"
-      style = "width: 100%; height: 400px; display: block;">
-   </highcharts-chart>
-  </div>
+   <div class="dropDown">
+    <label>Select type of Analytics </label>
 
-    <div class="chart2"><highcharts-chart
-      [Highcharts] = "burnDownHighcharts" 
-      [options] = "burnDownChartOptions"
-      style = "width: 100%; height: 400px; display: block;">
-   </highcharts-chart></div>
-
+    <select [(ngModel)]="optionValue">
+     <option value="userstories" selected>User Stories</option>
+     <option value="tasks" >Tasks</option>
+    </select>           
+</div>
    
-   <div class="chart1"><highcharts-chart
-    [Highcharts] = "taskPieChart" 
-    [options] = "taskPieChartOptions"
-    style = "width: 100%; height: 400px; display: block;">
+<ng-container *ngIf="optionValue == 'userstories'">
+  <div class="chart1"><highcharts-chart class="userStorychart1"
+    [Highcharts] = "highcharts" 
+    [options] = "chartOptions">
  </highcharts-chart>
 </div>
 
-  <div class="chart2"><highcharts-chart
+  <div class="chart2"><highcharts-chart class="userStorychart2"
+    [Highcharts] = "burnDownHighcharts" 
+    [options] = "burnDownChartOptions">
+ </highcharts-chart></div>
+</ng-container>
+
+
+<ng-container *ngIf="optionValue == 'tasks'">
+   
+   <div class="chart1"><highcharts-chart class="taskChart1"
+    [Highcharts] = "taskPieChart" 
+    [options] = "taskPieChartOptions">
+ </highcharts-chart>
+</div>
+
+  <div class="chart2"><highcharts-chart class="taskChart2"
     [Highcharts] = "taskBarGraph" 
-    [options] = "taskBarGraphOptions"
-    style = "width: 100%; height: 400px; display: block;">
+    [options] = "taskBarGraphOptions">
  </highcharts-chart></div>
 
-  
+</ng-container>
