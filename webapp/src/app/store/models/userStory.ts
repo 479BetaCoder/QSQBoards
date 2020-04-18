@@ -1,3 +1,5 @@
+import {Task} from './task';
+
 export default class UserStory {
   _id: string;
   title: string;
@@ -6,6 +8,6 @@ export default class UserStory {
   status: string;
   storyPoints: string;
   priority: string;
-  tasks: any[];
+  tasks: Task[];
   comment: string[];
 }
