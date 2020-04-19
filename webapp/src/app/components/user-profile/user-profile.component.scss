@@ -15,10 +15,10 @@
 
 
 img {
-  height: 70%;
-  width:70%;
+  height:100px;
+  width:100px;
   border-radius: 50%;
-  margin-left: 10%;
+  margin-left: 22%;
 }
 .hoverable{
   position: relative;
@@ -56,4 +56,8 @@ img {
 
 #fileInput{
   display: none;
+}
+
+.deleteBtn{
+  margin-left: 7%;
 }

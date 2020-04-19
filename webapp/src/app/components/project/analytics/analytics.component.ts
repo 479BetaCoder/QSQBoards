@@ -81,13 +81,13 @@ export class AnalyticsComponent implements OnInit {
             if(story.status == "Done"){
                this.finishedCount++;
             }
-            if(story.priority == "low"){
+            if(story.priority.toLowerCase() == "low"){
                this.lowCount++;
             }
-            if(story.priority == "medium"){
+            if(story.priority.toLowerCase() == "medium"){
                this.mediumCount++;
             }
-            if(story.priority == "high"){
+            if(story.priority.toLowerCase() == "high"){
                this.highCount++;
             }
             story.tasks.forEach(task => {
@@ -100,13 +100,13 @@ export class AnalyticsComponent implements OnInit {
                if(task.status == "Done"){
                   this.finishedTaskCount++;
                }
-               if(task.priority == "low"){
+               if(task.priority.toLowerCase() == "low"){
                   this.lowTaskCount++;
                }
-               if(task.priority == "medium"){
+               if(task.priority.toLowerCase() == "medium"){
                   this.mediumTaskCount++;
                }
-               if(task.priority == "high"){
+               if(task.priority.toLowerCase() == "high"){
                   this.highTaskCount++;
                }
             })

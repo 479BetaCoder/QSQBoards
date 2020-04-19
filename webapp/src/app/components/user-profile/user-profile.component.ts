@@ -16,7 +16,8 @@ export class UserProfileComponent implements OnInit {
   socialImage: any;
   updateForm: FormGroup;
   url: string | ArrayBuffer;
-  imageName: string;
+  imageName: string = '';
+  uploadImage : any;
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
@@ -45,8 +46,17 @@ export class UserProfileComponent implements OnInit {
 
   setForm() {
     this.authService.userProfile$.subscribe(data => {
-     // this.socialImage = data.image;
-      this.url= "http://localhost:3000/v1/users/profileImg/"+data.image;
+  
+      if(data.image.includes("http")){
+        this.url = data.image;
+      }
+      else if(data.image == ""){
+        this.url = null;
+      }
+      else{
+        this.url= baseURL +"/users/profileImg/"+ data.image;
+      }
+
       this.imageName = data.image;
       this.updateForm.setValue({
         userName: data.userName,
@@ -65,7 +75,14 @@ export class UserProfileComponent implements OnInit {
     if (!this.updateForm.valid) {
       return false;
     } else {
-      if (window.confirm('Are you sure?')) {
+      if (window.confirm('Are you sure you want to update?')) {
+        if(this.uploadImage){
+          let formData = new FormData();
+          this.imageName = this.uploadImage.name;
+          formData.append('profile_img', this.uploadImage);
+          this.qsqService.uploadImage(formData).subscribe();
+        }
+        
         this.updateForm.patchValue({image:this.imageName})
         this.qsqService.updateUser(this.updateForm.value)
           .subscribe(res => {
@@ -105,14 +122,12 @@ export class UserProfileComponent implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.url = event.target.result;
       }
-      let formData = new FormData();
-      this.imageName = event.target.files[0].name;
-      formData.append('profile_img', event.target.files[0]);
-      this.qsqService.uploadImage(formData).subscribe();
+      this.uploadImage = event.target.files[0]
     }
   }
 
   public delete(){
+    this.imageName = "";
     this.url = null;
   }
 }

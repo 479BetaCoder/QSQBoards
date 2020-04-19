@@ -10,7 +10,7 @@
     <div class="alignmentMenu">
       <button mat-button (click)="navigateToHome()"><span class="profileName">Home</span></button>
       <button mat-button [matMenuTriggerFor]="menu">
-        <img *ngIf="profile" [src]="profile.image" alt="Profile name" class="avatar"
+        <img *ngIf="profile" [src]="url ? url :'../../../assets/blank-profile-picture.png'" alt="Profile name" class="avatar"
           onerror="this.src='../../../assets/avatar-default-icon.png'" />
         <img *ngIf="!profile" src="../../../assets/avatar-default-icon.png" class="avatar" alt="Profile" />
         <label class="profileName">{{profile.userName}}</label>
