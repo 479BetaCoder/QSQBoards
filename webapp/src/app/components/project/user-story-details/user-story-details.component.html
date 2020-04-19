@@ -266,7 +266,17 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab class="tabLabel" label="Comments"> </mat-tab>
+        <mat-tab class="tabLabel" label="Comments"> 
+          <mat-form-field class="example-full-width">
+            <mat-label>Comments</mat-label>
+            <div>
+              <textarea matInput placeholder="Add a comment ..."></textarea>
+            </div>
+            <div *ngFor="let taskComment of taskComments">
+              <label>{{taskComment.comment}}</label>
+            </div>
+          </mat-form-field>
+        </mat-tab>
       </mat-tab-group>
     </ng-template>
   </mat-tab>

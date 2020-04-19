@@ -10,12 +10,15 @@ import {select, Store} from "@ngrx/store";
 import BoardState from "../../../store/states/board.state";
 import {map, take} from "rxjs/operators";
 import * as BoardActions from "../../../store/actions/board.action";
+import * as CommentActions from "../../../store/actions/comment.action";
 import UserStory from '../../../store/models/userStory';
 import {Task} from "../../../store/models/task";
 import {Location} from '@angular/common';
 import {NewTaskComponent} from "../new-task/new-task.component";
 import Project from "../../../store/models/project";
 import User from "../../../store/models/user";
+import CommentState from 'app/store/states/comment.state';
+import Comment from 'app/store/models/comment';
 
 
 @Component({
@@ -37,8 +40,16 @@ export class UserStoryDetailsComponent implements OnInit {
     {value: 'In Progress', viewValue: 'In Progress'},
     {value: 'Done', viewValue: 'Done'}];
   selectedProject: Project;
+  
+  // States and subscriptions
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
+  commentState$: Observable<CommentState>;
+  commentSubscription: Subscription;
+  commentsError: Error = null;
+
+
+  taskComments: Comment[];
   allUserStories: UserStory[];
   allErrors: Error = null;
   projectsDetailsError: Error = null;
@@ -54,9 +65,10 @@ export class UserStoryDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private userStoryService: UserStoryService,
-    private store: Store<{ board: BoardState, projectDetails: ProjectDetailsState }>,
+    private store: Store<{ board: BoardState, projectDetails: ProjectDetailsState, comments: CommentState}>,
   ) {
     this.boardState$ = store.pipe(select('board'));
+    this.commentState$ = store.pipe(select('comments'));
   }
 
   ngOnInit() {
@@ -85,6 +97,14 @@ export class UserStoryDetailsComponent implements OnInit {
 
   // for task comments
   commentTask(task: Task) {
+    this.store.dispatch(CommentActions.BeginGetComments({payload: task._id}));
+    this.commentSubscription = this.commentState$
+        .pipe(
+          map(response => {
+            this.taskComments = response.comments;
+            this.commentsError = response.commentsError;
+          })
+        ).subscribe();
     this.selectedTaskTab.setValue(1);
   }
 

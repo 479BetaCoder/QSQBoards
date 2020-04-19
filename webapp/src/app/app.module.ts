@@ -60,6 +60,7 @@ import {MatTableModule} from '@angular/material/table';
 import {BacklogComponent} from './components/project/backlog/backlog.component';
 import {AnalyticsComponent} from './components/project/analytics/analytics.component';
 
+
 // Reducers and effects
 import {ProjectReducer} from './store/reducers/project.reducer';
 import {ProjectEffects} from './effects/project.effects';
@@ -72,12 +73,15 @@ import {BoardEffects} from './effects/board.effects';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NewTaskComponent } from './components/project/new-task/new-task.component';
 import {UserStoryService} from './services/user-story.service';
+import { CommentReducer } from './store/reducers/comment.reducer';
+import {CommentEffects} from './effects/comment.effects';
 
 const rootReducer = {
   projects: ProjectReducer,
   user: UserReducer,
   projectDetails: ProjectDetailsReducer,
   board: BoardReducer,
+  comments: CommentReducer
 };
 
 @NgModule({
@@ -137,7 +141,7 @@ const rootReducer = {
     MatSortModule,
     MatTabsModule,
     StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects]),
+    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects, CommentEffects]),
     MatDatepickerModule
   ],
   providers: [

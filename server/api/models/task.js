@@ -21,18 +21,6 @@ let taskSchema = new Schema(
       type: String,
     },
     /**
-     * Task comments.
-     */
-    comments: [
-      {
-        text: String,
-        postedBy: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
-    /**
      * Task status.
      */
     status: {
