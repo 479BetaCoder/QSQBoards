@@ -38,6 +38,7 @@ export class UserProfileComponent implements OnInit {
 
   setForm() {
     this.authService.userProfile$.subscribe(data => {
+      console.log(data.image);
       this.socialImage = data.image;
       this.updateForm.setValue({
         userName: data.userName,

@@ -41,8 +41,7 @@ export class AnalyticsComponent implements OnInit {
   constructor(private router: Router,private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
    private store: Store<{board: BoardState }>) {
       this.boardState$ = store.pipe(select('board'));
-    this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));
-    
+      this.projectDetails$ = this.storePrDetail.pipe(select('projectDetails'));
     }
 
   ngOnInit(): void {
@@ -53,60 +52,86 @@ export class AnalyticsComponent implements OnInit {
             if (res) {
               this.selectedProject = res.selectedProjectDetails;
               this.projectsDetailsError = res.projectsDetailsError;
+              this.getUserStories();
             }
           })).subscribe();
-      this.boardSubscription = this.boardState$
-        .pipe(
-          map(response => {
-            this.allUserStories = response.userStories;
-            this.allErrors = response.userStoriesError;
-          })
-        ).subscribe();
-      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
-      this.constructGraphData();
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
   }
 
+   getUserStories() {
+   if(!this.selectedProject) {
+      this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+    }
+   this.boardSubscription = this.boardState$
+     .pipe(
+       map(response => {
+         this.allUserStories = response.userStories;
+         this.allErrors = response.userStoriesError;
+         this.constructGraphData();
+         
+       })
+     ).subscribe();
+      this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
+     
+  }
+
+  resetCount() { 
+   this.openCount = 0;
+   this.inProgressCount = 0;
+   this.finishedCount  = 0;
+   this.lowCount = 0;
+   this.mediumCount = 0;
+   this.highCount  = 0;
+   this.openTaskCount = 0;
+   this.inProgressTaskCount = 0;
+   this.finishedTaskCount = 0;
+   this.lowTaskCount = 0;
+   this.mediumTaskCount = 0;
+   this.highTaskCount = 0;
+  } 
+
   constructGraphData(){
+   this.resetCount();
+     console.log(JSON.stringify(this.allUserStories));
       this.allUserStories.forEach(
          story => {
-            if(story.status == "New"){
+            if(story.status.toLowerCase() == "new"){
                this.openCount++;
             }
-            if(story.status == "In Progress"){
+            if(story.status.toLowerCase() == "in progress"){
                this.inProgressCount++;
             }
-            if(story.status == "Done"){
+            if(story.status.toLowerCase() == "done"){
                this.finishedCount++;
             }
-            if(story.priority == "low"){
+            if(story.priority.toLowerCase() == "low"){
                this.lowCount++;
             }
-            if(story.priority == "medium"){
+            if(story.priority.toLowerCase() == "medium"){
                this.mediumCount++;
             }
-            if(story.priority == "high"){
+            if(story.priority.toLowerCase() == "high"){
                this.highCount++;
             }
             story.tasks.forEach(task => {
-               if(task.status == "New"){
+               if(task.status.toLowerCase() == "new"){
                   this.openTaskCount++;
                }
-               if(task.status == "In Progress"){
+               if(task.status.toLowerCase() == "in progress"){
                   this.inProgressTaskCount++;
                }
-               if(task.status == "Done"){
+               if(task.status.toLowerCase() == "done"){
                   this.finishedTaskCount++;
                }
-               if(task.priority == "low"){
+               if(task.priority.toLowerCase()== "low"){
                   this.lowTaskCount++;
                }
-               if(task.priority == "medium"){
+               if(task.priority.toLowerCase() == "medium"){
                   this.mediumTaskCount++;
                }
-               if(task.priority == "high"){
+               if(task.priority.toLowerCase() == "high"){
                   this.highTaskCount++;
                }
             })
@@ -187,7 +212,8 @@ export class AnalyticsComponent implements OnInit {
             },
             labels: {
                overflow: 'justify'
-            }
+            },
+            tickInterval: 1
          },
          plotOptions : {
             bar: {
@@ -200,8 +226,8 @@ export class AnalyticsComponent implements OnInit {
             enabled: false
          },
          colors: [
+            'red',
             '#ff9504',
-            '#3f51b5',
             'mediumseagreen',
             
     ],
@@ -295,7 +321,8 @@ export class AnalyticsComponent implements OnInit {
             },
             labels: {
                overflow: 'justify'
-            }
+            },
+            tickInterval: 1
          },
          plotOptions : {
             bar: {
@@ -308,8 +335,8 @@ export class AnalyticsComponent implements OnInit {
             enabled: false
          },
          colors: [
+            'red',
             '#ff9504',
-            '#3f51b5',
             'mediumseagreen',
     ],
          series: [

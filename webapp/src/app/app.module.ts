@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {RegisterComponent} from './components/register/register.component';
 // import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 // import { MainDeskComponent } from './main-desk/main-desk.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
@@ -135,6 +135,7 @@ const rootReducer = {
     HighchartsChartModule,
     MatTableExporterModule,
     MatSortModule,
+    MatTabsModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects]),
     MatDatepickerModule

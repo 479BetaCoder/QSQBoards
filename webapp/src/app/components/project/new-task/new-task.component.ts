@@ -1,5 +1,5 @@
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup,FormControl, Validators} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -12,6 +12,7 @@ import {map} from "rxjs/operators";
 import UserStory from "../../../store/models/userStory";
 import * as BoardActions from "../../../store/actions/board.action";
 import {Task} from "../../../store/models/task";
+import User from 'app/store/models/user';
 
 @Component({
   selector: 'app-new-task',
@@ -28,20 +29,21 @@ export class NewTaskComponent implements OnInit {
   editUserStory: UserStory;
   storyId: string;
   priorities = [
-    {value: 'low', viewValue: 'Low'},
-    {value: 'medium', viewValue: 'Medium'},
-    {value: 'high', viewValue: 'High'}];
+    {value: 'Low', viewValue: 'Low'},
+    {value: 'Medium', viewValue: 'Medium'},
+    {value: 'High', viewValue: 'High'}];
   status = [
     {value: 'New', viewValue: 'New'},
     {value: 'In Progress', viewValue: 'In Progress'},
-    {value: 'one', viewValue: 'Done'}];
+    {value: 'Done', viewValue: 'Done'}];
   selectedProject: any;
   projectDetails$: Observable<ProjectDetailsState>;
   boardState$: Observable<BoardState>;
   ProjectDetailsSubscription: Subscription;
   BoardSubscription: Subscription;
   projectsDetailsError: Error = null;
-
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
+  selectedAssignee = new FormControl('', [Validators.required]);
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -64,11 +66,12 @@ export class NewTaskComponent implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       status: [{value : 'New', disabled: true}, [Validators.required]],
-      assignee: ['', [Validators.required]],
+      assignee: this.selectedAssignee,
       priority: ['', [Validators.required]],
     });
     this.storyId = sessionStorage.getItem('storyId');
     this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+    console.log('Selected Project :: ' + JSON.stringify(this.selectedProject));
     this.teamMates = this.selectedProject.members;
     this.BoardSubscription = this.boardState$
       .pipe(
@@ -93,14 +96,22 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
+  compareFn(x: User, y: User): boolean {
+    return x && y ? x.userName === y.userName : x === y;
+  }
+
   updateTaskForm() {
+    console.log('formData :: ' + JSON.stringify(this.formData));
     this.heading = 'Update The Task';
     this.updateForm = true;
+    if(this.formData.assignee) {
+    this.selectedAssignee = new FormControl(this.formData.assignee, [Validators.required]);
+    }
     this.createTaskForm = this.fb.group({
       title: [this.formData.title, [Validators.required]],
       description: [this.formData.description, [Validators.required]],
       status: [this.formData.status, [Validators.required]],
-      assignee: [{value: this.formData.assignee.userName}, [Validators.required]],
+      assignee: this.selectedAssignee,
       priority: [this.formData.priority, [Validators.required]],
     });
 
@@ -117,8 +128,7 @@ export class NewTaskComponent implements OnInit {
       newTask.status = 'New';
       newTask.storyId = this.storyId;
       this.userStoryService.createTask(newTask).subscribe(
-        re => {
-          console.log(re);
+        _response => {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
         }
       );
@@ -126,8 +136,7 @@ export class NewTaskComponent implements OnInit {
     } else if (this.updateForm) {
       const updatedTask: Task = this.createTaskForm.value;
       this.userStoryService.updateTask(updatedTask, this.formData.id).subscribe(
-        re => {
-          console.log(re);
+        _response => {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
         }
       );

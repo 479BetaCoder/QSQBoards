@@ -1,5 +1,5 @@
 import {Component, Inject, NgZone, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -29,20 +29,22 @@ export class UserStoryDetailsComponent implements OnInit {
   storyId: string;
   editStory: UserStory;
   priorities = [
-    {value: 'low', viewValue: 'Low'},
-    {value: 'medium', viewValue: 'Medium'},
-    {value: 'high', viewValue: 'High'}];
+    {value: 'Low', viewValue: 'Low'},
+    {value: 'Medium', viewValue: 'Medium'},
+    {value: 'High', viewValue: 'High'}];
   status = [
     {value: 'New', viewValue: 'New'},
     {value: 'In Progress', viewValue: 'In Progress'},
-    {value: 'one', viewValue: 'Done'}];
+    {value: 'Done', viewValue: 'Done'}];
   selectedProject: Project;
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
   allUserStories: UserStory[];
   allErrors: Error = null;
   projectsDetailsError: Error = null;
-
+  displayedTaskColumns: string[] = ['title', 'description', 'status', 'priority', 'assignee', 'actions'];
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
+  selectedTaskTab = new FormControl(0);
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -68,10 +70,6 @@ export class UserStoryDetailsComponent implements OnInit {
         this.editStory = response.filter(story => story._id === this.storyId)[0];
         this.setForm();
       });
-      /*this.store.pipe(select('projectDetails'), take(1)).subscribe((pro) => {
-        this.selectedProject = pro;
-        this.teamMates = pro.
-      });*/
       this.boardSubscription = this.boardState$
         .pipe(
           map(response => {
@@ -80,17 +78,31 @@ export class UserStoryDetailsComponent implements OnInit {
             this.setForm();
           })
         ).subscribe();
+
       sessionStorage.setItem('storyId', this.storyId);
     }
   }
 
+  // for task comments
+  commentTask(task: Task) {
+    this.selectedTaskTab.setValue(1);
+  }
+
+
+  getElementDesc(taskDesc) {
+    if (taskDesc.length > 35) {
+      return taskDesc.substring(0, 35).concat(" ...");
+    }
+    return taskDesc;
+  }
+
   setForm() {
     this.updateStoryForm.setValue({
-      title: this.editStory.title,
-      description: this.editStory.description,
-      status: this.editStory.status,
-      storyPoints: this.editStory.storyPoints,
-      priority: this.editStory.priority,
+      title: this.editStory ? this.editStory.title : '',
+      description: this.editStory ? this.editStory.description: '',
+      status: this.editStory ? this.editStory.status : 'New',
+      storyPoints: this.editStory ? this.editStory.storyPoints : 0,
+      priority: this.editStory ? this.editStory.priority : 'Low',
     });
   }
 
@@ -137,11 +149,11 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   deleteTask(task, index) {
+    console.log(index);
     if (window.confirm('Are you sure?')) {
-      this.userStoryService.deleteTask(task._id).subscribe(() => {
-          this.editStory.tasks.splice(index, 1);
-        }
-      );
-    }
+      this.userStoryService.deleteTask(task._id).subscribe(_response => {
+          this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+        });
+      }
   }
 }

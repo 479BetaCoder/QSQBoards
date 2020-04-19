@@ -18,10 +18,8 @@
     </div>
     <mat-form-field *ngIf="update">
       
-    <mat-select placeholder="Status" formControlName="status" >
-      <mat-option *ngFor="let status of statusKeys()"  [value]="status">
-        {{status}}
-    </mat-option>
+    <mat-select placeholder="Status" [compareWith]="compareStatus" [formControlName]="'status'" >
+   <mat-option *ngFor="let status of statusKeys" [value]="status.value">{{status.viewValue}}</mat-option>
   </mat-select>
     </mat-form-field>
     <div>

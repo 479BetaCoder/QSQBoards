@@ -52,7 +52,7 @@ export class BoardEffects {
     this.action$.pipe(
       ofType(BoardActions.BeginCreateUserStory),
       mergeMap(action =>
-        this.http.post(this.baseUrlBoard + '/' + action.projectId, JSON.stringify(action.payload))
+        this.http.post(this.baseUrlBoard, JSON.stringify(action.payload))
           .pipe(
             map((data: UserStory) => {
               return BoardActions.SuccessCreateUserStory({ payload: data });

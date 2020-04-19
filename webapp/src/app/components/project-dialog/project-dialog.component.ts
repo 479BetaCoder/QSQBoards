@@ -35,12 +35,10 @@ export class ProjectDialogComponent implements OnInit {
   dialogTitle: string;
   update: boolean;
   projectId: string;
-
-  statusKeys() : Array<string> {
-    var keys = Object.keys(Status);
-    return keys.slice(keys.length / 2);
-}
-
+  statusKeys = [
+    {value: 'New', viewValue: 'New'},
+    {value: 'In progress', viewValue: 'In progress'},
+    {value: 'Done', viewValue: 'Done'}];
   activeUsers$: Observable<UserState>;
   activeUsers: User[];
   ActiveUsersSubscription: Subscription;
@@ -73,7 +71,7 @@ export class ProjectDialogComponent implements OnInit {
         title: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
         members: this.members,
-        status: new FormControl("NEW", null)
+        status: new FormControl("New", null)
       });
     } else {
 
@@ -100,6 +98,11 @@ export class ProjectDialogComponent implements OnInit {
 
   compareFn(x: User, y: User): boolean {
     return x && y ? x.userName === y.userName : x === y;
+  }
+
+  compareStatus(x: string, y: string) : boolean {
+    console.log(y);
+    return x && y ? x === y : false;
   }
 
   isValid(controlName) {
