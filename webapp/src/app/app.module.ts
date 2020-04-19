@@ -72,6 +72,7 @@ import {BoardEffects} from './effects/board.effects';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NewTaskComponent } from './components/project/new-task/new-task.component';
 import {UserStoryService} from './services/user-story.service';
+import { InboxComponent } from './components/inbox/inbox.component';
 
 const rootReducer = {
   projects: ProjectReducer,
@@ -99,7 +100,8 @@ const rootReducer = {
     BacklogComponent,
     UserStoryDetailsComponent,
     NewTaskComponent,
-    AnalyticsComponent
+    AnalyticsComponent,
+    InboxComponent
   ],
   imports: [
     BrowserModule,

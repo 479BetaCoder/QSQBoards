@@ -8,6 +8,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as UserActions from '../store/actions/user.action';
 import User from '../store/models/user';
 import { baseURL } from '../shared/baseurl';
+import { Task } from 'app/store/models/task';
 
 @Injectable()
 export class UserEffects {
@@ -16,6 +17,7 @@ export class UserEffects {
     private registerApiUrl: string = baseURL + '/users/signup';
     private loginApiUrl: string = baseURL + '/users/login';
     private getActiveUsersUrl: string = baseURL + '/users';
+    private getUserTasksUrl: string = baseURL + '/user/tasks';
 
     RegisterUser$: Observable<Action> = createEffect(() =>
         this.action$.pipe(
@@ -64,6 +66,26 @@ export class UserEffects {
                     .pipe(
                         map((data: User[]) => {
                             return UserActions.SuccessGetActiveUsers({ payload: data });
+                        }),
+                        catchError((error: Error) => {
+                            return of(UserActions.ErrorUserAction(error));
+                        })
+                    )
+            )
+        )
+    );
+
+    GetUserTasks$: Observable<Action> = createEffect(() =>
+        this.action$.pipe(
+            ofType(UserActions.BeginGetUserTasks),
+            mergeMap(_action =>
+                this.http
+                    .get(this.getUserTasksUrl, {
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .pipe(
+                        map((data: Task[]) => {
+                            return UserActions.SuccessGetUserTasks({ payload: data });
                         }),
                         catchError((error: Error) => {
                             return of(UserActions.ErrorUserAction(error));

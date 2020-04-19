@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
         .subscribe();
       this.store.dispatch(ProjectActions.BeginGetProjectsAction());
       this.store.dispatch(UserActions.BeginGetActiveUsers());
+      this.store.dispatch(UserActions.BeginGetUserTasks());
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }

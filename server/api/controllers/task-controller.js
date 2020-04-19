@@ -129,7 +129,7 @@ exports.updateTask = (request, response) => {
 };
 
 exports.getUserTasks = (request, response) => {
-  const userName = request.params.userName;
+  const userName = request.userData.userName;
   try{
     const resolve = (tasks) => {
       response.status(200);

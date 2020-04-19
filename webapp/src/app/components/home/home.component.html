@@ -5,10 +5,18 @@
       <mat-sidenav class="sideNavContainer" mode="side" opened>
         <!-- <mat-nav-list>
           <a class="sideNavItem"> -->
-        <span id="projectImage">
-          P
-        </span>
-        <span class="projectText">Projects</span>
+        <div>
+          <span id="projectImage">
+            P
+          </span>
+          <span class="projectText">Projects</span>
+        </div>
+        <div>
+          <span id="projectImage">
+            I
+          </span>
+          <span class="projectText" [routerLink]="['/', currentUserName, 'tasks']">Inbox</span>
+        </div>
         <!-- </a>
         </mat-nav-list> -->
       </mat-sidenav>

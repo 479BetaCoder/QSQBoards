@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import User from '../models/user';
+import { Task } from '../models/task';
 
 // Types with props
 export const RegisterUser = createAction(
@@ -11,6 +12,8 @@ export const LoginUser = createAction(
     props<User>()
 );
 export const GetActiveUsers = createAction('[User] - Get Active Users');
+
+export const GetUserTasks = createAction('[Task] - Get User tasks')
 
 // Begin Actions
 export const BeginRegisterUser = createAction(
@@ -37,5 +40,13 @@ export const SuccessGetActiveUsers = createAction(
     '[User] - Success Get Active Users',
     props<{ payload: User[] }>()
 );
+
+export const BeginGetUserTasks = createAction('[Task] - Begin Get User tasks');
+
+export const SuccessGetUserTasks = createAction(
+    '[Task] - Success Get User tasks',
+    props<{ payload: Task[] }>()
+);
+
 
 export const ErrorUserAction = createAction('[User] - Error', props<Error>());
