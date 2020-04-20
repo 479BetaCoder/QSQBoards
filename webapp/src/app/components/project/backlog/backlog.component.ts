@@ -24,6 +24,7 @@ import { Status } from '../../../shared/status';
 export class BacklogComponent implements OnInit {
 
   currentProjectTitle: String;
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   dataSource: MatTableDataSource<BacklogItem>;
   displayedColumns: string[] = ['title', 'assignee', 'priority', 'status', 'type'];
   projectDetails$: Observable<ProjectDetailsState>;
@@ -105,7 +106,7 @@ export class BacklogComponent implements OnInit {
     this.backlogUserStories.forEach(story =>{
         const item = new BacklogItem();
         item.id = story._id;
-        item.assignee = "";
+        item.assignee = undefined;
         item.description = story.description;
         item.status = story.status;
         item.storyPoints = story.storyPoints;
@@ -117,7 +118,7 @@ export class BacklogComponent implements OnInit {
           if(task.status != Status.Done){
             const taskItem = new BacklogItem();
             taskItem.id = story._id;
-            taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
+            taskItem.assignee = task.assignee;
             taskItem.description = task.description;
             taskItem.status = task.status;
             taskItem.priority = task.priority;

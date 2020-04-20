@@ -13,6 +13,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from '../project/comment/comment.component';
 import { Router } from '@angular/router';
 import * as constantRoutes from '../../shared/constants';
+import {NewTaskComponent} from "../project/new-task/new-task.component";
 
 @Component({
   selector: 'app-inbox',
@@ -76,5 +77,22 @@ export class InboxComponent implements OnInit {
   
     navigateToHome():void{
       this.router.navigateByUrl(constantRoutes.homeRoute);
+    }
+
+    updateTask(task: Task) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '500px';
+      dialogConfig.data = {
+        id: task._id,
+        title: task.title,
+        description: task.description,
+        assignee: task.assignee,
+        status: task.status,
+        priority: task.priority
+      };
+  
+      this.dialog.open(NewTaskComponent, dialogConfig);
     }
 }
