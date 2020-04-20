@@ -31,8 +31,21 @@
       </mat-form-field>
 
       <mat-form-field class="half-width">
-        <mat-select placeholder="Assignee" formControlName="assignee">
-          <mat-option *ngFor="let assignee of teamMates" [value]="assignee">{{assignee.userName}}</mat-option>
+        <mat-select placeholder="Assignee" [compareWith]="compareFn" [formControlName]="'assignee'">
+          <mat-select-trigger>
+            <mat-chip-list>
+              <mat-chip class="memberChip">
+                <img class="avatar" [src]="selectedAssignee.value.image!= null ? selectedAssignee.value.image : emptyImgUrl"
+                  onerror="this.src='../../../assets/blank-profile-picture.png'">
+                {{ selectedAssignee.value.userName }}
+              </mat-chip>
+            </mat-chip-list>
+          </mat-select-trigger>
+          <mat-option *ngFor="let assignee of teamMates" [value]="assignee">
+            <img class="avatar" [src]="assignee.image!= null ? assignee.image : emptyImgUrl"
+              onerror="this.src='../../../assets/blank-profile-picture.png'">
+            {{assignee.userName}}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="!createTaskForm.controls['assignee'].valid && createTaskForm.controls['assignee'].touched">

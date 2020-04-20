@@ -21,18 +21,6 @@ let taskSchema = new Schema(
       type: String,
     },
     /**
-     * Task comments.
-     */
-    comments: [
-      {
-        text: String,
-        postedBy: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
-    /**
      * Task status.
      */
     status: {
@@ -44,7 +32,7 @@ let taskSchema = new Schema(
      */
     priority: {
       type: String,
-      default: 0,
+      default: "Low",
     },
     /**
      * Assignee for the tasks

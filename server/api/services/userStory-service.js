@@ -7,7 +7,8 @@ const mongoose = require("mongoose"),
   UserStory = mongoose.model("UserStories"),
   Project = mongoose.model("Projects"),
   Task = mongoose.model("Tasks"),
-  utilConstants = require("../utils/Constants");
+  taskService = require("./task-service"),
+utilConstants = require("../utils/Constants");
 
 /**
  * Saves and returns the new userStory object.
@@ -44,54 +45,55 @@ exports.getStories = function (projectId) {
     await UserStory.aggregate([
       {
         $match: {
-          projectId: projectId
-        }
+          projectId: projectId,
+        },
       },
       // Unwind the source
       {
         $unwind: {
           path: "$tasks",
-          preserveNullAndEmptyArrays: true
-        }
-
+          preserveNullAndEmptyArrays: true,
+        },
       },
       // // Do the lookup matching
       {
         $lookup: {
-          "from": Task.collection.name,
-          "localField": "tasks",
-          "foreignField": "_id",
-          "as": "taskObjects"
-        }
+          from: Task.collection.name,
+          localField: "tasks",
+          foreignField: "_id",
+          as: "taskObjects",
+        },
       },
       // Unwind the result arrays ( likely one or none )
       {
         $unwind: {
           path: "$taskObjects",
-          preserveNullAndEmptyArrays: true
-        }
+          preserveNullAndEmptyArrays: true,
+        },
       },
       // Group back to arrays
       {
-        "$group": {
-          "_id": "$_id",
-          "title": { $first: "$title" },
-          "description": { $first: "$description" },
-          "status": { $first: "$status" },
-          "storyPoints": { $first: "$storyPoints" },
-          "priority": { $first: "$priority" },
-          "createdAt": {$first: "$createdAt"},
-          "tasks": { "$push": "$taskObjects" }
-        }
+        $group: {
+          _id: "$_id",
+          title: { $first: "$title" },
+          description: { $first: "$description" },
+          status: { $first: "$status" },
+          storyPoints: { $first: "$storyPoints" },
+          priority: { $first: "$priority" },
+          createdAt: { $first: "$createdAt" },
+          tasks: { $push: "$taskObjects" },
+        },
       },
       // sorting stage
-      { "$sort": { "createdAt": 1 } }
-    ]).then(result => {
-      return resolve(result);
-    }).catch(error => {
-      return reject(error);
-    })
-  })
+      { $sort: { createdAt: 1 } },
+    ])
+      .then((result) => {
+        return resolve(result);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
 
   return promise;
 };
@@ -103,7 +105,10 @@ exports.getStories = function (projectId) {
  * @param {String} storyId
  */
 exports.updateUserStory = function (updatedUserStory, storyId) {
-  const promise = UserStory.findOneAndUpdate({ _id: storyId }, updatedUserStory).exec();
+  const promise = UserStory.findOneAndUpdate(
+    { _id: storyId },
+    updatedUserStory
+  ).exec();
   return promise;
 };
 
@@ -113,7 +118,7 @@ exports.updateUserStory = function (updatedUserStory, storyId) {
  *  @param {String} storyId
  */
 exports.getUserStory = async function (storyId) {
-  const promise = UserStory.findById({ _id: storyId }).exec();
+  const promise = UserStory.findOne({ _id: storyId }).populate("tasks").exec();
   return promise;
 };
 
@@ -126,6 +131,8 @@ exports.delete = async function (storyId) {
   try {
     const validUserStory = await UserStory.findOne({ _id: storyId });
     if (validUserStory) {
+      // Remove the associated tasks
+      removeAssociatedTasks(validUserStory);
       return validUserStory.remove();
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
@@ -133,4 +140,10 @@ exports.delete = async function (storyId) {
   } catch (err) {
     return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
   }
+};
+
+const removeAssociatedTasks = (validUserStory) => {
+  validUserStory.tasks.forEach((taskId) => {
+    taskService.delete(taskId);
+  });
 };

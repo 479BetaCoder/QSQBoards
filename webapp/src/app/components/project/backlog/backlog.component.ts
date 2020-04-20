@@ -1,20 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProjectService } from '../../../services/project.service';
 import { select, Store } from "@ngrx/store";
 import Project from 'app/store/models/project';
 import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import ProjectDetailsState from '../../../store/states/project-details.state';
-import {ActivatedRoute, Route, Router} from "@angular/router";
-import * as ProjectDetailsActions from "../../../store/actions/project-details.action";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BacklogItem} from '../../../models/backlog.model';
 import BoardState from 'app/store/states/board.state';
 import UserStory from 'app/store/models/userStory';
 import * as BoardActions from '../../../store/actions/board.action';
 import * as constantRoutes from "../../../shared/constants";
-import {MatDialog} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from '@angular/common';
 import { Status } from '../../../shared/status';
@@ -48,11 +45,9 @@ export class BacklogComponent implements OnInit {
 
   sortBy:any;
 
-  constructor(private projectService: ProjectService,
-    private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
+  constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
+    storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
     private store: Store<{board: BoardState }>) {
     this.boardState$ = store.pipe(select('board'));
     this.projectDetails$ = storePrDetail.pipe(select('projectDetails'));

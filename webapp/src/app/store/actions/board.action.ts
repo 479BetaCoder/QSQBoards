@@ -20,7 +20,7 @@ export const SuccessGetAllUserStoriesAction = createAction(
 
 export const BeginCreateUserStory = createAction(
   '[UserStory] - Begin Create UserStory',
-  props<{ projectId: string,  payload: UserStory}>()
+  props<{payload: UserStory}>()
 );
 
 export const SuccessCreateUserStory = createAction(

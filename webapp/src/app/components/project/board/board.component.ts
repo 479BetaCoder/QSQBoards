@@ -101,7 +101,6 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       this.updateTheStatus(event.item.data, 'In Progress');
-      console.log(event.item);
     }
   }
 
