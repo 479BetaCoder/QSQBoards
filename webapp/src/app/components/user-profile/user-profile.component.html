@@ -5,13 +5,25 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            <h2>Update Your Profile Password</h2>
+            <h2>Update Your Profile</h2>
           </mat-card-title>
           <mat-card-subtitle></mat-card-subtitle>
         </mat-card-header><br>
         <mat-card-content>
           <img mat-card-image *ngIf="socialImage" src={{socialImage}} alt="Profile Picture" class="img-width"
             onerror="this.src='../../../assets/blank-profile-picture.png'"><br>
+          <div class="profilePic" *ngIf="!socialImage">
+            <label class="hoverable" for="fileInput">
+              <img [src]="url ? url :'../../../assets/blank-profile-picture.png'"> 
+              <div class="hover-text">Change Pic</div>
+              <div class="background"></div>
+            </label>
+            <br/>
+            <input id="fileInput" type='file' (change)="onSelectFile($event)">
+            <button mat-stroked-button color="warn" class="deleteBtn" *ngIf="url" (click)="delete()" >Remove</button>
+
+          </div>
+            
           <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="half-width">
               <mat-label>UserName</mat-label>
