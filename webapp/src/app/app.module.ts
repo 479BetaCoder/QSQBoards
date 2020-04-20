@@ -107,6 +107,7 @@ const rootReducer = {
     UserStoryDetailsComponent,
     NewTaskComponent,
     AnalyticsComponent,
+    InboxComponent,
     CommentComponent
   ],
   imports: [
