@@ -5,10 +5,18 @@
       <mat-sidenav class="sideNavContainer" mode="side" opened>
         <!-- <mat-nav-list>
           <a class="sideNavItem"> -->
-        <span id="projectImage">
-          P
-        </span>
-        <span class="projectText">Projects</span>
+        <div class="home-nav-item"  (click)="navigateToHome()">
+          <span id="home-nav-img">
+            <img src="../../../assets/project.png" class="avatar" alt="Projects" />
+          </span>
+          <span class="projectText">Projects</span>
+        </div>
+        <div class="home-nav-item"  [routerLink]="['/', currentUserName, 'tasks']">
+          <span id="home-nav-img">
+            <img src="../../../assets/inbox.png" class="avatar" alt="Projects" />
+          </span>
+          <span class="projectText">Inbox</span>
+        </div>
         <!-- </a>
         </mat-nav-list> -->
       </mat-sidenav>

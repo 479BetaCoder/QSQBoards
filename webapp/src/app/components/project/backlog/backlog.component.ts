@@ -5,7 +5,7 @@ import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import ProjectDetailsState from '../../../store/states/project-details.state';
 import {ActivatedRoute, Router} from "@angular/router";
-import {BacklogItem} from '../../../models/backlog.model';
+import {BacklogItem} from '../../../store/models/backlog.model';
 import BoardState from 'app/store/states/board.state';
 import UserStory from 'app/store/models/userStory';
 import * as BoardActions from '../../../store/actions/board.action';
@@ -24,6 +24,7 @@ import { Status } from '../../../shared/status';
 export class BacklogComponent implements OnInit {
 
   currentProjectTitle: String;
+  emptyImgUrl: string = '../../../assets/blank-profile-picture.png';
   dataSource: MatTableDataSource<BacklogItem>;
   displayedColumns: string[] = ['title', 'assignee', 'priority', 'status', 'type'];
   projectDetails$: Observable<ProjectDetailsState>;
@@ -60,15 +61,8 @@ export class BacklogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projectDetails = JSON.parse(sessionStorage.getItem('SelectedProject'));
       if (sessionStorage.getItem('User')) {
-        this.ProjectDetailsSubscription = this.projectDetails$
-          .pipe(
-            map(res => {
-              if (res) {
-                this.projectDetails = res.selectedProjectDetails;
-                this.projectsDetailsError = res.projectsDetailsError;
-              }
-            })).subscribe();
         this.boardSubscription = this.boardState$
           .pipe(
             map(response => {
@@ -105,7 +99,7 @@ export class BacklogComponent implements OnInit {
     this.backlogUserStories.forEach(story =>{
         const item = new BacklogItem();
         item.id = story._id;
-        item.assignee = "";
+        item.assignee = undefined;
         item.description = story.description;
         item.status = story.status;
         item.storyPoints = story.storyPoints;
@@ -117,7 +111,7 @@ export class BacklogComponent implements OnInit {
           if(task.status != Status.Done){
             const taskItem = new BacklogItem();
             taskItem.id = story._id;
-            taskItem.assignee = task.assignee != undefined?  task.assignee.userName : "";
+            taskItem.assignee = task.assignee;
             taskItem.description = task.description;
             taskItem.status = task.status;
             taskItem.priority = task.priority;

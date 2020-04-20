@@ -1,4 +1,5 @@
 import User from '../models/user';
+import { Task } from '../models/task';
 
 export default class UserState {
     activeUsers: Array<User>;
@@ -6,6 +7,7 @@ export default class UserState {
     authToken: string;
     userError: Error;
     isUserRegistered: boolean;
+    tasks: Array<Task>;
 }
 
 export const initializeState = (): UserState => { 
@@ -14,6 +16,7 @@ export const initializeState = (): UserState => {
         loggedInUser: null,
         authToken: '',
         userError: null,
-        isUserRegistered: false
+        isUserRegistered: false,
+        tasks: Array<Task>()
     };
 };

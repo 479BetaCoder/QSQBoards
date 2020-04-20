@@ -1,3 +1,5 @@
+import User from './user';
+
 export class BacklogItem {
   id: string;
   title: string;
@@ -6,6 +8,6 @@ export class BacklogItem {
   status: string;
   storyPoints: string;
   priority: string;
-  assignee: string;
+  assignee: User;
   type: string;
 }

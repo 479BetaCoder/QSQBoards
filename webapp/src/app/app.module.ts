@@ -77,6 +77,7 @@ import {UserStoryService} from './services/user-story.service';
 import { CommentReducer } from './store/reducers/comment.reducer';
 import {CommentEffects} from './effects/comment.effects';
 import { CommentComponent } from './components/project/comment/comment.component';
+import { InboxComponent } from './components/inbox/inbox.component';
 
 const rootReducer = {
   projects: ProjectReducer,
@@ -106,6 +107,7 @@ const rootReducer = {
     UserStoryDetailsComponent,
     NewTaskComponent,
     AnalyticsComponent,
+    InboxComponent,
     CommentComponent
   ],
   imports: [

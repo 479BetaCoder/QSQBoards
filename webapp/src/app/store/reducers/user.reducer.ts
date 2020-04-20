@@ -9,6 +9,7 @@ const reducer = createReducer(
     on(UserActions.RegisterUser, state => state),
     on(UserActions.LoginUser, state => state),
     on(UserActions.GetActiveUsers, state => state),
+    on(UserActions.GetUserTasks, state => state),
     on(UserActions.SuccessRegisterUser, (state: UserState) => {
         return { ...state, isUserRegistered: true, userError: null };
     }),
@@ -19,6 +20,13 @@ const reducer = createReducer(
         return {
             ...state,
             activeUsers: [...payload],
+            projectsError: null
+        };
+    }),
+    on(UserActions.SuccessGetUserTasks, (state: UserState, {payload}) => {
+        return {
+            ...state,
+            tasks: payload,
             projectsError: null
         };
     }),

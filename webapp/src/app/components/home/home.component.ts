@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
         .subscribe();
       this.store.dispatch(ProjectActions.BeginGetProjectsAction());
       this.store.dispatch(UserActions.BeginGetActiveUsers());
+      this.store.dispatch(UserActions.BeginGetUserTasks());
     } else {
       this.router.navigateByUrl(constantRoutes.emptyRoute);
     }
@@ -123,6 +124,10 @@ export class HomeComponent implements OnInit {
     if (this.ProjectSubscription) {
       this.ProjectSubscription.unsubscribe();
     }
+  }
+
+  navigateToHome():void{
+    this.router.navigateByUrl(constantRoutes.homeRoute);
   }
 
 }
