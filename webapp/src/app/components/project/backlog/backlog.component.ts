@@ -5,7 +5,7 @@ import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import ProjectDetailsState from '../../../store/states/project-details.state';
 import {ActivatedRoute, Router} from "@angular/router";
-import {BacklogItem} from '../../../models/backlog.model';
+import {BacklogItem} from '../../../store/models/backlog.model';
 import BoardState from 'app/store/states/board.state';
 import UserStory from 'app/store/models/userStory';
 import * as BoardActions from '../../../store/actions/board.action';
