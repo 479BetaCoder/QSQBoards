@@ -21,9 +21,9 @@ export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
   userProject: any;
   priorities = [
-    {value: 'low', viewValue: 'Low'},
-    {value: 'medium', viewValue: 'Medium'},
-    {value: 'high', viewValue: 'High'}];
+    {value: 'Low', viewValue: 'Low'},
+    {value: 'Medium', viewValue: 'Medium'},
+    {value: 'High', viewValue: 'High'}];
   selectedProject: any;
   projectDetails$: Observable<ProjectDetailsState>;
   ProjectDetailsSubscription: Subscription;
@@ -43,7 +43,6 @@ export class NewUserStoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
     this.ProjectDetailsSubscription = this.projectDetails$
       .pipe(
         map(res => {
@@ -72,18 +71,14 @@ export class NewUserStoryComponent implements OnInit {
     if (!this.createStoryForm.valid) {
       return false;
     } else {
+      if(!this.selectedProject) {
+        this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+      }
       const newUserStory: UserStory = this.createStoryForm.value;
       newUserStory.status = 'New';
-      this.store.dispatch(BoardActions.BeginCreateUserStory({ projectId:  this.selectedProject._id, payload: newUserStory }));
+      newUserStory.projectId = this.selectedProject._id;
+      this.store.dispatch(BoardActions.BeginCreateUserStory({payload: newUserStory}));
       this.dialogRef.close();
-      /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
-        () => {
-          console.log('Stories successfully created!');
-          // this.ngZone.run(() => this.router.navigateByUrl('/boards'));
-          this.dialogRef.close();
-        }, (error) => {
-          console.log(error);
-        });*/
     }
   }
 

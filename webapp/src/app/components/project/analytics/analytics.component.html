@@ -9,6 +9,7 @@
 
 <ng-container *ngIf="optionValue == 'userstories'">
 
+  <div class="analyticsContainer">
   <div class="chartContainerLeft">
     <div class="chart1"><highcharts-chart class="userStorychart1"
       [Highcharts] = "highcharts" 
@@ -22,14 +23,12 @@
         [options] = "burnDownChartOptions">
      </highcharts-chart></div>  
     </div>
-
-  
-
- 
+  </div>
 </ng-container>
 
 
 <ng-container *ngIf="optionValue == 'tasks'">
+  <div class="analyticsContainer">
   <div class="chartContainerLeft">
    <div class="chart1"><highcharts-chart class="taskChart1"
     [Highcharts] = "taskPieChart" 
@@ -42,5 +41,6 @@
     [Highcharts] = "taskBarGraph" 
     [options] = "taskBarGraphOptions">
  </highcharts-chart></div>
+</div>
 </div>
 </ng-container>

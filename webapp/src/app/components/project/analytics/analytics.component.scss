@@ -11,12 +11,10 @@ mat-select{
     width: 15%;
 }
 
-.chartContainerRight{
-    width: 50%; 
-    float:right;
-}
-
-.chartContainerLeft{
-    width: 50%; 
-    float:left;
+.analyticsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 50px;
 }

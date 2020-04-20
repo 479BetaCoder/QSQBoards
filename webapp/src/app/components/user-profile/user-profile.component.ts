@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   url: string | ArrayBuffer;
   imageName: string = '';
   uploadImage : any;
+  profile: any;
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
@@ -46,15 +47,12 @@ export class UserProfileComponent implements OnInit {
 
   setForm() {
     this.authService.userProfile$.subscribe(data => {
-  
-      if(data.image.includes("http")){
-        this.url = data.image;
-      }
-      else if(data.image == ""){
+
+      if(data.image == ""){
         this.url = null;
       }
       else{
-        this.url= baseURL +"/users/profileImg/"+ data.image;
+        this.url = data.image;
       }
 
       this.imageName = data.image;
@@ -78,7 +76,7 @@ export class UserProfileComponent implements OnInit {
       if (window.confirm('Are you sure you want to update?')) {
         if(this.uploadImage){
           let formData = new FormData();
-          this.imageName = this.uploadImage.name;
+          this.imageName = baseURL + '/users/profileImg/'+ this.uploadImage.name;
           formData.append('profile_img', this.uploadImage);
           this.qsqService.uploadImage(formData).subscribe();
         }
@@ -88,6 +86,9 @@ export class UserProfileComponent implements OnInit {
           .subscribe(res => {
             this.router.navigateByUrl(constantRoutes.homeRoute);
             console.log('Content updated successfully!');
+            this.profile = JSON.parse(sessionStorage.getItem('User'));
+            this.profile.image = this.imageName;
+            sessionStorage.setItem('User', JSON.stringify(this.profile));
           }, (error) => {
             console.log(error);
           });

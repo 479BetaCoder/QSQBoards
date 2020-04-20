@@ -6,6 +6,7 @@
 const mongoose = require("mongoose"),
   UserStory = mongoose.model("UserStories"),
   Task = mongoose.model("Tasks"),
+  Comment = mongoose.model("Comments"),
   utilConstants = require("../utils/Constants");
 
 /**
@@ -70,6 +71,11 @@ exports.getAssociatedStoryId = function (taskId) {
   return promise;
 }
 
+const removeComments = (validTask) => {
+  const promise = Comment.remove({taskId: validTask._id}).exec();
+  return promise;
+}
+
 /**
  * Deletes the Task object matching the taskId.
  *
@@ -79,8 +85,11 @@ exports.delete = async function (taskId) {
   try {
     const validTask = await Task.findOne({ _id: taskId });
     if (validTask) {
+      // Remove associate taskComments if any
+      const commentsPromise = await removeComments(validTask);
+      if(commentsPromise) {
       return validTask.remove();
-      return;
+      }
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
     }

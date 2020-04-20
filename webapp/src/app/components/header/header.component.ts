@@ -16,14 +16,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (sessionStorage.getItem('User')) {
       this.profile = JSON.parse(sessionStorage.getItem('User'));
-      if(this.profile.image.includes("http")){
-        this.url = this.profile.image;
-      }
-      else if(this.profile.image == ""){
+      if(this.profile.image == ""){
         this.url = null;
       }
       else{
-        this.url= baseURL +"/users/profileImg/"+ this.profile.image;
+        this.url = this.profile.image;
       }
       //this.authService.userProfile$.subscribe(prof => this.profile = prof);
     }

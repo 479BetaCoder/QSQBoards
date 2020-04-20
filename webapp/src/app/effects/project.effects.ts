@@ -40,7 +40,6 @@ export class ProjectEffects {
                     })
                     .pipe(
                         map((data: Project) => {
-                            console.log(JSON.stringify(data));
                             return ProjectActions.SuccessCreateProject({ payload: data });
                         }),
                         catchError((error: Error) => {
