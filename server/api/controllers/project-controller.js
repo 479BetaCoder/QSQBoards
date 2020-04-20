@@ -1,5 +1,5 @@
 "use strict";
-//import task service.
+//import project service.
 const projectService = require("../services/project-service"),
   utilConstants = require("../utils/Constants"),
   log4js = require("log4js");

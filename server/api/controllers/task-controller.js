@@ -80,7 +80,6 @@ exports.delete = function (request, response) {
             if (userStory) {
               response.status(200).json();
             } else {
-              console.log('hello');
               response.status(400).json({
                 message: utilConstants.CLIENT_ERR,
               });

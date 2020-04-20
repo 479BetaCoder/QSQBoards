@@ -6,7 +6,6 @@ import {Injectable} from '@angular/core';
 export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('INTERCEPTOR');
     // We retrieve the token, if any
     const user = JSON.parse(sessionStorage.getItem('User'));
     let newHeaders = req.headers.set('Content-Type', 'application/json');

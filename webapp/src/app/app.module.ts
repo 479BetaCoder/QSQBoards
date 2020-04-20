@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {RegisterComponent} from './components/register/register.component';
 // import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 // import { MainDeskComponent } from './main-desk/main-desk.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
@@ -42,6 +42,7 @@ import {TokenInterceptorService} from './interceptors/TokenInterceptorService';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ProjectDialogComponent} from './components/project-dialog/project-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {UserFilterPipe} from './shared/user-filter.pipe';
 import {ProjectFilterPipe} from './shared/project-filter.pipe';
@@ -60,6 +61,7 @@ import {MatTableModule} from '@angular/material/table';
 import {BacklogComponent} from './components/project/backlog/backlog.component';
 import {AnalyticsComponent} from './components/project/analytics/analytics.component';
 
+
 // Reducers and effects
 import {ProjectReducer} from './store/reducers/project.reducer';
 import {ProjectEffects} from './effects/project.effects';
@@ -72,6 +74,9 @@ import {BoardEffects} from './effects/board.effects';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NewTaskComponent } from './components/project/new-task/new-task.component';
 import {UserStoryService} from './services/user-story.service';
+import { CommentReducer } from './store/reducers/comment.reducer';
+import {CommentEffects} from './effects/comment.effects';
+import { CommentComponent } from './components/project/comment/comment.component';
 import { InboxComponent } from './components/inbox/inbox.component';
 
 const rootReducer = {
@@ -79,6 +84,7 @@ const rootReducer = {
   user: UserReducer,
   projectDetails: ProjectDetailsReducer,
   board: BoardReducer,
+  comments: CommentReducer
 };
 
 @NgModule({
@@ -101,7 +107,7 @@ const rootReducer = {
     UserStoryDetailsComponent,
     NewTaskComponent,
     AnalyticsComponent,
-    InboxComponent
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -137,9 +143,11 @@ const rootReducer = {
     HighchartsChartModule,
     MatTableExporterModule,
     MatSortModule,
+    MatTabsModule,
     StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects]),
-    MatDatepickerModule
+    EffectsModule.forRoot([ProjectEffects, BoardEffects, UserEffects, ProjectDetailsEffects, CommentEffects]),
+    MatDatepickerModule,
+    MatExpansionModule
   ],
   providers: [
     UserService,
