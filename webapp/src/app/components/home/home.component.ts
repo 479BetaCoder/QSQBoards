@@ -126,4 +126,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  navigateToHome():void{
+    this.router.navigateByUrl(constantRoutes.homeRoute);
+  }
+
 }

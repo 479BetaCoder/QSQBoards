@@ -9,6 +9,10 @@ import { Store, select } from '@ngrx/store';
 import ProjectState from 'app/store/states/project.state';
 import ProjectDetailsState from 'app/store/states/project-details.state';
 import * as UserActions from '../../store/actions/user.action';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { CommentComponent } from '../project/comment/comment.component';
+import { Router } from '@angular/router';
+import * as constantRoutes from '../../shared/constants';
 
 @Component({
   selector: 'app-inbox',
@@ -19,14 +23,18 @@ export class InboxComponent implements OnInit {
 
   currentUserName: string;
   dataSource: any;
-  displayedColumns: string[] = ['title', 'description', 'priority', 'status'];
+  displayedColumns: string[] = ['title', 'description', 'priority', 'status', 'comments'];
   tasks: Task[];
 
   activeUsers$: Observable<UserState>;
   ActiveUsersSubscription: Subscription;
   userError: Error = null;
   
-  constructor( private store: Store<{ projects: ProjectState, user: UserState, projectDetails: ProjectDetailsState }>) {
+  constructor( private store: Store<{ projects: ProjectState, 
+    user: UserState, 
+    projectDetails: ProjectDetailsState }>,
+    private dialog: MatDialog,
+    private router: Router,) {
     this.activeUsers$ = store.pipe(select('user'));
    }
 
@@ -48,4 +56,25 @@ export class InboxComponent implements OnInit {
       .subscribe();
   }
 
+  getElementDesc(taskDesc) {
+    if (taskDesc.length > 35) {
+      return taskDesc.substring(0, 35).concat(" ...");
+    }
+    return taskDesc;
+  }
+
+    // for task comments
+    commentTask(task: Task) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = false;
+      dialogConfig.width = '60vw';
+      dialogConfig.height="80%";
+      dialogConfig.data = task;
+      this.dialog.open(CommentComponent, dialogConfig);
+    }
+  
+    navigateToHome():void{
+      this.router.navigateByUrl(constantRoutes.homeRoute);
+    }
 }

@@ -307,17 +307,69 @@
     margin-bottom: 10px;
   }
   table {
-    width: 100%;
-  }
-  .mat-header-cell{
-    font-size: large;
-    font-weight: bolder;
+    width: 95%;
+    align-self: center;
   }
 
   td{
     align-items: center;
   }
-  .mat-cell{
-    font-size: large;
+
+  .sideNavContainer {
+    width: 200px !important;
+    padding: 10px;
   }
-    
+  .home-nav-item{
+    height: 60px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .avatar {
+    vertical-align: middle;
+    width: 38px;
+    height: 38px;
+  }
+
+  .projectText{
+    margin-left: 5px;
+    font-size: larger;
+    color: #3f51b5;
+  }
+
+
+  .taskContainer {
+    display: flex;
+    width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.Done {
+  background: green;
+  color: white;
+}
+
+.New {
+    background: #ff9504;
+    color: white;
+}
+
+.Progress {
+  background: #3f51b5;
+  color: white;
+}
+
+.High {
+  color: red;
+}
+
+.Medium {
+  color: #ff9504;
+}
+
+.Low {
+  color: green;
+}
