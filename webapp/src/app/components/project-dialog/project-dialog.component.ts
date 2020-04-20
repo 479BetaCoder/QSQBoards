@@ -101,7 +101,6 @@ export class ProjectDialogComponent implements OnInit {
   }
 
   compareStatus(x: string, y: string) : boolean {
-    console.log(y);
     return x && y ? x === y : false;
   }
 

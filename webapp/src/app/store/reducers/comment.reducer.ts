@@ -12,7 +12,11 @@ const reducer = createReducer(
         return { ...state, comments: payload };
     }),
     on(CommentActions.SuccessCreateComment, (state: CommentState, { payload }) => {
-        return { ...state, comments: [...state.comments, payload], commentsError: null };
+        let currentComments = [...state.comments];
+        currentComments.unshift(payload);
+        return { 
+            ...state, 
+            comments: [...currentComments], commentsError: null };
     }),
     on(CommentActions.ErrorCommentsAction, (state: CommentState, error: Error) => {
         return { ...state, commentsError: error };

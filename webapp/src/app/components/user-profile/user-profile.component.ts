@@ -38,7 +38,6 @@ export class UserProfileComponent implements OnInit {
 
   setForm() {
     this.authService.userProfile$.subscribe(data => {
-      console.log(data.image);
       this.socialImage = data.image;
       this.updateForm.setValue({
         userName: data.userName,
@@ -60,7 +59,6 @@ export class UserProfileComponent implements OnInit {
         this.qsqService.updateUser(this.updateForm.value)
           .subscribe(res => {
             this.router.navigateByUrl('/home');
-            console.log('Content updated successfully!');
           }, (error) => {
             console.log(error);
           });

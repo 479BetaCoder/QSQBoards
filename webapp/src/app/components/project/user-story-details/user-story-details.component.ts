@@ -19,6 +19,7 @@ import Project from "../../../store/models/project";
 import User from "../../../store/models/user";
 import CommentState from 'app/store/states/comment.state';
 import Comment from 'app/store/models/comment';
+import { CommentComponent } from '../comment/comment.component';
 
 
 @Component({
@@ -44,12 +45,6 @@ export class UserStoryDetailsComponent implements OnInit {
   // States and subscriptions
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
-  commentState$: Observable<CommentState>;
-  commentSubscription: Subscription;
-  commentsError: Error = null;
-
-
-  taskComments: Comment[];
   allUserStories: UserStory[];
   allErrors: Error = null;
   projectsDetailsError: Error = null;
@@ -58,17 +53,13 @@ export class UserStoryDetailsComponent implements OnInit {
   selectedTaskTab = new FormControl(0);
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private ngZone: NgZone,
     private dialog: MatDialog,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private projectService: ProjectService,
     private userStoryService: UserStoryService,
     private store: Store<{ board: BoardState, projectDetails: ProjectDetailsState, comments: CommentState}>,
   ) {
     this.boardState$ = store.pipe(select('board'));
-    this.commentState$ = store.pipe(select('comments'));
   }
 
   ngOnInit() {
@@ -97,15 +88,13 @@ export class UserStoryDetailsComponent implements OnInit {
 
   // for task comments
   commentTask(task: Task) {
-    this.store.dispatch(CommentActions.BeginGetComments({payload: task._id}));
-    this.commentSubscription = this.commentState$
-        .pipe(
-          map(response => {
-            this.taskComments = response.comments;
-            this.commentsError = response.commentsError;
-          })
-        ).subscribe();
-    this.selectedTaskTab.setValue(1);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '60vw';
+    dialogConfig.height="80%";
+    dialogConfig.data = task;
+    this.dialog.open(CommentComponent, dialogConfig);
   }
 
 
@@ -168,8 +157,7 @@ export class UserStoryDetailsComponent implements OnInit {
     this.dialog.open(NewTaskComponent, dialogConfig);
   }
 
-  deleteTask(task, index) {
-    console.log(index);
+  deleteTask(task: Task) {
     if (window.confirm('Are you sure?')) {
       this.userStoryService.deleteTask(task._id).subscribe(_response => {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));

@@ -106,15 +106,7 @@
       </mat-dialog-content>
     </form>
   </mat-tab>
-  <mat-tab label="Tasks">
-    <ng-template matTabContent>
-      <mat-tab-group
-        animationDuration="0ms"
-        mat-align-tabs="center"
-        [selectedIndex]="selectedTaskTab.value"
-        (selectedIndexChange)="selectedTaskTab.setValue($event)"
-      >
-        <mat-tab class="tabLabel" label="Edit Task">
+  <mat-tab label="Edit Task">
           <div>
             <button
               class="mat-raised-button mat-primary taskButton"
@@ -259,25 +251,12 @@
                   mat-row
                   *matRowDef="let row; columns: displayedTaskColumns"
                 ></tr>
+                
               </table>
             </div>
             <div *ngIf="!editStory || !editStory.tasks">
               <label>No Tasks for the current User Story !</label>
             </div>
           </div>
-        </mat-tab>
-        <mat-tab class="tabLabel" label="Comments"> 
-          <mat-form-field class="example-full-width">
-            <mat-label>Comments</mat-label>
-            <div>
-              <textarea matInput placeholder="Add a comment ..."></textarea>
-            </div>
-            <div *ngFor="let taskComment of taskComments">
-              <label>{{taskComment.comment}}</label>
-            </div>
-          </mat-form-field>
-        </mat-tab>
-      </mat-tab-group>
-    </ng-template>
   </mat-tab>
 </mat-tab-group>

@@ -71,7 +71,6 @@ export class NewTaskComponent implements OnInit {
     });
     this.storyId = sessionStorage.getItem('storyId');
     this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
-    console.log('Selected Project :: ' + JSON.stringify(this.selectedProject));
     this.teamMates = this.selectedProject.members;
     this.BoardSubscription = this.boardState$
       .pipe(
@@ -101,7 +100,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   updateTaskForm() {
-    console.log('formData :: ' + JSON.stringify(this.formData));
     this.heading = 'Update The Task';
     this.updateForm = true;
     if(this.formData.assignee) {

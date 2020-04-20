@@ -94,7 +94,6 @@ export class AnalyticsComponent implements OnInit {
 
   constructGraphData(){
    this.resetCount();
-     console.log(JSON.stringify(this.allUserStories));
       this.allUserStories.forEach(
          story => {
             if(story.status.toLowerCase() == "new"){

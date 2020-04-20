@@ -79,14 +79,6 @@ export class NewUserStoryComponent implements OnInit {
       newUserStory.projectId = this.selectedProject._id;
       this.store.dispatch(BoardActions.BeginCreateUserStory({payload: newUserStory}));
       this.dialogRef.close();
-      /*this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
-        () => {
-          console.log('Stories successfully created!');
-          // this.ngZone.run(() => this.router.navigateByUrl('/boards'));
-          this.dialogRef.close();
-        }, (error) => {
-          console.log(error);
-        });*/
     }
   }
 

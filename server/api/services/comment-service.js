@@ -12,7 +12,7 @@ const mongoose = require("mongoose"),
  * @param {Object} params {Search parameters}
  */
 exports.search = function (taskId) {
-  const promise = Comment.find({ taskId: taskId }).exec();
+  const promise = Comment.find({ taskId: taskId }).sort({createdAt: -1}).exec();
   return promise;
 };
 
