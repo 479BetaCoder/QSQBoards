@@ -61,15 +61,8 @@ export class BacklogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.projectDetails = JSON.parse(sessionStorage.getItem('SelectedProject'));
       if (sessionStorage.getItem('User')) {
-        this.ProjectDetailsSubscription = this.projectDetails$
-          .pipe(
-            map(res => {
-              if (res) {
-                this.projectDetails = res.selectedProjectDetails;
-                this.projectsDetailsError = res.projectsDetailsError;
-              }
-            })).subscribe();
         this.boardSubscription = this.boardState$
           .pipe(
             map(response => {
