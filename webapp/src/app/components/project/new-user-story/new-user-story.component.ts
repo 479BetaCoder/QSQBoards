@@ -10,7 +10,7 @@ import * as BoardActions from '../../../store/actions/board.action';
 import BoardState from '../../../store/states/board.state';
 import {map} from "rxjs/operators";
 import {Observable, Subscription} from "rxjs";
-import ProjectDetailsState from "../../../store/states/project-details.state";
+import ProjectDetailsState from '../../../store/states/project-details.state';
 
 @Component({
   selector: 'app-new-user-story',

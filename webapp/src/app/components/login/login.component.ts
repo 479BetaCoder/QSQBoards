@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GoogleLoginProvider, AuthService } from 'angularx-social-login';
+import {GoogleLoginProvider, AuthService, FacebookLoginProvider} from 'angularx-social-login';
 import { AuthenticationService } from '../../auth/authentication.service';
 import * as constantRoutes from '../../shared/constants';
 
@@ -36,9 +36,16 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
   }
 
-  public socialSignIn() {
-    let socialPlatformProvider: string;
-    socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+  /*
+  * Login user using social and registration of social user
+  * */
+  public socialSignIn(socialProvider) {
+    let socialPlatformProvider;
+    if (socialProvider === 'facebook') {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    } else if (socialProvider === 'google') {
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    }
     this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
       const reqObject = {
         emailId: socialuser.email,
@@ -61,6 +68,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /*
+  * Social login routing accordingly
+  * */
   loginSocialUser(reqObject, loginForFirst) {
     this.qsqservice.login(reqObject)
       .subscribe(
@@ -70,11 +80,13 @@ export class LoginComponent implements OnInit {
           loginForFirst ? this._router.navigate([constantRoutes.userProfileRoute]) : this._router.navigate([constantRoutes.homeRoute]);
         },
         error => {
-          
+
         }
       );
   }
 
+  /*
+  * normal login for username and password*/
   login() {
     if (this.loginForm.valid) {
       this.qsqservice.login(this.loginForm.value)
@@ -96,6 +108,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /*
+  * Navigate to register
+  * */
   movetoregister() {
     this._router.navigateByUrl(constantRoutes.registerRoute, { relativeTo: this._activatedRoute });
   }
