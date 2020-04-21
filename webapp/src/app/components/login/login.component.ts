@@ -47,8 +47,6 @@ export class LoginComponent implements OnInit {
       socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     }
     this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
-      console.log(socialProvider, socialuser);
-      console.log(socialuser);
       const reqObject = {
         emailId: socialuser.email,
         userName: socialuser.firstName + socialuser.lastName,
