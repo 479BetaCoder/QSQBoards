@@ -104,11 +104,7 @@ exports.delete = async function (taskId) {
  * @param {string} userName {user name of the user}
  */
 exports.getUserTasks = function (userName) {
-  const promise = Task.find({ 
-    assignee: {
-          userName: userName
-        }
-    }).exec();
+  const promise = Task.find({"assignee.userName":userName}).exec();
   return promise;
 };
 

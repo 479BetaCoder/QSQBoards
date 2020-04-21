@@ -1,11 +1,8 @@
+<mat-toolbar color="primary">
+    <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" alt="QSQ Boards" />
+    <span class="qsqboards">Qsqboards</span>
+    </mat-toolbar>
 <div class="registerContainer">
-    <mat-toolbar>
-        <!-- <button mat-button (click)="navigateToHome()">
-          <label class="profileName">Home</label>
-        </button> -->
-        <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" alt="QSQ Boards" />
-        <span class="qsqboards">Qsqboards</span>
-      </mat-toolbar>
     <div class="formcontainer">
         <div class="formbody">
             <form [formGroup]="myForm">
@@ -37,7 +34,7 @@
                 </div>
 
 
-                <div>
+                <div class="signUpContainer">
                     <button mat-raised-button color="primary" class="form-btn" (click)="register()">Sign Up</button>
 
                 </div>
@@ -45,7 +42,7 @@
                 <div class="errorMessage">
                     <strong>{{successMessage}}</strong> 
                 </div>
-                <div>
+                <div class="alreadyMemberContainer">
                     <a class="alreadyMember" (click)="movetologin()">Already a member? click here to login!</a>
                 </div>
             </form>

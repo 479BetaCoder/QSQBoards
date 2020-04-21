@@ -145,6 +145,11 @@
     font-size: 16px;
     width: 180px;
   }
+
+  .commentIcon {
+    color: mediumseagreen;
+    margin-right: 4px;
+  }
   
   .hoverClass:hover {
     cursor: pointer;
@@ -320,9 +325,16 @@
     padding: 10px;
   }
   .home-nav-item{
-    height: 60px;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     cursor: pointer;
+    & span {
+      cursor: pointer;
+    }
+  }
+
+  .noTasksLabel {
+    padding: 40px;
   }
 
   .avatar {

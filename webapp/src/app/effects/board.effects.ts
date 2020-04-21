@@ -52,7 +52,8 @@ export class BoardEffects {
     this.action$.pipe(
       ofType(BoardActions.BeginCreateUserStory),
       mergeMap(action =>
-        this.http.post(this.baseUrlBoard, JSON.stringify(action.payload))
+        
+        this.http.post(this.baseUrlBoard, JSON.stringify(action.payload), {headers:{'Content-Type':'application/json'}})
           .pipe(
             map((data: UserStory) => {
               return BoardActions.SuccessCreateUserStory({ payload: data });
@@ -69,7 +70,7 @@ export class BoardEffects {
     this.action$.pipe(
       ofType(BoardActions.BeginUpdateUserStory),
       mergeMap(action =>
-        this.http.put(this.baseUrlBoard + '/' + action.storyId, JSON.stringify(action.payload))
+        this.http.put(this.baseUrlBoard + '/' + action.storyId, JSON.stringify(action.payload), {headers:{'Content-Type':'application/json'}})
           .pipe(
             map(() => {
               return BoardActions.SuccessUpdateStory({ payload: action.payload });

@@ -13,24 +13,27 @@
 
 .formcontainer {
   align-self: center;
+  width: 25%;
+  border-top: 2px solid #3f51b5;
+}
+
+.signUpContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .qsqIcon {
   width: 100px;
   height: 75px;
+  background-color: white;
   cursor: default;
-}
-
-mat-toolbar {
-  background: transparent !important;
-  align-items: center !important;
-  margin-left: 40% !important;
 }
 
 .qsqboards {
   font-size: 30px;
   font-weight: 1000;
-  color: #3f51b5;
+  padding-left: 10px;
   cursor: default;
 }
 
@@ -38,13 +41,12 @@ mat-toolbar {
  // background-image: linear-gradient(to right, #da4453, #89216b);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 6%;
   width: 100%;
   height: 100%;
 }
 
 .formbody {
-  width: 390px;
   min-height: 200px;
   background-color: white;
   box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -55,9 +57,9 @@ mat-toolbar {
 .alreadyMember {
   font-size: smaller;
   font-style: italic;
-  text-decoration: underline;
+  text-decoration: underline !important;
+  margin-top: 15px;
   margin-bottom: 15px;
-  margin-left: 50px;
 }
 
 .scrummaster {
@@ -92,7 +94,11 @@ div > span {
   margin: 2px;
   width: 160px;
   padding: 2px;
-  margin-left: 85px;
+}
+
+.alreadyMemberContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .errorMessage{

@@ -183,12 +183,17 @@ body {
   line-height: 50px;
   margin: 4px;
 }
-.home-nav-item{
-  height: 60px;
-  margin-top: 10px;
-  cursor: pointer;
-  outline: none !important;
+
+.home-nav-item {
+    outline: none !important;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    & span {
+      cursor: pointer;
+    }
 }
+
 .avatar {
   vertical-align: middle;
   width: 38px;
