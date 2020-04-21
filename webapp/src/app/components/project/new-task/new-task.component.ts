@@ -11,6 +11,7 @@ import UserStory from "../../../store/models/userStory";
 import * as BoardActions from "../../../store/actions/board.action";
 import {Task} from "../../../store/models/task";
 import User from 'app/store/models/user';
+import * as UserActions from '../../../store/actions/user.action';
 
 @Component({
   selector: 'app-new-task',
@@ -125,6 +126,7 @@ export class NewTaskComponent implements OnInit {
       this.userStoryService.createTask(newTask).subscribe(
         _response => {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+          this.store.dispatch(UserActions.BeginGetUserTasks());
         }
       );
       this.dialogRef.close();
@@ -133,6 +135,7 @@ export class NewTaskComponent implements OnInit {
       this.userStoryService.updateTask(updatedTask, this.formData.id).subscribe(
         _response => {
           this.store.dispatch(BoardActions.BeginGetUserStory({storyId: this.storyId}));
+          this.store.dispatch(UserActions.BeginGetUserTasks());
         }
       );
       this.dialogRef.close();
