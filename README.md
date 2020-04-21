@@ -19,7 +19,7 @@ NUID - 001066158<br />
 ### Technology Stack (MEAN)
 * MongoDB
 * Express
-* AngularJS
+* Angular
 * Node.js
 
 ### Additional Technologies used -
