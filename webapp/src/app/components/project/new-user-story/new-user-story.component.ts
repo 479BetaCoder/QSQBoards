@@ -1,9 +1,6 @@
-import {Component, Inject, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ProjectService} from '../../../services/project.service';
-import {UserStoryService} from '../../../services/user-story.service';
+import {MatDialogRef} from '@angular/material/dialog';
 import UserStory from '../../../store/models/userStory';
 import {select, Store} from '@ngrx/store';
 import * as BoardActions from '../../../store/actions/board.action';
@@ -30,16 +27,11 @@ export class NewUserStoryComponent implements OnInit {
   projectsDetailsError: Error = null;
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private ngZone: NgZone,
     private dialogRef: MatDialogRef<NewUserStoryComponent>,
-    private projectService: ProjectService,
-    private userStoryService: UserStoryService,
-    @Inject(MAT_DIALOG_DATA) data,
     private store: Store<{ projects: BoardState }>,
     private storeProjectDetails: Store<{ projectDetails: ProjectDetailsState }>,
   ) {
-    this.projectDetails$ = storeProjectDetails.pipe(select('projectDetails'));
+    this.projectDetails$ = this.storeProjectDetails.pipe(select('projectDetails'));
   }
 
   ngOnInit() {

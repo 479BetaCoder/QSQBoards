@@ -11,10 +11,7 @@ export class UserService {
 
   // tslint:disable-next-line:variable-name
   constructor(private _http: HttpClient) { }
-/*  headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('token', localStorage.getItem('token'));*/
-
+  
     submitRegister(body: any) {
       return this._http.post( baseURL + '/users/signup', body, {
         observe: 'body'

@@ -54,39 +54,6 @@ exports.create = function (request, response) {
   }
 };
 
-// /**
-//  * Updates and returns a project object in JSON.
-//  *
-//  * @param {request} {HTTP request object}
-//  * @param {response} {HTTP response object}
-//  */
-// exports.put = function (request, response) {
-//   const project = Object.assign({}, request.body);
-//   const resolve = () => {
-//     response.status(200).json();
-//   };
-//   project._id = request.params.projectId;
-//   projectService
-//     .update(project, request.userData.userName)
-//     .then(resolve)
-//     .catch(renderErrorResponse(response));
-// };
-
-// /**
-//  * Deletes a project object.
-//  *
-//  * @param {request} {HTTP request object}
-//  * @param {response} {HTTP response object}
-//  */
-// exports.delete = function (request, response) {
-//   const resolve = () => {
-//     response.status(200).json();
-//   };
-//   projectService
-//     .delete(request.params.projectId, request.userData.userName)
-//     .then(resolve)
-//     .catch(renderErrorResponse(response));
-// };
 /**
  * Throws error if error object is present.
  *
