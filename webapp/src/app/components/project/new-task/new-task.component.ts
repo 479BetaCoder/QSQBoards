@@ -1,10 +1,8 @@
-import {Component, Inject, NgZone, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup,FormControl, Validators} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
-import {ActivatedRoute, Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ProjectService} from "../../../services/project.service";
 import {UserStoryService} from "../../../services/user-story.service";
 import {select, Store} from "@ngrx/store";
 import BoardState from "../../../store/states/board.state";
@@ -46,11 +44,7 @@ export class NewTaskComponent implements OnInit {
   selectedAssignee = new FormControl('', [Validators.required]);
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private ngZone: NgZone,
     private dialogRef: MatDialogRef<NewTaskComponent>,
-    private activatedRoute: ActivatedRoute,
-    private projectService: ProjectService,
     private userStoryService: UserStoryService,
     @Inject(MAT_DIALOG_DATA) data,
     private store: Store<{ projectDetails: ProjectDetailsState, userStory: BoardState }>,

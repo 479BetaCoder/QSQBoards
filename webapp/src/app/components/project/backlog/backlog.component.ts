@@ -55,9 +55,6 @@ export class BacklogComponent implements OnInit {
     if(this.backlogItems != undefined){
       this.dataSource = new MatTableDataSource(this.backlogItems);
     }
-    //this.projectDetails$ = store.pipe(select('projectDetails'));
-    //this.tasks = this.projectService.getPendingTasks();
-    //this.dataSource = this.tasks;
   }
 
   ngOnInit(): void {
@@ -71,7 +68,6 @@ export class BacklogComponent implements OnInit {
               this.setBacklogItems();
             })
           ).subscribe();
-        ///this.selectedProject = sessionStorage.getItem('SelectedProject');
         this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectDetails._id}));
       } else {
         this.router.navigateByUrl(constantRoutes.emptyRoute);

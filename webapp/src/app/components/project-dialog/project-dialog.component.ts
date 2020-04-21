@@ -2,16 +2,12 @@ import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import User from '../../store/models/user';
-import { ProjectService } from '../../services/project.service';
 import Project from '../../store/models/project';
 import { select, Store } from '@ngrx/store';
 
 // import { take } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Status } from '../../shared/status';
-
-
 
 // States
 import UserState from 'app/store/states/user.state';

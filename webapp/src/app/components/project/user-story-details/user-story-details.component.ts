@@ -1,24 +1,20 @@
-import {Component, Inject, NgZone, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {Observable, Subscription} from "rxjs";
 import ProjectDetailsState from "../../../store/states/project-details.state";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {ProjectService} from "../../../services/project.service";
+import {ActivatedRoute} from "@angular/router";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {UserStoryService} from '../../../services/user-story.service';
 import {select, Store} from "@ngrx/store";
 import BoardState from "../../../store/states/board.state";
-import {map, take} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import * as BoardActions from "../../../store/actions/board.action";
-import * as CommentActions from "../../../store/actions/comment.action";
 import UserStory from '../../../store/models/userStory';
 import {Task} from "../../../store/models/task";
 import {Location} from '@angular/common';
 import {NewTaskComponent} from "../new-task/new-task.component";
 import Project from "../../../store/models/project";
-import User from "../../../store/models/user";
 import CommentState from 'app/store/states/comment.state';
-import Comment from 'app/store/models/comment';
 import { CommentComponent } from '../comment/comment.component';
 
 
