@@ -75,4 +75,24 @@ export class InboxComponent implements OnInit {
     navigateToHome():void{
       this.router.navigateByUrl(constantRoutes.homeRoute);
     }
+
+    /*
+  * Calling the update pop-up
+  * */
+  updateTask(task: Task) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    dialogConfig.data = {
+      id: task._id,
+      title: task.title,
+      description: task.description,
+      assignee: task.assignee,
+      status: task.status,
+      priority: task.priority
+    };
+
+    this.dialog.open(NewTaskComponent, dialogConfig);
+  }
 }
