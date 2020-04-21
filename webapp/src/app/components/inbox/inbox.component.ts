@@ -41,11 +41,7 @@ export class InboxComponent implements OnInit {
 
   ngOnInit(): void {
     this.tasks = [];
-      if (sessionStorage.getItem('User')) {
-        const user = JSON.parse(sessionStorage.getItem('User'));
-        this.currentUserName = user.userName;
-      }
-     
+      this.store.dispatch(UserActions.BeginGetUserTasks());
       this.ActiveUsersSubscription = this.activeUsers$
       .pipe(
         map(res => {
@@ -55,6 +51,7 @@ export class InboxComponent implements OnInit {
         })
       )
       .subscribe();
+      
   }
 
   getElementDesc(taskDesc) {
@@ -77,22 +74,5 @@ export class InboxComponent implements OnInit {
   
     navigateToHome():void{
       this.router.navigateByUrl(constantRoutes.homeRoute);
-    }
-
-    updateTask(task: Task) {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '500px';
-      dialogConfig.data = {
-        id: task._id,
-        title: task.title,
-        description: task.description,
-        assignee: task.assignee,
-        status: task.status,
-        priority: task.priority
-      };
-  
-      this.dialog.open(NewTaskComponent, dialogConfig);
     }
 }

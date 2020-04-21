@@ -41,7 +41,7 @@ export class UserStoryDetailsComponent implements OnInit {
     {value: 'In Progress', viewValue: 'In Progress'},
     {value: 'Done', viewValue: 'Done'}];
   selectedProject: Project;
-  
+
   // States and subscriptions
   boardState$: Observable<BoardState>;
   boardSubscription: Subscription;
@@ -92,7 +92,7 @@ export class UserStoryDetailsComponent implements OnInit {
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
     dialogConfig.width = '60vw';
-    dialogConfig.height="80%";
+    dialogConfig.height = '80%';
     dialogConfig.data = task;
     this.dialog.open(CommentComponent, dialogConfig);
   }
@@ -100,7 +100,7 @@ export class UserStoryDetailsComponent implements OnInit {
 
   getElementDesc(taskDesc) {
     if (taskDesc.length > 35) {
-      return taskDesc.substring(0, 35).concat(" ...");
+      return taskDesc.substring(0, 35).concat(' ...');
     }
     return taskDesc;
   }
@@ -108,7 +108,7 @@ export class UserStoryDetailsComponent implements OnInit {
   setForm() {
     this.updateStoryForm.setValue({
       title: this.editStory ? this.editStory.title : '',
-      description: this.editStory ? this.editStory.description: '',
+      description: this.editStory ? this.editStory.description : '',
       status: this.editStory ? this.editStory.status : 'New',
       storyPoints: this.editStory ? this.editStory.storyPoints : 0,
       priority: this.editStory ? this.editStory.priority : 'Low',
@@ -125,9 +125,12 @@ export class UserStoryDetailsComponent implements OnInit {
     });
   }
 
+  /*
+  * Creating the new task
+  * */
   createTask() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '500px';
     this.dialog.open(NewTaskComponent, dialogConfig);
@@ -140,9 +143,12 @@ export class UserStoryDetailsComponent implements OnInit {
     this.location.back();
   }
 
+  /*
+  * Calling the update pop-up
+  * */
   updateTask(task: Task) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '500px';
     dialogConfig.data = {
@@ -157,6 +163,9 @@ export class UserStoryDetailsComponent implements OnInit {
     this.dialog.open(NewTaskComponent, dialogConfig);
   }
 
+  /*
+  * The service is called for deleting user Stories
+  * */
   deleteTask(task: Task) {
     if (window.confirm('Are you sure?')) {
       this.userStoryService.deleteTask(task._id).subscribe(_response => {

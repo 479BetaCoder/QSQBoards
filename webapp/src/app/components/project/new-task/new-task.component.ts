@@ -99,10 +99,13 @@ export class NewTaskComponent implements OnInit {
     return x && y ? x.userName === y.userName : x === y;
   }
 
+  /*
+  * Update task service will be called
+  * */
   updateTaskForm() {
     this.heading = 'Update The Task';
     this.updateForm = true;
-    if(this.formData.assignee) {
+    if (this.formData.assignee) {
     this.selectedAssignee = new FormControl(this.formData.assignee, [Validators.required]);
     }
     this.createTaskForm = this.fb.group({
@@ -116,7 +119,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   /*
-  * Create service is called and new UserStory is created
+  * Create service is called and new Task is created
   * */
   onSubmit() {
     if (!this.createTaskForm.valid) {

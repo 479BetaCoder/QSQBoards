@@ -2,7 +2,6 @@ import {Action, createReducer, on} from '@ngrx/store';
 import * as BoardActions from '../actions/board.action';
 import BoardState, {initializeState} from '../states/board.state';
 import UserStory from '../models/userStory';
-import userStory from "../models/userStory";
 
 export const intialState = initializeState();
 
