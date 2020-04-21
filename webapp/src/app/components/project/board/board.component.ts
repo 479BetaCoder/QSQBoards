@@ -71,6 +71,9 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  /*
+  * This method is used to draw the board
+  * */
   drawTheBoard() {
       this.todoUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'new');
       this.inProgressUserStories = this.allUserStories.filter(item => item.status.toLowerCase() === 'in progress');
@@ -80,6 +83,9 @@ export class BoardComponent implements OnInit {
       this.doneColumn = new Column('Done', this.doneUserStories);
   }
 
+  /*
+  * Below are the dropping events for drag and drop
+  * */
   dropInTodo(event: CdkDragDrop<UserStory[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -113,6 +119,9 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  /*
+  * This method is used for updating the status for the stories in board
+  * */
   updateTheStatus(userStory: UserStory, status: string) {
     const updateStory = Object.assign({}, userStory);
     updateStory.status = status;
@@ -120,16 +129,26 @@ export class BoardComponent implements OnInit {
     this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.selectedProject._id}));
   }
 
+  /*
+  * Deleting the story using id
+  * */
   deleteStory(item) {
-    this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
-    // column.tasks.splice(index, 1);
+    if (window.confirm('Are you sure?')) {
+      this.store.dispatch(BoardActions.BeginDeleteUserStory({storyId: item._id}));
+    }
   }
 
+  /*
+  * Navigating to User Story Details page
+  * */
   editTheStory(userStory: UserStory) {
     const id = userStory._id;
     this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
   }
 
+  /*
+  * Create User story pop up
+  * */
   createUserStory() {
     this.dialog.open(NewUserStoryComponent, {width: '500px'});
   }
