@@ -46,9 +46,10 @@ NUID - 001066158<br />
 ### How to use the app?
 1. Click on "Click here to register" to register yourself using a username, emailId and password.
 2. On the login page, enter your credentials.
-3. Click on "New Project" on the home page to enter project details and create new project.
-4. Click on edit or delete icon on the project card for their respective functionalities.
-5. Click on any project card on the home page to navigate to a view and manage details of each project.
+3. Click on your usernme on the top navigation bar to navigate and edit your details or to logout.
+4. Click on "New Project" on the home page to enter project details and create new project.
+5. Click on edit or delete icon on the project card for their respective functionalities.
+6. Click on any project card on the home page to navigate to a view and manage details of each project.
 
 #### Overview 
 To view a high level summary about your project- title, description, memebers, basic stats
