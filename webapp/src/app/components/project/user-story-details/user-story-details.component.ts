@@ -127,7 +127,7 @@ export class UserStoryDetailsComponent implements OnInit {
 
   createTask() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '500px';
     this.dialog.open(NewTaskComponent, dialogConfig);
@@ -142,7 +142,7 @@ export class UserStoryDetailsComponent implements OnInit {
 
   updateTask(task: Task) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '500px';
     dialogConfig.data = {

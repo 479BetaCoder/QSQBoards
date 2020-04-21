@@ -85,7 +85,6 @@ export class UserProfileComponent implements OnInit {
         this.qsqService.updateUser(this.updateForm.value)
           .subscribe(res => {
             this.router.navigateByUrl(constantRoutes.homeRoute);
-            console.log('Content updated successfully!');
             this.profile = JSON.parse(sessionStorage.getItem('User'));
             this.profile.image = this.imageName;
             sessionStorage.setItem('User', JSON.stringify(this.profile));

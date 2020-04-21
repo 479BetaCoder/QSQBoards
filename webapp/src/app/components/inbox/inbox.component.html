@@ -21,7 +21,10 @@
           </mat-nav-list> -->
         </mat-sidenav>
         <mat-sidenav-content fullscreen>
-          <div class="taskContainer">
+          <div *ngIf="tasks.length === 0">
+            <p class="noTasksLabel">No Tasks available!</p>
+          </div>
+          <div *ngIf="tasks.length > 0" class="taskContainer">
             <table mat-table matTableExporter [dataSource]="dataSource" class="mat-elevation-z8" #exporter="matTableExporter" matSort matSortStart="desc">
               
                 <!-- title Column -->
@@ -67,7 +70,6 @@
                   <th mat-header-cell *matHeaderCellDef>Actions</th>
                   <td mat-cell *matCellDef="let task">
                     <mat-icon class="commentIcon" (click)="commentTask(task)">comment</mat-icon>
-                    <mat-icon class="editIcon" (click)="updateTask(task)">edit</mat-icon>
                   </td>
                 </ng-container>
               
@@ -79,3 +81,4 @@
       </mat-sidenav-container>
     </div>
   </div>
+  

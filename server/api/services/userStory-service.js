@@ -25,10 +25,9 @@ exports.save = function (userStory) {
  * Checks for project Validity
  */
 exports.isProjectValid = function (projectId) {
+  console.log(projectId);
   try {
-    const promise = Project.find({
-      _id: projectId,
-    }).exec();
+    const promise = Project.find({_id: projectId}).exec();
     return promise;
   } catch (err) {
     return Promise.reject(new Error(err));

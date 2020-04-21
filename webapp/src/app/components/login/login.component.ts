@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { Socialusers } from '../Models/socialusers'
-// import { SocialloginService } from '../Service/sociallogin.service';
-import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
+import { GoogleLoginProvider, AuthService } from 'angularx-social-login';
 import { AuthenticationService } from '../../auth/authentication.service';
 import * as constantRoutes from '../../shared/constants';
 
@@ -38,15 +36,10 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
   }
 
-  public socialSignIn(socialProvider: string) {
-    let socialPlatformProvider;
-    if (socialProvider === 'facebook') {
-      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    } else if (socialProvider === 'google') {
-      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    }
+  public socialSignIn() {
+    let socialPlatformProvider: string;
+    socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
-      // this.authService.userProfileSubject$.next(socialuser);
       const reqObject = {
         emailId: socialuser.email,
         userName: socialuser.firstName + socialuser.lastName,
@@ -56,7 +49,7 @@ export class LoginComponent implements OnInit {
       };
       this.qsqservice.submitRegister(reqObject)
         .subscribe(
-          data => {
+          _data => {
             this.loginSocialUser(reqObject, true);
           },
           error => {
@@ -74,7 +67,7 @@ export class LoginComponent implements OnInit {
         data => {
           this.authService.userProfileSubject$.next(data);
           sessionStorage.setItem('User', JSON.stringify(data));
-          loginForFirst ? this._router.navigate([constantRoutes.registerRoute]) : this._router.navigate([constantRoutes.homeRoute]);
+          loginForFirst ? this._router.navigate([constantRoutes.userProfileRoute]) : this._router.navigate([constantRoutes.homeRoute]);
         },
         error => {
           

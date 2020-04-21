@@ -11,13 +11,8 @@
       <form [formGroup]="loginForm">
         <div class="header">Welcome</div>
         <div class="oAuthContainer">
-          <img (click)="socialSignIn('google')" class="socialButtons googleIcon"
+          <img (click)="socialSignIn()" class="socialButtons googleIcon"
             src="../../../assets/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" />
-          <br><br>
-          <button mat-button class="btn-facebook" (click)="socialSignIn('facebook')"
-            class="background-fb socialButtons">
-            <i class="fa fa-facebook-square fa-2x fbicon" aria-hidden="true"></i><span> Login with
-              Facebook</span></button>
         </div>
 
         <div class="separator">OR</div>

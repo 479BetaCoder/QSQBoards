@@ -19,7 +19,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
 import {HeaderComponent} from './components/header/header.component';
-import {GoogleLoginProvider, FacebookLoginProvider, AuthService} from 'angularx-social-login';
+import {AuthService} from 'angularx-social-login';
 import {SocialLoginModule, AuthServiceConfig} from 'angularx-social-login';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
