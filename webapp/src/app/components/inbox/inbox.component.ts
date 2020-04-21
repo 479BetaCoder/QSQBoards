@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from 'app/store/models/task';
 import { Observable, Subscription } from 'rxjs';
 import UserState from 'app/store/states/user.state';
-import { map, takeLast } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import ProjectState from 'app/store/states/project.state';
 import ProjectDetailsState from 'app/store/states/project-details.state';
@@ -11,6 +11,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from '../project/comment/comment.component';
 import { Router } from '@angular/router';
 import * as constantRoutes from '../../shared/constants';
+import { NewTaskComponent } from '../project/new-task/new-task.component';
 
 @Component({
   selector: 'app-inbox',
