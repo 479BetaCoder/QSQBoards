@@ -60,6 +60,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns truncated project title if longer than 15 chars
+   * @param projectTitle 
+   */
   getProjectTitle(projectTitle) {
     if (projectTitle.length > 15) {
       return projectTitle.substring(0, 15).concat(" ...");
@@ -67,6 +71,11 @@ export class HomeComponent implements OnInit {
     return projectTitle;
   }
 
+  /**
+   * Handles Confirmation dialog to delete project
+   * @param id 
+   * @param name 
+   */
   confirmDelete(id: string, name: string) {
     if (confirm("Are you sure you want to delete this project: " + name)) {
       this.deleteProject(id);
@@ -77,6 +86,9 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(ProjectActions.BeginDeleteProject({ payload: projectId }));
   }
 
+  /**
+   * Opens new project creation dialog
+   */
   openProjectDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -86,6 +98,10 @@ export class HomeComponent implements OnInit {
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
   }
 
+  /**
+   * Opens project creation dialog with project details filled in
+   * @param project 
+   */
   openUpdateDialog(project: Project) {
 
     const dialogConfig = new MatDialogConfig();
@@ -103,6 +119,10 @@ export class HomeComponent implements OnInit {
     this.projectDialog.open(ProjectDialogComponent, dialogConfig);
   }
 
+  /**
+   * Returns a random color for prject card
+   * @param index 
+   */
   getRandomColor(index) {
     const totalProjects = this.projectList.length
     const minIndex = index / totalProjects;
@@ -110,6 +130,10 @@ export class HomeComponent implements OnInit {
     return '#' + ('d9a16b' + color).slice(-6);
   }
 
+  /**
+   * Returns the text required for project avatar
+   * @param project 
+   */
   getProjectTitleAvatar(project) {
     const projAvatarArr = project.title.split(" ")
     if (projAvatarArr.length > 1) {

@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
   }
 
+  /**
+   * Handles social platform sign in
+   */
   public socialSignIn() {
     let socialPlatformProvider: string;
     socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
@@ -75,6 +78,9 @@ export class LoginComponent implements OnInit {
       );
   }
 
+  /**
+   * Handles user log in
+   */
   login() {
     if (this.loginForm.valid) {
       this.qsqservice.login(this.loginForm.value)

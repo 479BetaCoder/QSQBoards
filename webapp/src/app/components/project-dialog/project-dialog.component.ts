@@ -96,10 +96,20 @@ export class ProjectDialogComponent implements OnInit {
 
   }
 
+  /**
+   * Returns comparison result of 2 user names
+   * @param x 
+   * @param y 
+   */
   compareFn(x: User, y: User): boolean {
     return x && y ? x.userName === y.userName : x === y;
   }
 
+  /**
+   * Returns comparison result of 2 project statuses
+   * @param x 
+   * @param y 
+   */
   compareStatus(x: string, y: string) : boolean {
     return x && y ? x === y : false;
   }
@@ -129,6 +139,10 @@ export class ProjectDialogComponent implements OnInit {
     return memberUserNames;
   }
 
+  /**
+   * Handles creation of new project
+   * @param newProject 
+   */
   createProject(newProject) {
     const project: Project = newProject;
     // assign owner from session. 
@@ -138,6 +152,10 @@ export class ProjectDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  /**
+   * Handles updation of project
+   * @param updatedProject 
+   */
   updateProject(updatedProject) {
     const project: Project = updatedProject;
     // assign owner from session. 
