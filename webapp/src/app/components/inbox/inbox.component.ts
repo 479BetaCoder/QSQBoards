@@ -4,7 +4,7 @@ import { Task } from 'app/store/models/task';
 import { UserStoryService } from 'app/services/user-story.service';
 import { Observable, Subscription } from 'rxjs';
 import UserState from 'app/store/states/user.state';
-import { map } from 'rxjs/operators';
+import { map, takeLast } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import ProjectState from 'app/store/states/project.state';
 import ProjectDetailsState from 'app/store/states/project-details.state';
@@ -47,6 +47,7 @@ export class InboxComponent implements OnInit {
         map(res => {
           this.tasks = res.tasks;
           this.userError = res.userError;
+          this.tasks = this.tasks.filter(task => task.status != "Done");
           this.dataSource = this.tasks;
         })
       )
@@ -75,4 +76,24 @@ export class InboxComponent implements OnInit {
     navigateToHome():void{
       this.router.navigateByUrl(constantRoutes.homeRoute);
     }
+
+    /*
+  * Calling the update pop-up
+  * */
+  updateTask(task: Task) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    dialogConfig.data = {
+      id: task._id,
+      title: task.title,
+      description: task.description,
+      assignee: task.assignee,
+      status: task.status,
+      priority: task.priority
+    };
+
+    this.dialog.open(NewTaskComponent, dialogConfig);
+  }
 }
