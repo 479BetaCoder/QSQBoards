@@ -53,7 +53,7 @@ export class NewTaskComponent implements OnInit {
     this.boardState$ = store.pipe(select('userStory'));
     this.formData = data;
   }
-
+ 
   ngOnInit() {
     this.heading = 'Create A Task';
     this.createTaskForm = this.fb.group({
