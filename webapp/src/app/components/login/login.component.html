@@ -10,16 +10,20 @@
     <!-- <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" alt="QSQ Boards" />
     <span class="qsqboards">Qsqboards</span>
   </mat-toolbar> -->
-  
+
   <div class="formcontainer">
     <div class="formbody">
       <form [formGroup]="loginForm">
         <div class="header">Welcome</div>
         <div class="oAuthContainer">
-          <img (click)="socialSignIn()" class="socialButtons googleIcon"
+          <img (click)="socialSignIn('google')" class="socialButtons googleIcon"
             src="../../../assets/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" />
         </div>
-
+        <div class="oAuthContainer">
+          <button mat-button class="btn-facebook" (click)="socialSignIn('facebook')" class="background-fb socialButtons">
+            <i class="fa fa-facebook-square fa-2x fbicon" aria-hidden="true"></i><span> Login with
+            Facebook</span></button>
+        </div>
         <div class="separator">OR</div>
         <div class="userNameContainer">
           <mat-form-field>
