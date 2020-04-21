@@ -38,6 +38,7 @@ export class AnalyticsComponent implements OnInit {
   mediumTaskCount: number =0;
   highTaskCount : number =0;
   optionValue : string = "userstories";
+
   constructor(private router: Router,private storePrDetail: Store<{ projectDetails: ProjectDetailsState }>,
    private store: Store<{board: BoardState }>) {
       this.boardState$ = store.pipe(select('board'));
@@ -92,6 +93,9 @@ export class AnalyticsComponent implements OnInit {
    this.highTaskCount = 0;
   } 
 
+  /**
+   * Sets the value and axes required for the construction of charts
+   */
   constructGraphData(){
    this.resetCount();
       this.allUserStories.forEach(
