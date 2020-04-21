@@ -55,6 +55,10 @@ export class InboxComponent implements OnInit {
       
   }
 
+  /**
+   * Method to truncate long task descriptions
+   * @param taskDesc 
+   */
   getElementDesc(taskDesc) {
     if (taskDesc.length > 35) {
       return taskDesc.substring(0, 35).concat(" ...");
@@ -77,7 +81,7 @@ export class InboxComponent implements OnInit {
       this.router.navigateByUrl(constantRoutes.homeRoute);
     }
 
-    /*
+  /*
   * Calling the update pop-up
   * */
   updateTask(task: Task) {
