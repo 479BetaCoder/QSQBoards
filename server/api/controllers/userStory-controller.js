@@ -26,12 +26,10 @@ exports.create = function (request, response) {
     const resolve = (createdUserStory) => {
       response.status(201).json(createdUserStory);
     };
-    console.log(newUserStory);
     // check if project exists
     userStoryService
       .isProjectValid(request.body.projectId)
       .then((project) => {
-        console.log(project);
         if (project.length > 0) {
           newUserStory.projectId = request.body.projectId;
           userStoryService

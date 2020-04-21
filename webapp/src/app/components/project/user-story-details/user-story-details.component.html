@@ -118,36 +118,10 @@
               </div>
             </button>
           </div>
-          <div class="taskContainer">
-            <!-- <button mat-button (click)="createTask()" color="primary">Create Task</button> -->
-
-            <!-- <table class="todo-table" *ngIf="editStory">
-          <thead class="table-success">
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Status</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Assignee</th>
-            <th scope="col">Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let task of editStory.tasks; let i = index">
-            <td>{{task.title}}</td>
-            <td>{{task.description}}</td>
-            <td>{{task.status}}</td>
-            <td>{{task.priority}}</td>
-            <td>{{task.assignee ? task.assignee.userName : ''}}</td>
-            <td class="text-center edit-block">
-          <span [routerLink]="">
-            <button mat-button color="primary" (click)="updateTask(task)" type="button">Edit</button>
-            <button mat-button color="warn" type="button" (click)="deleteTask(task, i)" >Delete</button>
-          </span>
-            </td>
-          </tr>
-          </tbody>
-        </table> -->
+          <div *ngIf="!editStory || editStory.tasks.length === 0">
+            <p class="noTasksLabel">No Tasks available!</p>
+          </div>
+          <div *ngIf="editStory.tasks.length > 0" class="taskContainer">
             <div *ngIf="editStory && editStory.tasks">
               <table
                 mat-table
