@@ -34,7 +34,7 @@ NUID - 001066158<br />
 ----------------------------------------------------------
 ## How to run the app?
 - Start the Frontend Angular App
-  - `cd webapp` to enter into the backend folder
+  - `cd webapp` to enter into the frontend folder
   - `npm install` to install required dependencies
   - `ng serve` to start the Angular CLI server
 - Start the Node server backend
