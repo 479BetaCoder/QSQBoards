@@ -4,18 +4,14 @@ import {Board} from '../../../store/models/board';
 import {Column} from '../../../store/models/column';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserStoryComponent} from '../new-user-story/new-user-story.component';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {UserStoryService} from '../../../services/user-story.service';
-import {ProjectService} from '../../../services/project.service';
+import {Observable, Subscription} from 'rxjs';
 import UserStory from '../../../store/models/userStory';
 import BoardState from '../../../store/states/board.state';
 import * as BoardActions from '../../../store/actions/board.action';
-import * as ProjectDetailsActions from '../../../store/actions/project-details.action';
 import {select, Store} from '@ngrx/store';
-import {map, take} from 'rxjs/operators';
-import Project from "../../../store/models/project";
+import {map} from 'rxjs/operators';
 import ProjectDetailsState from "../../../store/states/project-details.state";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import * as constantRoutes from "../../../shared/constants";
 
 @Component({
@@ -45,8 +41,6 @@ export class BoardComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private userStoryService: UserStoryService,
-    private projectService: ProjectService,
     private store: Store<{board: BoardState , projectDetails: ProjectDetailsState}>) {
     this.boardState$ = store.pipe(select('board'));
     this.projectDetails$ = store.pipe(select('projectDetails'));

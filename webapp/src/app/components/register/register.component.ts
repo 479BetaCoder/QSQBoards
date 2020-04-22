@@ -33,6 +33,10 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get(controlName).invalid && this.myForm.get(controlName).touched;
   }
 
+  /**
+   * Password validation
+   * @param control 
+   */
   passValidator(control: AbstractControl) {
     if (control && (control.value !== null || control.value !== undefined)) {
       const cnfpassValue = control.value;
@@ -51,6 +55,9 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Handles user registration
+   */
   register(){
     if(this.myForm.valid){
       this._qsqservice.submitRegister(this.myForm.value)
@@ -73,6 +80,9 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  /**
+   * Navigates to login page
+   */
   movetologin() {
     this._router.navigateByUrl('',{relativeTo: this._activateRoute});
   }

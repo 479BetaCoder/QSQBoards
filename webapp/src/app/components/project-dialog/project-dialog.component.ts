@@ -2,16 +2,12 @@ import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import User from '../../store/models/user';
-import { ProjectService } from '../../services/project.service';
 import Project from '../../store/models/project';
 import { select, Store } from '@ngrx/store';
 
 // import { take } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Status } from '../../shared/status';
-
-
 
 // States
 import UserState from 'app/store/states/user.state';
@@ -96,10 +92,20 @@ export class ProjectDialogComponent implements OnInit {
 
   }
 
+  /**
+   * Returns comparison result of 2 user names
+   * @param x 
+   * @param y 
+   */
   compareFn(x: User, y: User): boolean {
     return x && y ? x.userName === y.userName : x === y;
   }
 
+  /**
+   * Returns comparison result of 2 project statuses
+   * @param x 
+   * @param y 
+   */
   compareStatus(x: string, y: string) : boolean {
     return x && y ? x === y : false;
   }
@@ -129,6 +135,10 @@ export class ProjectDialogComponent implements OnInit {
     return memberUserNames;
   }
 
+  /**
+   * Handles creation of new project
+   * @param newProject 
+   */
   createProject(newProject) {
     const project: Project = newProject;
     // assign owner from session. 
@@ -138,6 +148,10 @@ export class ProjectDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  /**
+   * Handles updation of project
+   * @param updatedProject 
+   */
   updateProject(updatedProject) {
     const project: Project = updatedProject;
     // assign owner from session. 

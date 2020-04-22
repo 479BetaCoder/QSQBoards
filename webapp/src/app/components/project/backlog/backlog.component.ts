@@ -55,9 +55,6 @@ export class BacklogComponent implements OnInit {
     if(this.backlogItems != undefined){
       this.dataSource = new MatTableDataSource(this.backlogItems);
     }
-    //this.projectDetails$ = store.pipe(select('projectDetails'));
-    //this.tasks = this.projectService.getPendingTasks();
-    //this.dataSource = this.tasks;
   }
 
   ngOnInit(): void {
@@ -71,7 +68,6 @@ export class BacklogComponent implements OnInit {
               this.setBacklogItems();
             })
           ).subscribe();
-        ///this.selectedProject = sessionStorage.getItem('SelectedProject');
         this.store.dispatch(BoardActions.BeginGetUserStoriesAction({projectId: this.projectDetails._id}));
       } else {
         this.router.navigateByUrl(constantRoutes.emptyRoute);
@@ -79,6 +75,10 @@ export class BacklogComponent implements OnInit {
     this.currentProjectTitle = this.projectDetails.title;
   }
 
+  /**
+   * Handles title based filtering of table
+   * @param filterValue 
+   */
   applyFilter(filterValue: string) {
     const tableFilters = [];
     tableFilters.push({
@@ -93,6 +93,9 @@ export class BacklogComponent implements OnInit {
     }
   }
 
+  /**
+   * Loops through each user story and its corresponding tasks array to create backlog items
+   */
   setBacklogItems(){
     this.backlogItems = [];
     this.backlogUserStories =  this.allUserStories.filter(item => item.status != Status.Done);
@@ -137,17 +140,24 @@ export class BacklogComponent implements OnInit {
         return matchFilter.every(Boolean);
     };
   }
-
+  /**
+   * Returns current date time
+   */
   getDate(){
     return formatDate(new Date(), 'yyyy/MM/dd', 'en');
   }
 
+  /**
+   * Navigates to user story details component
+   * @param backlogItem 
+   */
   editBacklogItem(backlogItem: BacklogItem) {
     const id = backlogItem.id ;
     this.router.navigate(['../user-story-details/' + id], { relativeTo: this.activatedRoute });
   }
+
   highlight(row){
     this.selectedRowIndex = row.id;
-}
+  }
 }
 
