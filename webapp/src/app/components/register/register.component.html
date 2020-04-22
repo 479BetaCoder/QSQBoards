@@ -1,7 +1,8 @@
+<mat-toolbar color="primary">
+    <img class="qsqIcon" src="../../../assets/qsqlogo_blue.png" alt="QSQ Boards" />
+    <span class="qsqboards">Qsqboards</span>
+    </mat-toolbar>
 <div class="registerContainer">
-    <div class="titleContainer">
-        <h1 class="projectTitle">QSQ Boards</h1>
-    </div>
     <div class="formcontainer">
         <div class="formbody">
             <form [formGroup]="myForm">
@@ -22,7 +23,7 @@
                     <mat-form-field>
                         <input type="password" formControlName="password" matInput placeholder="Password" id="pass">
                     </mat-form-field>
-                    <span *ngIf="isValid('password')">Password is a mandatory field</span>
+                    <span *ngIf="isValid('password')">Password is mandatory and should be atleast 8 characters</span>
                 </div>
                 <div>
                     <mat-form-field>
@@ -33,13 +34,15 @@
                 </div>
 
 
-                <div>
+                <div class="signUpContainer">
                     <button mat-raised-button color="primary" class="form-btn" (click)="register()">Sign Up</button>
 
                 </div>
 
-
-                <div>
+                <div class="errorMessage">
+                    <strong>{{successMessage}}</strong> 
+                </div>
+                <div class="alreadyMemberContainer">
                     <a class="alreadyMember" (click)="movetologin()">Already a member? click here to login!</a>
                 </div>
             </form>

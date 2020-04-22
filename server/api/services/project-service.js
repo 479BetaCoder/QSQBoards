@@ -7,7 +7,8 @@ const mongoose = require("mongoose"),
   Project = mongoose.model("Projects"),
   UserStory = mongoose.model("UserStories"),
   User = mongoose.model("Users"),
-  utilConstants = require("../utils/Constants");
+  utilConstants = require("../utils/Constants"),
+  storyService = require("./userStory-service");
 /**
  * Returns an array of project object matching the search parameters.
  *
@@ -93,8 +94,8 @@ exports.delete = async function (projectId, userName) {
   try {
     const validProject = await Project.findOne({ _id: projectId });
     if (validProject && validProject.owner === userName) {
-      // Remove the associated userStories
-      UserStory.deleteMany({ projectId: projectId }).exec();
+      // Remove Associations
+      removeAssociatedStories(projectId);
       return validProject.remove();
     } else {
       return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
@@ -103,3 +104,13 @@ exports.delete = async function (projectId, userName) {
     return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
   }
 };
+
+const removeAssociatedStories = (projectId) => {
+  UserStory.find({projectId: projectId}).exec((err,userStories) => {
+    if(!err) {
+    userStories.forEach((userStory) => {
+        storyService.delete(userStory._id);
+    })
+  }
+  })
+}

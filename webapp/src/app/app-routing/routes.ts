@@ -5,6 +5,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { UserProfileComponent } from '../components/user-profile/user-profile.component';
 import * as constantRoutes from '../shared/constants';
 import {ProjectDashboardComponent} from "../components/project/project-dashboard/project-dashboard.component";
+import { InboxComponent } from 'app/components/inbox/inbox.component';
 
 export const routes: Routes = [
 
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: constantRoutes.homeRoute, component: HomeComponent },
   { path: constantRoutes.userProfileRoute, component: UserProfileComponent },
   { path: constantRoutes.projectDashboard, component: ProjectDashboardComponent},
+  { path: constantRoutes.inboxRoute, component: InboxComponent},
   { path: constantRoutes.emptyRoute, redirectTo: 'qsqboards', pathMatch: 'full' },
 ];

@@ -15,4 +15,10 @@ module.exports = function (app) {
     .route("/v1/users")
     .put(checkAuth, userController.updateUser)
     .get(checkAuth, userController.getUsers);
+
+  app.route('/v1/users/uploadProfileImage')
+    .post(userController.upload, userController.uploadRes);
+
+  app.route('/v1/users/profileImg/:filename')
+    .get(userController.image);
 };

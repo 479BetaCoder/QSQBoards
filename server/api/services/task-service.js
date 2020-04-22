@@ -6,6 +6,7 @@
 const mongoose = require("mongoose"),
   UserStory = mongoose.model("UserStories"),
   Task = mongoose.model("Tasks"),
+  Comment = mongoose.model("Comments"),
   utilConstants = require("../utils/Constants");
 
 /**
@@ -38,13 +39,14 @@ exports.save = function (taskObj) {
  *  @param {Object} taskId {task Id}
  * @param {Object} storyId {userStory Id}
  */
-exports.updateUserStory = async function (taskId, storyId) {
+exports.updateUserStory = async function (taskId, storyId, isTaskAdded) {
   try {
     const userStory = await UserStory.findOne({ _id: storyId });
-    if (userStory) {
-      let currentTasks = userStory.tasks;
-      let updatedTasks = currentTasks.push(taskId);
-      userStory.tasks = updatedTasks;
+    if (userStory && isTaskAdded) {
+      userStory.tasks.push(taskId);
+      return userStory.update(userStory);
+    } else if (userStory && !isTaskAdded) {
+      userStory.tasks.pull(taskId);
       return userStory.update(userStory);
     } else {
       return Promise.reject(new Error(utilConstants.NOT_FOUND));
@@ -52,5 +54,58 @@ exports.updateUserStory = async function (taskId, storyId) {
   } catch (err) {
     return Promise.reject(new Error(utilConstants.NOT_FOUND));
   }
-  //UserStory.findOneAndUpdate({_id: storyId},)
 };
+
+/**
+ * Updates and returns the Task object.
+ * @param {Object} userStory {Task object}
+ * @param {String} taskId
+ */
+exports.updateTask = function (updatedTask, taskId) {
+  const promise = Task.findOneAndUpdate({ _id: taskId }, updatedTask).exec();
+  return promise;
+};
+
+exports.getAssociatedStoryId = function (taskId) {
+  const promise = UserStory.findOne({ tasks: taskId }).exec();
+  return promise;
+}
+
+const removeComments = (validTask) => {
+  const promise = Comment.remove({taskId: validTask._id}).exec();
+  return promise;
+}
+
+/**
+ * Deletes the Task object matching the taskId.
+ *
+ * @param {string} taskId {Id of the task object}
+ */
+exports.delete = async function (taskId) {
+  try {
+    const validTask = await Task.findOne({ _id: taskId });
+    if (validTask) {
+      // Remove associate taskComments if any
+      const commentsPromise = await removeComments(validTask);
+      if(commentsPromise) {
+      return validTask.remove();
+      }
+    } else {
+      return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+    }
+  } catch (err) {
+    return Promise.reject(new Error(utilConstants.FORBIDDEN_ERR));
+  }
+};
+
+/**
+ * Returns the list of tasks assigned to the user
+ * 
+ * @param {string} userName {user name of the user}
+ */
+exports.getUserTasks = function (userName) {
+  const promise = Task.find({"assignee.userName":userName}).exec();
+  return promise;
+};
+
+

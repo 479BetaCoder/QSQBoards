@@ -1,8 +1,14 @@
 export class Task {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   priority: string;
   status: string;
-  storyPoints: string;
+  assignee: {
+    userName: string,
+    image: string
+  };
+  comments: string[];
 }
+
+

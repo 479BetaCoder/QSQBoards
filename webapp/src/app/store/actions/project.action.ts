@@ -8,7 +8,16 @@ export const CreateProject = createAction(
     props<Project>()
 );
 
-props<Project>();
+export const DeleteProject = createAction(
+    '[Project] - Delete Project',
+    props<String>()
+);
+
+export const UpdateProject = createAction(
+    '[Project] - Update Project',
+    props<Project>()
+);
+
 export const BeginGetProjectsAction = createAction('[Project] - Begin Get Projects');
 
 export const SuccessGetProjectsAction = createAction(
@@ -17,13 +26,33 @@ export const SuccessGetProjectsAction = createAction(
 );
 
 export const BeginCreateProject = createAction(
-    '[ToDo] - Begin Create Project',
+    '[Project] - Begin Create Project',
     props<{ payload: Project }>()
 );
 
 export const SuccessCreateProject = createAction(
-    '[ToDo] - Success Create Project',
+    '[Project] - Success Create Project',
     props<{ payload: Project }>()
+);
+
+export const BeginUpdateProject = createAction(
+    '[Project] - Begin Update Project Action',
+    props<{ payload: Project }>()
+);
+
+export const SuccessUpdateProjectAction = createAction(
+    '[Project] - Success Update Project',
+    props<{ payload: Project }>()
+);
+
+export const BeginDeleteProject = createAction(
+    '[Project] - Begin Delete Project',
+    props<{ payload: string }>()
+);
+
+export const SuccessDeleteProject = createAction(
+    '[Project] - Success Delete Project',
+    props<{ payload: string }>()
 );
 
 export const ErrorProjectAction = createAction('[Project] - Error', props<Error>());

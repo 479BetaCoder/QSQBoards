@@ -3,7 +3,7 @@
 const userStoryService = require("../services/userStory-service"),
   utilConstants = require("../utils/Constants"),
   log4js = require("log4js");
-log4js.configure({
+log4js. configure({
   appenders: {
     everything: { type: "file", filename: "logs/qsqBoard.log" },
   },
@@ -23,15 +23,15 @@ const logger = log4js.getLogger("qsqBoard");
 exports.create = function (request, response) {
   try {
     const newUserStory = Object.assign({}, request.body);
-    const resolve = () => {
-      response.status(201).json();
+    const resolve = (createdUserStory) => {
+      response.status(201).json(createdUserStory);
     };
     // check if project exists
     userStoryService
-      .isProjectValid(request.params.projectId)
+      .isProjectValid(request.body.projectId)
       .then((project) => {
         if (project.length > 0) {
-          newUserStory.projectId = request.params.projectId;
+          newUserStory.projectId = request.body.projectId;
           userStoryService
             .save(newUserStory)
             .then(resolve)
@@ -90,6 +90,45 @@ exports.delete = function (request, response) {
     .delete(request.params.storyId)
     .then(resolve)
     .catch(renderErrorResponse(response));
+};
+
+
+exports.getUserStory = function (request, response) {
+  const resolve = (userStory) => {
+    response.status(200);
+    response.json(userStory);
+  };
+  userStoryService
+      .getUserStory(request.params.storyId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+};
+
+/**
+ * Returns Updated UserStory response.
+ *
+ * @param request
+ * @param response
+ */
+exports.updateUserStory = (request, response) => {
+  try {
+    const updatedUserStory = Object.assign({}, request.body);
+    const resolve = (updatedUserStory) => {
+      if (updatedUserStory) {
+        response.status(200).json();
+      } else {
+        response.status(400).json({
+          message: "Update failed"
+        })
+      }
+    };
+    userStoryService
+      .updateUserStory(updatedUserStory, request.params.storyId)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
+  }
 };
 
 /**

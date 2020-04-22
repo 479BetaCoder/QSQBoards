@@ -21,18 +21,6 @@ let taskSchema = new Schema(
       type: String,
     },
     /**
-     * Task comments.
-     */
-    comments: [
-      {
-        text: String,
-        postedBy: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
-    /**
      * Task status.
      */
     status: {
@@ -43,15 +31,8 @@ let taskSchema = new Schema(
      * Priority for the tasks
      */
     priority: {
-      type: Number,
-      default: 0,
-    },
-    /**
-     * userStory Id
-     */
-    storyId: {
       type: String,
-      required: "User Story Id is required",
+      default: "Low",
     },
     /**
      * Assignee for the tasks

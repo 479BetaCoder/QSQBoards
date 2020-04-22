@@ -16,28 +16,35 @@
       </mat-form-field>
       <span class="mandatoryField" *ngIf="isValid('description')">Description cannot be blank</span>
     </div>
+    <mat-form-field *ngIf="update">
+      
+    <mat-select placeholder="Status" [compareWith]="compareStatus" [formControlName]="'status'" >
+   <mat-option *ngFor="let status of statusKeys" [value]="status.value">{{status.viewValue}}</mat-option>
+  </mat-select>
+    </mat-form-field>
     <div>
       <mat-form-field>
         <mat-label>Select Members</mat-label>
-        <mat-select [formControl]="members" placeholder="Select Members" multiple>
-          <div class="search">
+        <mat-select [compareWith]="compareFn" [formControlName]="'members'" (closed)="onSelectClose()"
+          placeholder="Select Members" multiple>
+          <!-- <div class="search">
             <span class="fa fa-search searchIcn"></span>
             <input class="searchUser" matInput type="text" placeholder="Search by Name" [(ngModel)]="searchTerm"
               [ngModelOptions]="{standalone: true}" />
-          </div>
+          </div> -->
           <mat-select-trigger>
             <mat-chip-list>
               <mat-chip class="memberChip" *ngFor="let user of members.value" [removable]="true"
                 (removed)="onMemberRemoved(user)">
-                <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+                <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
                   onerror="this.src='../../../assets/blank-profile-picture.png'">
                 {{ user.userName }}
                 <mat-icon class="icnRemove" matChipRemove>cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>
           </mat-select-trigger>
-          <mat-option *ngFor="let user of allUsers | userFilter:searchTerm" [value]="user">
-            <img class="avatar" [src]="user.image!= null ? user.Image : emptyImgUrl"
+          <mat-option *ngFor="let user of activeUsers" [value]="user">
+            <img class="avatar" [src]="user.image!= null ? user.image : emptyImgUrl"
               onerror="this.src='../../../assets/blank-profile-picture.png'">
             {{user.userName}}
           </mat-option>

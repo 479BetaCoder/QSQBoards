@@ -11,20 +11,17 @@ export class UserService {
 
   // tslint:disable-next-line:variable-name
   constructor(private _http: HttpClient) { }
-/*  headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('token', localStorage.getItem('token'));*/
-
-  submitRegister(body: any) {
-    return this._http.post( baseURL + '/users/signup', body, {
-      observe: 'body'
-    });
-  }
+  
+    submitRegister(body: any) {
+      return this._http.post( baseURL + '/users/signup', body, {
+        observe: 'body'
+      }).pipe(catchError(this.errorHandling));
+    }
 
   login(body: any): Observable<any> {
     return this._http.post(baseURL + '/users/login', body, {
       observe: 'body'
-   });
+   }).pipe(catchError(this.errorHandling));
   }
 
   updateUser(updateUser): Observable<any> {
@@ -32,6 +29,16 @@ export class UserService {
     return this._http.put(url, updateUser).pipe(
       catchError(this.errorHandling)
     );
+  }
+
+  public uploadImage(formData: FormData){
+    const httpOptions = {
+      headers: new HttpHeaders({        
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    return this._http.post(baseURL + '/users/uploadProfileImage', formData,httpOptions);
   }
   // Error handling
   errorHandling(error: HttpErrorResponse) {
@@ -44,6 +51,6 @@ export class UserService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error);
   }
 }

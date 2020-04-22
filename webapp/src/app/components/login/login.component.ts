@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { Socialusers } from '../Models/socialusers'
-// import { SocialloginService } from '../Service/sociallogin.service';
-import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
+import {GoogleLoginProvider, AuthService, FacebookLoginProvider} from 'angularx-social-login';
 import { AuthenticationService } from '../../auth/authentication.service';
 import * as constantRoutes from '../../shared/constants';
 
@@ -14,7 +12,7 @@ import * as constantRoutes from '../../shared/constants';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  successMessage = '';
   loginForm: FormGroup;
   constructor(
     private qsqservice: UserService,
@@ -38,7 +36,10 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched;
   }
 
-  public socialSignIn(socialProvider: string) {
+  /*
+  * Login user using social and registration of social user
+  * */
+  public socialSignIn(socialProvider) {
     let socialPlatformProvider;
     if (socialProvider === 'facebook') {
       socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
@@ -46,9 +47,6 @@ export class LoginComponent implements OnInit {
       socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     }
     this.OAuth.signIn(socialPlatformProvider).then(socialuser => {
-      console.log(socialProvider, socialuser);
-      console.log(socialuser);
-      // this.authService.userProfileSubject$.next(socialuser);
       const reqObject = {
         emailId: socialuser.email,
         userName: socialuser.firstName + socialuser.lastName,
@@ -58,7 +56,7 @@ export class LoginComponent implements OnInit {
       };
       this.qsqservice.submitRegister(reqObject)
         .subscribe(
-          data => {
+          _data => {
             this.loginSocialUser(reqObject, true);
           },
           error => {
@@ -70,18 +68,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /*
+  * Social login routing accordingly
+  * */
   loginSocialUser(reqObject, loginForFirst) {
     this.qsqservice.login(reqObject)
       .subscribe(
         data => {
           this.authService.userProfileSubject$.next(data);
           sessionStorage.setItem('User', JSON.stringify(data));
-          loginForFirst ? this._router.navigate([constantRoutes.registerRoute]) : this._router.navigate([constantRoutes.homeRoute]);
+          loginForFirst ? this._router.navigate([constantRoutes.userProfileRoute]) : this._router.navigate([constantRoutes.homeRoute]);
         },
-        error => { }
+        error => {
+
+        }
       );
   }
 
+  /*
+  * normal login for username and password*/
   login() {
     if (this.loginForm.valid) {
       this.qsqservice.login(this.loginForm.value)
@@ -91,11 +96,21 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('User', JSON.stringify(data));
             this._router.navigate([constantRoutes.homeRoute]);
           },
-          error => { }
+          error => {
+            if(error.status == 401)
+            {
+              this.successMessage = "Invalid Credentials!";
+            }
+            else{
+              this.successMessage = "Error occured while login!";
+            } }
         );
     }
   }
 
+  /*
+  * Navigate to register
+  * */
   movetoregister() {
     this._router.navigateByUrl(constantRoutes.registerRoute, { relativeTo: this._activatedRoute });
   }

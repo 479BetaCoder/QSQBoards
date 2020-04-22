@@ -1,9 +1,13 @@
-import {Component, Inject, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ProjectService} from '../../../services/project.service';
-import {UserStoryService} from '../../../services/user-story.service';
+import {MatDialogRef} from '@angular/material/dialog';
+import UserStory from '../../../store/models/userStory';
+import {select, Store} from '@ngrx/store';
+import * as BoardActions from '../../../store/actions/board.action';
+import BoardState from '../../../store/states/board.state';
+import {map} from "rxjs/operators";
+import {Observable, Subscription} from "rxjs";
+import ProjectDetailsState from '../../../store/states/project-details.state';
 
 @Component({
   selector: 'app-new-user-story',
@@ -12,34 +16,42 @@ import {UserStoryService} from '../../../services/user-story.service';
 })
 export class NewUserStoryComponent implements OnInit {
   createStoryForm: FormGroup;
-  newStatus: 'New';
   userProject: any;
   priorities = [
-    {value: 'low', viewValue: 'Low'},
-    {value: 'medium', viewValue: 'Medium'},
-    {value: 'high', viewValue: 'High'}];
+    {value: 'Low', viewValue: 'Low'},
+    {value: 'Medium', viewValue: 'Medium'},
+    {value: 'High', viewValue: 'High'}];
+  selectedProject: any;
+  projectDetails$: Observable<ProjectDetailsState>;
+  ProjectDetailsSubscription: Subscription;
+  projectsDetailsError: Error = null;
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private ngZone: NgZone,
     private dialogRef: MatDialogRef<NewUserStoryComponent>,
-    private projectService: ProjectService,
-    private userStoryService: UserStoryService,
-    @Inject(MAT_DIALOG_DATA) data
+    private store: Store<{ projects: BoardState }>,
+    private storeProjectDetails: Store<{ projectDetails: ProjectDetailsState }>,
   ) {
-    this.mainForm();
+    this.projectDetails$ = this.storeProjectDetails.pipe(select('projectDetails'));
   }
 
   ngOnInit() {
-    this.projectService.userProject$.subscribe(pr =>  this.userProject = pr);
+    this.ProjectDetailsSubscription = this.projectDetails$
+      .pipe(
+        map(res => {
+          if (res) {
+            this.selectedProject = res.selectedProjectDetails;
+            this.projectsDetailsError = res.projectsDetailsError;
+          }
+        })).subscribe();
+    this.mainForm();
   }
 
   mainForm() {
     this.createStoryForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      status: [{value : 'New', disabled: true}, [Validators.required, Validators.pattern]],
-      storyPoints: ['', [Validators.required]],
+      status: [{value : 'New', disabled: true}, [Validators.required]],
+      storyPoints: ['', [Validators.required, Validators.pattern]],
       priority: ['', [Validators.required]],
     });
   }
@@ -51,14 +63,14 @@ export class NewUserStoryComponent implements OnInit {
     if (!this.createStoryForm.valid) {
       return false;
     } else {
-      this.userStoryService.createStory(this.createStoryForm.value, this.userProject._id).subscribe(
-        (res) => {
-          console.log('Stories successfully created!');
-          // this.ngZone.run(() => this.router.navigateByUrl('/boards'));
-          this.dialogRef.close();
-        }, (error) => {
-          console.log(error);
-        });
+      if(!this.selectedProject) {
+        this.selectedProject = JSON.parse(sessionStorage.getItem('SelectedProject'));
+      }
+      const newUserStory: UserStory = this.createStoryForm.value;
+      newUserStory.status = 'New';
+      newUserStory.projectId = this.selectedProject._id;
+      this.store.dispatch(BoardActions.BeginCreateUserStory({payload: newUserStory}));
+      this.dialogRef.close();
     }
   }
 

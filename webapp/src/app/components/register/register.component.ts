@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     this.myForm = new FormGroup({
       emailId: new FormControl(null, Validators.email),
       userName: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.minLength(8)),
       cnfpass: new FormControl(null, this.passValidator),
     });
 
@@ -33,6 +33,10 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get(controlName).invalid && this.myForm.get(controlName).touched;
   }
 
+  /**
+   * Password validation
+   * @param control 
+   */
   passValidator(control: AbstractControl) {
     if (control && (control.value !== null || control.value !== undefined)) {
       const cnfpassValue = control.value;
@@ -51,19 +55,34 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Handles user registration
+   */
   register(){
     if(this.myForm.valid){
       this._qsqservice.submitRegister(this.myForm.value)
       .subscribe(
         data => {
+          this.successMessage = '';
           this._router.navigate(['']);
         },
-        error => this.successMessage = 'Error occurred'
+        error => {
+          if(error.status == 422)
+          {
+            this.successMessage = "User with same Username/Email already registered";
+          }
+          else{
+            this.successMessage = "Error occured while registering User";
+          }
+        }
       );
     }
 
   }
 
+  /**
+   * Navigates to login page
+   */
   movetologin() {
     this._router.navigateByUrl('',{relativeTo: this._activateRoute});
   }

@@ -47,10 +47,11 @@ exports.updateUser = function (updatedUser, currentUser) {
     updatedUser.password,
     utilConstants.SALT_ROUNDS
   );
-
   const promise = User.findOneAndUpdate(currentUser, {
     $set: {
-      password: hashPwd
+      password: hashPwd,
+      image: updatedUser.image
+
     },
   });
   return promise;
